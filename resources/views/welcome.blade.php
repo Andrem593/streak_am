@@ -46,6 +46,9 @@
                 -webkit-filter: drop-shadow(1px 0px 0px rgba(0,0,0,.5));
                 filter: drop-shadow(1px 0px 0px rgba(0,0,0,.5));
             }
+            .breadcrumb li:after {
+                border-left: 20px solid #854 !important;
+            }
 /* 
             .breadcrumb li:first-child:after {
                 border-left-color: #fdf9cc;
@@ -75,7 +78,7 @@
         <ol class="breadcrumb">
             <li><a href="#">Home</a></li>
             <li><a href="#">Library</a></li>
-            <li class="active">Data</li>
+            <li class="bg-orange">Data</li>
             <li><a href="#">Library</a></li>
             <li class="active">Data</li>
             <li><a href="#">Library</a></li>
