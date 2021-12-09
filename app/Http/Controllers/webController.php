@@ -14,4 +14,8 @@ class webController extends Controller
     {
         return view('giras.show');
     }
+    public function create()
+    {
+        return view('giras.create');
+    }
 }

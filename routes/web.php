@@ -19,3 +19,4 @@ Route::get('/', function () {
 });
 Route::get('/giras',[webController::class,'index'])->name('giras');
 Route::get('/show',[webController::class,'show'])->name('show');
+Route::get('/giras-create',[webController::class,'create'])->name('giras.create');
