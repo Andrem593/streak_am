@@ -10,4 +10,8 @@ class webController extends Controller
     {
         return view('giras.index');
     }
+    public function show()
+    {
+        return view('giras.show');
+    }
 }

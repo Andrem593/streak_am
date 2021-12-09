@@ -18,3 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/giras',[webController::class,'index'])->name('giras');
+Route::get('/show',[webController::class,'show'])->name('show');
