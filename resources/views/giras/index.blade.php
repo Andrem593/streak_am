@@ -6,7 +6,7 @@
                 <h2 class="fw-bold my-2">Modulo de Giras Streak</h2>
             </div>
             <div class="col my-auto text-right">
-                <a class="btn btn-primary btn-sm" href="#"><i class="fas fa-plus mr-1"></i>Nueva Gira</a>
+                <a class="btn btn-primary btn-sm" href="{{route('giras.create')}}"><i class="fas fa-plus mr-1"></i>Nueva Gira</a>
             </div>
         </div>
     @stop
@@ -54,11 +54,11 @@
                             </td>
                             <td>
                                 <a>
-                                    AdminLTE v3
+                                    GIRA GUAYAQUIL
                                 </a>
                                 <br>
                                 <small>
-                                    Created 01.01.2019
+                                    Creada 01.12.2021
                                 </small>
                             </td>
                             <td>
@@ -92,7 +92,7 @@
                                 </small>
                             </td>
                             <td class="project-state">
-                                <span class="badge badge-success">Success</span>
+                                <span class="badge badge-success">Activa</span>
                             </td>
                             <td class="project-actions text-right">
                                 <a class="btn btn-primary btn-sm" href="#">
@@ -115,11 +115,11 @@
                             </td>
                             <td>
                                 <a>
-                                    AdminLTE v3
+                                    GIRA GUAYAQUIL
                                 </a>
                                 <br>
                                 <small>
-                                    Created 01.01.2019
+                                    Creada 01.12.2021
                                 </small>
                             </td>
                             <td>
@@ -153,7 +153,7 @@
                                 </small>
                             </td>
                             <td class="project-state">
-                                <span class="badge badge-success">Success</span>
+                                <span class="badge badge-success">Activa</span>
                             </td>
                             <td class="project-actions text-right">
                                 <a class="btn btn-primary btn-sm" href="#">
@@ -176,11 +176,11 @@
                             </td>
                             <td>
                                 <a>
-                                    AdminLTE v3
+                                    GIRA GUAYAQUIL
                                 </a>
                                 <br>
                                 <small>
-                                    Created 01.01.2019
+                                    Creada 01.12.2021
                                 </small>
                             </td>
                             <td>
@@ -214,7 +214,7 @@
                                 </small>
                             </td>
                             <td class="project-state">
-                                <span class="badge badge-success">Success</span>
+                                <span class="badge badge-success">Activa</span>
                             </td>
                             <td class="project-actions text-right">
                                 <a class="btn btn-primary btn-sm" href="#">
@@ -237,11 +237,11 @@
                             </td>
                             <td>
                                 <a>
-                                    AdminLTE v3
+                                    GIRA GUAYAQUIL
                                 </a>
                                 <br>
                                 <small>
-                                    Created 01.01.2019
+                                    Creada 01.12.2021
                                 </small>
                             </td>
                             <td>
@@ -275,7 +275,68 @@
                                 </small>
                             </td>
                             <td class="project-state">
-                                <span class="badge badge-success">Success</span>
+                                <span class="badge badge-success">Activa</span>
+                            </td>
+                            <td class="project-actions text-right">
+                                <a class="btn btn-primary btn-sm" href="#">
+                                    <i class="fas fa-folder">
+                                    </i>
+                                </a>
+                                <a class="btn btn-info btn-sm" href="#">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                </a>
+                                <a class="btn btn-danger btn-sm" href="#">
+                                    <i class="fas fa-trash">
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                #
+                            </td>
+                            <td>
+                                <a>
+                                    GIRA GUAYAQUIL
+                                </a>
+                                <br>
+                                <small>
+                                    Creada 01.12.2021
+                                </small>
+                            </td>
+                            <td>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar"
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPgS1h_HJXlk30XL589iPYN7jbjLdXRYKxA&usqp=CAU">
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar"
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPgS1h_HJXlk30XL589iPYN7jbjLdXRYKxA&usqp=CAU">
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar"
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPgS1h_HJXlk30XL589iPYN7jbjLdXRYKxA&usqp=CAU">
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar"
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPgS1h_HJXlk30XL589iPYN7jbjLdXRYKxA&usqp=CAU">
+                                    </li>
+                                </ul>
+                            </td>
+                            <td class="project_progress">
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57"
+                                        aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                                    </div>
+                                </div>
+                                <small>
+                                    57% Completo
+                                </small>
+                            </td>
+                            <td class="project-state">
+                                <span class="badge badge-success">Activa</span>
                             </td>
                             <td class="project-actions text-right">
                                 <a class="btn btn-primary btn-sm" href="#">
