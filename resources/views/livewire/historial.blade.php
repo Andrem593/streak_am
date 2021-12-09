@@ -17,7 +17,8 @@
                 <div class="col-md-8">
                     <div class="card collapsed-card">
                         <div class="card-header">
-                            <h3 class="card-title text-success fw-bold"><i class="fas fa-sticky-note"></i> AGREGAR COMENTARIOS</h3>
+                            <h3 class="card-title text-success fw-bold"><i class="fas fa-sticky-note"></i> AGREGAR
+                                COMENTARIOS</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -68,7 +69,8 @@
                                             <div>
                                                 <i class="fas fa-envelope bg-blue"></i>
                                                 <div class="timeline-item">
-                                                    <span class="time"><i class="fas fa-clock"></i> 12:05</span>
+                                                    <span class="time"><i class="fas fa-clock"></i>
+                                                        12:05</span>
                                                     <h3 class="timeline-header"><a href="#">Support Team</a> sent you an
                                                         email
                                                     </h3>
@@ -91,7 +93,8 @@
                                             <div>
                                                 <i class="fas fa-user bg-green"></i>
                                                 <div class="timeline-item">
-                                                    <span class="time"><i class="fas fa-clock"></i> 5 mins ago</span>
+                                                    <span class="time"><i class="fas fa-clock"></i> 5 mins
+                                                        ago</span>
                                                     <h3 class="timeline-header no-border"><a href="#">Sarah Young</a>
                                                         accepted
                                                         your friend request</h3>
@@ -102,7 +105,8 @@
                                             <div>
                                                 <i class="fas fa-comments bg-yellow"></i>
                                                 <div class="timeline-item">
-                                                    <span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>
+                                                    <span class="time"><i class="fas fa-clock"></i> 27 mins
+                                                        ago</span>
                                                     <h3 class="timeline-header"><a href="#">Jay White</a> commented on
                                                         your post
                                                     </h3>
@@ -127,7 +131,8 @@
                                                 <i class="fas fa-video bg-maroon"></i>
 
                                                 <div class="timeline-item">
-                                                    <span class="time"><i class="fas fa-clock"></i> 5 days ago</span>
+                                                    <span class="time"><i class="fas fa-clock"></i> 5 days
+                                                        ago</span>
 
                                                     <h3 class="timeline-header"><a href="#">Mr. Doe</a> shared a video
                                                     </h3>
@@ -171,15 +176,16 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleSelectBorderWidth2">Modificar la Etapa Actual</label>
-                                <select class="custom-select form-control-border border-width-2" id="exampleSelectBorderWidth2">
-                                  <option >B/D Clientes</option>
-                                  <option >Por visitar</option>
-                                  <option >Por Llamar</option>
-                                  <option >Visitas</option>
-                                  <option >Llamadas</option>
-                                  <option >Pedidos</option>
+                                <select class="custom-select form-control-border border-width-2"
+                                    id="exampleSelectBorderWidth2">
+                                    <option>B/D Clientes</option>
+                                    <option>Por visitar</option>
+                                    <option>Por Llamar</option>
+                                    <option>Visitas</option>
+                                    <option>Llamadas</option>
+                                    <option>Pedidos</option>
                                 </select>
-                              </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card">
@@ -198,15 +204,33 @@
                                 <input type="datetime" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label>Fecha y Hora:</label>
+                                {{-- <label>Fecha y Hora:</label>
                                 <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-                                    <input type="datetime" class="form-control datetimepicker-input" data-target="#reservationdatetime">
-                                    <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                                    <input type="datetime" class="form-control datetimepicker-input"
+                                        data-target="#reservationdatetime">
+                                    <div class="input-group-append" data-target="#reservationdatetime"
+                                        data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
-                                </div>
+                                </div> --}}
+                                @section('plugins.TempusDominusBs4', true)
+                                @php
+                                    $config = ['format' => 'DD/MM/YYYY HH:mm',
+                                    'minDate' => "js:moment()",
+                                    'showClear' => true,];
+                                    
+                                @endphp
+                                <x-adminlte-input-date name="idLabel" :config="$config" placeholder="Choose a date..."
+                                    label="Fecha y Hora" >
+                                    <x-slot name="appendSlot">
+                                        <x-adminlte-button theme="outline-primary" icon="fas fa-lg fa-clock"
+                                            title="Set to Birthday" />
+                                    </x-slot>
+                                </x-adminlte-input-date>
+
                             </div>
-                            <button class="btn btn-primary float-right"><i class="fas fa-save"></i> GUARDAR</button>
+                            <button class="btn btn-primary float-right"><i class="fas fa-save"></i>
+                                GUARDAR</button>
                         </div>
                     </div>
                 </div>
@@ -215,4 +239,12 @@
 
         </section>
     </div>
+
+    @push('js')
+        <script>
+
+
+        </script>
+    @endpush
+
 </div>
