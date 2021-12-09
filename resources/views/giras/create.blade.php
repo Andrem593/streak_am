@@ -110,24 +110,29 @@
         </script>
         <script>
             $(document).ready(function(){
-            $('#color-chooser a').click(function (e) {
-                let color = $(this).attr('class');
-                color = color.split('-');
-                color[0] = color[0].replace('text','btn');
-                color = color[0]+'-'+color[1];                
-                $('#btn-crear-fase').attr('class', 'btn '+color);
-            })
-            $('#btn-crear-fase').click(function (e) {
-                let color = $(this).attr('class');
-                color = color.split('-')
-                color = color[1];                            
-                if($('#nombre_fase').val() != ''){
-                    $('#sortable').append(
-                        '<div class="external-event bg-'+color+'">'+$('#nombre_fase').val()+' <div class="float-right"><a class="delete" href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div></div>'
-                    )
-                }
-            })
-
+                $('#color-chooser a').click(function (e) {
+                    let color = $(this).attr('class');
+                    color = color.split('-');
+                    color[0] = color[0].replace('text','btn');
+                    color = color[0]+'-'+color[1];                
+                    $('#btn-crear-fase').attr('class', 'btn '+color);
+                })
+                $('#btn-crear-fase').click(function (e) {
+                    let color = $(this).attr('class');
+                    color = color.split('-')
+                    color = color[1];                            
+                    if($('#nombre_fase').val() != ''){
+                        $('#sortable').append(
+                            '<div class="external-event bg-'+color+'">'+$('#nombre_fase').val()+' <div class="float-right"><a class="delete" href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div></div>'
+                        )
+                    }
+                })
+                $('#sortable .delete').click(function (e) {
+                    let elemento = $(this).parents().parents();
+                    elemento = elemento[0];               
+                    console.log(elemento)
+                    elemento.remove();
+                })
             });
         </script>
     @endpush

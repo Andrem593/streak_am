@@ -151,7 +151,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><button class="btn btn-sm btn-info"><i class="fas fa-edit"></i></button></td>
+                                                <td><a href="{{route('fase.historial')}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a></td>
                                                 <td><input type="checkbox" name="prueba" id="prueba"></td>
                                                 <td>Update software</td>
                                                 <td>Update software</td>
