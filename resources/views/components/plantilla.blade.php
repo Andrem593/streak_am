@@ -8,9 +8,9 @@
 @stop
 
 @section('css')
-    @stack('css')
+
 @stop
 
 @section('js')
-    @stack('js')
+    
 @stop

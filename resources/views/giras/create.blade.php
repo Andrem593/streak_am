@@ -109,6 +109,7 @@
             } );            
         </script>
         <script>
+            $(document).ready(function(){
             $('#color-chooser a').click(function (e) {
                 let color = $(this).attr('class');
                 color = color.split('-');
@@ -126,6 +127,8 @@
                     )
                 }
             })
+
+            });
         </script>
     @endpush
 </x-plantilla>
