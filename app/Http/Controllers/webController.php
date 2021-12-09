@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gira;
 use Illuminate\Http\Request;
 
 class webController extends Controller
@@ -16,6 +17,16 @@ class webController extends Controller
     }
     public function create()
     {
-        return view('giras.create');
+        $gira = new Gira();
+        return view('giras.create', compact('gira'));
+    }
+    public function createGira(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|max:50|min:5',
+            'estado' => 'required',
+        ]);
+
+        dd($request);
     }    
 }
