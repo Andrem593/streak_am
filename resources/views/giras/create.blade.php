@@ -80,7 +80,7 @@
                           <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
                           <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
                           <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                          <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
+                          <li><a class="text-secondary" href="#"><i class="fas fa-square"></i></a></li>
                         </ul>
                       </div>
                       <!-- /btn-group -->
@@ -88,7 +88,7 @@
                         <input id="nombre_fase" type="text" class="form-control" placeholder="Nombre de nueva fase">
     
                         <div class="input-group-append">
-                          <button id="btn-crear-fase" type="button" class="btn btn-primary" style="background-color: rgb(25, 105, 44); border-color: rgb(25, 105, 44);">ADD</button>
+                          <button id="btn-crear-fase" type="button" class="btn btn-primary">ADD</button>
                         </div>
                         <!-- /btn-group -->
                       </div>
@@ -106,7 +106,26 @@
         <script>
             $( function() {
                 $( "#sortable" ).sortable();
-            } );
+            } );            
+        </script>
+        <script>
+            $('#color-chooser a').click(function (e) {
+                let color = $(this).attr('class');
+                color = color.split('-');
+                color[0] = color[0].replace('text','btn');
+                color = color[0]+'-'+color[1];                
+                $('#btn-crear-fase').attr('class', 'btn '+color);
+            })
+            $('#btn-crear-fase').click(function (e) {
+                let color = $(this).attr('class');
+                color = color.split('-')
+                color = color[1];                            
+                if($('#nombre_fase').val() != ''){
+                    $('#sortable').append(
+                        '<div class="external-event bg-'+color+'">'+$('#nombre_fase').val()+' <div class="float-right"><a class="delete" href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div></div>'
+                    )
+                }
+            })
         </script>
     @endpush
 </x-plantilla>
