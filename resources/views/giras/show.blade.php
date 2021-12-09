@@ -138,6 +138,7 @@
                                     <table class="table table-sm">
                                         <thead>
                                             <tr>
+                                                <th style="width: 10px">&nbsp;</th>
                                                 <th style="width: 10px">#</th>
                                                 <th>Asignado a</th>
                                                 <th>Zona</th>
@@ -150,6 +151,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
+                                                <td><button class="btn btn-sm btn-info"><i class="fas fa-edit"></i></button></td>
                                                 <td><input type="checkbox" name="prueba" id="prueba"></td>
                                                 <td>Update software</td>
                                                 <td>Update software</td>
@@ -163,8 +165,9 @@
                                                     </div>
                                                 </td>
                                                 <td><span class="badge bg-danger">55%</span></td>
-                                            </tr>
+                                            </tr>                                                                                     
                                             <tr>
+                                                <td><button class="btn btn-sm btn-info"><i class="fas fa-edit"></i></button></td>
                                                 <td><input type="checkbox" name="prueba" id="prueba"></td>
                                                 <td>Update software</td>
                                                 <td>Update software</td>
@@ -178,8 +181,9 @@
                                                     </div>
                                                 </td>
                                                 <td><span class="badge bg-danger">55%</span></td>
-                                            </tr>
+                                            </tr>                                                                                     
                                             <tr>
+                                                <td><button class="btn btn-sm btn-info"><i class="fas fa-edit"></i></button></td>
                                                 <td><input type="checkbox" name="prueba" id="prueba"></td>
                                                 <td>Update software</td>
                                                 <td>Update software</td>
@@ -193,8 +197,9 @@
                                                     </div>
                                                 </td>
                                                 <td><span class="badge bg-danger">55%</span></td>
-                                            </tr>
+                                            </tr>                                                                                     
                                             <tr>
+                                                <td><button class="btn btn-sm btn-info"><i class="fas fa-edit"></i></button></td>
                                                 <td><input type="checkbox" name="prueba" id="prueba"></td>
                                                 <td>Update software</td>
                                                 <td>Update software</td>
@@ -208,8 +213,9 @@
                                                     </div>
                                                 </td>
                                                 <td><span class="badge bg-danger">55%</span></td>
-                                            </tr>
+                                            </tr>                                                                                     
                                             <tr>
+                                                <td><button class="btn btn-sm btn-info"><i class="fas fa-edit"></i></button></td>
                                                 <td><input type="checkbox" name="prueba" id="prueba"></td>
                                                 <td>Update software</td>
                                                 <td>Update software</td>
@@ -223,7 +229,7 @@
                                                     </div>
                                                 </td>
                                                 <td><span class="badge bg-danger">55%</span></td>
-                                            </tr>                                            
+                                            </tr>                                                                                     
                                         </tbody>
                                     </table>
                                 </div>
