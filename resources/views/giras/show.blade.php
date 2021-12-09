@@ -3,11 +3,16 @@
         <div class="row d-flex justify-content-around">
             <div class="col"></div>
             <div class="col text-center">
-                <h2 class="fw-bold my-2">Titulo</h2>
+                <h2 class="fw-bold my-2">Gira Guayaquil</h2>
             </div>
             <div class="col my-auto text-right">
-                <a class="btn btn-primary btn-sm" href="#"><i class="fas fa-plus mr-1"></i>Agregar Cliente</a>
+                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fas fa-plus mr-1"></i>Agregar
+                    Cliente</button>
             </div>
+
+
+
         </div>
     @stop
 
@@ -32,14 +37,14 @@
             }
 
             /* 
-                    .breadcrumb li:first-child {
-                        background: #fdf9cc;
-                    }
+                        .breadcrumb li:first-child {
+                            background: #fdf9cc;
+                        }
 
-                    .breadcrumb li:last-child {
-                        background: #fddc05;
-                        margin-right: 18px;
-                    } */
+                        .breadcrumb li:last-child {
+                            background: #fddc05;
+                            margin-right: 18px;
+                        } */
 
             .breadcrumb li:before {
                 display: none;
@@ -151,7 +156,9 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><a href="{{route('fase.historial')}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a></td>
+                                                <td><a href="{{ route('fase.historial') }}"
+                                                        class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
+                                                </td>
                                                 <td><input type="checkbox" name="prueba" id="prueba"></td>
                                                 <td>Update software</td>
                                                 <td>Update software</td>
@@ -165,9 +172,10 @@
                                                     </div>
                                                 </td>
                                                 <td><span class="badge bg-danger">55%</span></td>
-                                            </tr>                                                                                     
+                                            </tr>
                                             <tr>
-                                                <td><button class="btn btn-sm btn-info"><i class="fas fa-edit"></i></button></td>
+                                                <td><button class="btn btn-sm btn-info"><i
+                                                            class="fas fa-edit"></i></button></td>
                                                 <td><input type="checkbox" name="prueba" id="prueba"></td>
                                                 <td>Update software</td>
                                                 <td>Update software</td>
@@ -181,9 +189,10 @@
                                                     </div>
                                                 </td>
                                                 <td><span class="badge bg-danger">55%</span></td>
-                                            </tr>                                                                                     
+                                            </tr>
                                             <tr>
-                                                <td><button class="btn btn-sm btn-info"><i class="fas fa-edit"></i></button></td>
+                                                <td><button class="btn btn-sm btn-info"><i
+                                                            class="fas fa-edit"></i></button></td>
                                                 <td><input type="checkbox" name="prueba" id="prueba"></td>
                                                 <td>Update software</td>
                                                 <td>Update software</td>
@@ -197,9 +206,10 @@
                                                     </div>
                                                 </td>
                                                 <td><span class="badge bg-danger">55%</span></td>
-                                            </tr>                                                                                     
+                                            </tr>
                                             <tr>
-                                                <td><button class="btn btn-sm btn-info"><i class="fas fa-edit"></i></button></td>
+                                                <td><button class="btn btn-sm btn-info"><i
+                                                            class="fas fa-edit"></i></button></td>
                                                 <td><input type="checkbox" name="prueba" id="prueba"></td>
                                                 <td>Update software</td>
                                                 <td>Update software</td>
@@ -213,9 +223,10 @@
                                                     </div>
                                                 </td>
                                                 <td><span class="badge bg-danger">55%</span></td>
-                                            </tr>                                                                                     
+                                            </tr>
                                             <tr>
-                                                <td><button class="btn btn-sm btn-info"><i class="fas fa-edit"></i></button></td>
+                                                <td><button class="btn btn-sm btn-info"><i
+                                                            class="fas fa-edit"></i></button></td>
                                                 <td><input type="checkbox" name="prueba" id="prueba"></td>
                                                 <td>Update software</td>
                                                 <td>Update software</td>
@@ -229,7 +240,7 @@
                                                     </div>
                                                 </td>
                                                 <td><span class="badge bg-danger">55%</span></td>
-                                            </tr>                                                                                     
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -316,6 +327,16 @@
 
             </div>
             <!-- /.card-body -->
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            ...
         </div>
     </div>
 </x-plantilla>
