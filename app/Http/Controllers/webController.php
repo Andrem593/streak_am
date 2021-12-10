@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Etapa;
 use App\Models\Gira;
 use Illuminate\Http\Request;
+use App\Events\RealTimeMessage;
 
 class webController extends Controller
 {
     public function index()
     {
         $giras = Gira::all();  
-        $i = 1; 
-        return view('giras.index',compact('giras','i'));
+        $i = 1;         
+        // return view('giras.index',compact('giras','i'));
+        return view('welcome');
     }
     public function show($id_gira)
     {
