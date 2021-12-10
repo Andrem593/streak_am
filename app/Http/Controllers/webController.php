@@ -14,9 +14,11 @@ class webController extends Controller
         $i = 1; 
         return view('giras.index',compact('giras','i'));
     }
-    public function show()
+    public function show($id_gira)
     {
-        return view('giras.show');
+        $gira = Gira::find($id_gira);
+        $etapas = Etapa::where('id_gira',$id_gira)->get();
+        return view('giras.show',compact('gira','etapas'));
     }
     public function create()
     {

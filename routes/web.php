@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[webController::class,'index']);
 Route::get('/giras',[webController::class,'index'])->name('giras');
-Route::get('/show',[webController::class,'show'])->name('show');
+Route::get('/show/{id_gira}',[webController::class,'show'])->name('show');
 Route::get('/giras-create',[webController::class,'create'])->name('giras.create');
 Route::get('/historial',Historial::class)->name('fase.historial');
 Route::post('/crear-gira',[webController::class,'createGira'])->name('new.gira');
