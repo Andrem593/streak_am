@@ -3,11 +3,13 @@
         <div class="row d-flex justify-content-around">
             <div class="col"></div>
             <div class="col text-center">
-                <h2 class="fw-bold my-2">{{$gira->nombre}}</h2>
+                <h2 class="fw-bold my-2">{{ $gira->nombre }}</h2>
             </div>
             <div class="col my-auto text-right">
-                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fas fa-plus mr-1"></i>Agregar
+                {{-- <a class="btn btn-primary btn-sm" href="#offCanvas" id="triggerButton"><i class="fas fa-plus mr-1"></i>Agregar
+                    Cliente</a> --}}
+                <button class="btn btn-primary btn-sm js-offcanvas-trigger" data-offcanvas-trigger="off-canvas-right"><i
+                        class="fas fa-plus mr-1"></i>Agregar
                     Cliente</button>
             </div>
 
@@ -17,6 +19,8 @@
     @stop
 
     @push('css')
+
+        <link href="https://unpkg.com/js-offcanvas@1.2.8/dist/_css/prefixed/js-offcanvas.css" rel="stylesheet">
         <style>
             .breadcrumb {
                 display: inline-block;
@@ -37,14 +41,14 @@
             }
 
             /* 
-                        .breadcrumb li:first-child {
-                            background: #fdf9cc;
-                        }
+                                        .breadcrumb li:first-child {
+                                            background: #fdf9cc;
+                                        }
 
-                        .breadcrumb li:last-child {
-                            background: #fddc05;
-                            margin-right: 18px;
-                        } */
+                                        .breadcrumb li:last-child {
+                                            background: #fddc05;
+                                            margin-right: 18px;
+                                        } */
 
             .breadcrumb li:before {
                 display: none;
@@ -108,14 +112,15 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{$gira->nombre}}</h3>
+                <h3 class="card-title">{{ $gira->nombre }}</h3>
             </div>
             <div class="card-body text-center p-0">
                 <div class="row p-2">
                     <div class="col">
                         <ol class="breadcrumb">
-                            @foreach ($etapas as $etapa)                                
-                                <li class="{{$etapa->color}}"><a data-toggle="collapse" href="#card{{$etapa->id}}">{{$etapa->nombre}}</a>
+                            @foreach ($etapas as $etapa)
+                                <li class="{{ $etapa->color }}"><a data-toggle="collapse"
+                                        href="#card{{ $etapa->id }}">{{ $etapa->nombre }}</a>
                                 </li>
                             @endforeach
                         </ol>
@@ -124,21 +129,22 @@
 
                 <div class="row">
                     <div class="col-12" id="accordion">
-                        @foreach ($etapas as $etapa)  
+                        @foreach ($etapas as $etapa)
                             @php
-                                $color = explode('-',$etapa->color);
-                                $color = $color[1];                                
-                            @endphp                          
-                            <div class="card card-{{$color}} card-outline">
-                                <a class="d-block w-100 collapsed" data-toggle="collapse" href="#card{{$etapa->id}}"
-                                    aria-expanded="false">
+                                $color = explode('-', $etapa->color);
+                                $color = $color[1];
+                            @endphp
+                            <div class="card card-{{ $color }} card-outline">
+                                <a class="d-block w-100 collapsed" data-toggle="collapse"
+                                    href="#card{{ $etapa->id }}" aria-expanded="false">
                                     <div class="card-header">
-                                        <h4 class="card-title w-100 text-{{$color}}">
-                                            {{$etapa->nombre}}
+                                        <h4 class="card-title w-100 text-{{ $color }}">
+                                            {{ $etapa->nombre }}
                                         </h4>
                                     </div>
                                 </a>
-                                <div id="card{{$etapa->id}}" class="collapse" data-parent="#accordion" style="">
+                                <div id="card{{ $etapa->id }}" class="collapse" data-parent="#accordion"
+                                    style="">
                                     <div class="card-body">
                                         <table class="table table-sm">
                                             <thead>
@@ -157,7 +163,8 @@
                                             <tbody>
                                                 <tr>
                                                     <td><a href="{{ route('fase.historial') }}"
-                                                            class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
+                                                            class="btn btn-sm btn-info"><i
+                                                                class="fas fa-edit"></i></a>
                                                     </td>
                                                     <td><input type="checkbox" name="prueba" id="prueba"></td>
                                                     <td>Update software</td>
@@ -246,7 +253,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach                                                
+                        @endforeach
                     </div>
                 </div>
 
@@ -255,13 +262,40 @@
         </div>
     </div>
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
-            <h5 id="offcanvasRightLabel">Offcanvas right</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <!--Right-->
+    <aside class="js-offcanvas js-open" data-offcanvas-options='{"modifiers":"right,overlay"}' id="off-canvas-right"
+        role="complementary">
+        <div class="row">
+            <div class="col">
+                <h3>Agregar cliente</h3>
+            </div>
         </div>
-        <div class="offcanvas-body">
-            ...
+        <div class="row">
+            <div class="col">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                        aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <button class="btn btn-primary js-offcanvas-close"
+            data-button-options='{"modifiers":"blue,hard,close-right"}'>Close</button>
+    </aside>
+
+    @push('js')
+        <script src="https://unpkg.com/js-offcanvas@1.2.8/dist/_js/js-offcanvas.pkgd.min.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                $(document).trigger("enhance");
+            });
+        </script>
+    @endpush
+
 </x-plantilla>
