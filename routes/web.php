@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('giras.index');
-});
+Route::get('/',[webController::class,'index']);
 Route::get('/giras',[webController::class,'index'])->name('giras');
 Route::get('/show',[webController::class,'show'])->name('show');
 Route::get('/giras-create',[webController::class,'create'])->name('giras.create');

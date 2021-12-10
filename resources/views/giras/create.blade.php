@@ -24,38 +24,27 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-body" style="display: block;">
-                        <form action="{{route('new.gira')}}" method="post">
-                            @csrf
-                            <div class="form-group">
-                                <label for="nombre">Nombre de Gira</label>
-                                <input type="text" name="nombre" class="form-control" value="{{old('nombre')}}">
-                                @error('nombre')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="descripcion">Descripcion</label>
-                                <textarea name="descripcion" class="form-control" rows="4">{{$gira->descripcion}}</textarea>
-                                @error('descripcion')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="inputStatus">Estado</label>
-                                <select name="estado" class="form-control custom-select">
-                                    <option selected="" value='' disabled="">Selecciona</option>
-                                    <option value="ACTIVA">Activa</option>
-                                    <option value="INACTIVA">Inactiva</option>
-                                    <option value="CANCELADA">Cancelada</option>
-                                    <option value="COMPLETADA">Completada</option>
-                                </select>
-                                @error('estado')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <button class="btn btn-primary w-100">GUARDAR</button>
-                        </form>
+                    <div class="card-body" style="display: block;">                        
+                        <div class="form-group">
+                            <label for="nombre">Nombre de Gira</label>
+                            <input type="text" id="nombre" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripcion</label>
+                            <textarea id="descripcion" class="form-control" rows="4">{{$gira->descripcion}}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputStatus">Estado</label>
+                            <select id="estado" class="form-control custom-select" required>
+                                <option selected="" value='' disabled="">Selecciona</option>
+                                <option value="ACTIVA">Activa</option>
+                                <option value="INACTIVA">Inactiva</option>
+                                <option value="CANCELADA">Cancelada</option>
+                                <option value="COMPLETADA">Completada</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary w-100" id="btn-crear">GUARDAR</button>
+                       
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -140,6 +129,11 @@
 
         </script>
         <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            });
             $(document).ready(function() {
                 $('#color-chooser a').click(function(e) {
                     let color = $(this).attr('class');
@@ -159,13 +153,39 @@
                         )
                     }
                 })
-                $('#sortable .delete').click(function(e) {
+                $(document).on('click','#sortable .delete',function (){
                     let elemento = $(this).parents().parents();
                     elemento = elemento[0];
                     console.log(elemento)
                     elemento.remove();
                 })
             });
+            $(document).on('click','#btn-crear',function (e) {                
+                let etapas = [];
+                let elemento = $('#sortable .external-event');
+                $.each(elemento,function (i,v) {
+                    let nombre = $(this).text().trim()
+                    let color = $(this).attr('class')
+                    color = color.split(' ')
+                    color = color[1]
+                    etapas.push([nombre,color])
+                })
+                data = {
+                    nombre:$('#nombre').val(),
+                    descripcion:$('#descricion').text(),
+                    estado:$('#estado').val(),    
+                    etapas:etapas,                
+                }
+                $.post({
+                        url: '{{route("new.gira")}}',
+                        data: data,
+                        beforeSend: function() {                            
+                        },
+                        success: function(response) {                            
+                            window.location="{{route('giras')}}?message=true";
+                        }
+                    })
+            })
 
         </script>
     @endpush
