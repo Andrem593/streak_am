@@ -2094,9 +2094,10 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "390affdc5a516a9894e1",
   cluster: "sa1",
-  forceTLS: true // wsHost: window.location.hostname,
-  // wsPort: 6001
-
+  wsHost: window.location.hostname,
+  wsPort: 6001,
+  forceTLS: false,
+  disableStats: true
 }); // import Echo from "laravel-echo";
 // window.Pusher = require("pusher-js");
 // window.Echo = new Echo({
