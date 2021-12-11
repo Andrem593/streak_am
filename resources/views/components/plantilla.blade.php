@@ -23,7 +23,8 @@
         //     channel.bind('my-event', function(data) {
         //         alert(JSON.stringify(data));
         //     });
-        Echo.channel('events').listen('RealTimeMessage', (e) => {
+
+        window.Echo.channel('events').listen('RealTimeMessage', (e) => {
             console.log('RealTimeMessage: ' + e.message)
         });
     </script>

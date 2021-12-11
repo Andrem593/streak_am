@@ -14,7 +14,7 @@ class RealTimeMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message ;
+    public $message;
 
     /**
      * Create a new event instance.
