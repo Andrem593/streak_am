@@ -6,6 +6,8 @@ use App\Models\Etapa;
 use App\Models\Gira;
 use Illuminate\Http\Request;
 use App\Events\RealTimeMessage;
+use App\Models\Aw_user;
+use App\Models\Tarea;
 
 class webController extends Controller
 {
@@ -47,4 +49,11 @@ class webController extends Controller
         }
         return 'success';
     }    
+    public function crearTarea(Request $request){
+        Tarea::create([
+            'tarea'=>$request->tarea,
+            'horario'=>$request->horario
+        ]);
+        return 'success';
+    }
 }

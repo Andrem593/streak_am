@@ -4,7 +4,7 @@
 
 
 @section('content')
-    {{$slot}}
+    {{ $slot }}
 @stop
 
 @section('css')
@@ -13,19 +13,18 @@
 
 @section('js')
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js" integrity="sha512-eiqtDDb4GUVCSqOSOTz/s/eiU4B31GrdSb17aPAA4Lv/Cjc8o+hnDvuNkgXhSI5yHuDvYkuojMaQmrB5JB31XQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        // Pusher.logToConsole = true;
-
-        // var pusher = new Pusher('390affdc5a516a9894e1', {
-        //     cluster: 'us2'
-        // });
-        // var channel = pusher.subscribe('my-channel');
-        //     channel.bind('my-event', function(data) {
-        //         alert(JSON.stringify(data));
-        //     });
-
-        window.Echo.channel('events').listen('RealTimeMessage', (e) => {
-            console.log('RealTimeMessage: ' + e.message)
+        window.Echo.channel('events').listen('RealTimeMessage', (e) => {           
+            Push.create("Tienes un Recordatorio:", {
+                body: e.message,
+                // icon: '/icon.png',
+                timeout: 4000,
+                onClick: function () {
+                    window.focus();
+                    this.close();
+                }
+            });
         });
     </script>
     @livewireScripts()
