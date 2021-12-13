@@ -40,14 +40,14 @@
             }
 
             /* 
-                                                            .breadcrumb li:first-child {
-                                                                background: #fdf9cc;
-                                                            }
+                                                                .breadcrumb li:first-child {
+                                                                    background: #fdf9cc;
+                                                                }
 
-                                                            .breadcrumb li:last-child {
-                                                                background: #fddc05;
-                                                                margin-right: 18px;
-                                                            } */
+                                                                .breadcrumb li:last-child {
+                                                                    background: #fddc05;
+                                                                    margin-right: 18px;
+                                                                } */
 
             .breadcrumb li:before {
                 display: none;
@@ -288,8 +288,8 @@
         <div class="row">
             <div class="col">
                 <div class="input-group input-group-sm">
-                    <input id="txt_search" class="form-control form-control-divbar" type="search" placeholder="Buscar cliente"
-                        aria-label="Search">
+                    <input id="txt_search" class="form-control form-control-divbar" type="search"
+                        placeholder="Buscar cliente" aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-info" type="button">
                             <i class="fas fa-search"></i>
@@ -300,66 +300,71 @@
         </div>
     </div>
 
-        @push('js')
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
-                        integrity="sha512-+VS2+Nl1Qit71a/lbncmVsWOZ0BmPDkopw5sXAS2W+OfeceCEd9OGTQWjgVgP5QaMV4ddqOIW9XLW7UVFzkMAw=="
-                        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            <script src="https://cdn.jsdelivr.net/npm/jquery-offcanvas@3.4.7/dist/jquery.offcanvas.min.js"></script>
-            <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
-            <script>
-                $(document).ready(function() {
-                    var $el = $("#element").offcanvas({
-                        effect: "slide-in-over",
-                        overlay: true,
-                        origin: "right",
-                        coverage: "400px",
-                    });
-
-                    var styles = {
-                        backgroundColor: "#fff",
-                        top: "57px"
-                    };
-
-                    $(".offcanvas-element").css(styles);
-
-                    $(".offcanvas-trigger").on("click.offcanvas", function() {
-                        $el.offcanvas("show");
-                    });
-
-                    let path = "{{ route('web.autocompletar') }}";
-
-                    $('#txt_search').autocomplete({
-                        source: function(request, response) {
-                            $.getJSON(path, {
-                                    term: request.term
-                                },
-                                response
-                            );
-                        },
-                        focus: function(event, ui) {
-                            $("#txt_search").val(ui.item.value);
-                            return false;
-                        },
-                        minLength: 1,
-                        select: function(event, ui) {
-                            //  url = url.replace(':id', ui.item.estilo);
-                            //  document.location.href = url;
-                            //get_datos_afiliado(ui.item.data);
-                            //console.log('You selected: ' + ui.item.value + ', ' + ui.item.data);
-                        }
-                    }).autocomplete("instance")._renderItem = function(ul, item) {
-                        if (item.value) {
-                            return $("<li>").append("<div><span>" + item.ruc + "</span><br><span>" + item.value +
-                                    "</span></div>")
-                                .appendTo(ul);
-                        } else {
-                            return $("<li class='ui-state-disabled'>").append("<div>Cliente no encontrado</div>")
-                                .appendTo(ul);
-                        }
-
-                    };
+    @push('js')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
+                integrity="sha512-+VS2+Nl1Qit71a/lbncmVsWOZ0BmPDkopw5sXAS2W+OfeceCEd9OGTQWjgVgP5QaMV4ddqOIW9XLW7UVFzkMAw=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-offcanvas@3.4.7/dist/jquery.offcanvas.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var $el = $("#element").offcanvas({
+                    effect: "slide-in-over",
+                    overlay: true,
+                    origin: "right",
+                    coverage: "400px",
                 });
-            </script>
-        @endpush
+
+                var styles = {
+                    backgroundColor: "#fff",
+                    top: "57px"
+                };
+
+                $(".offcanvas-element").css(styles);
+
+                $(".offcanvas-trigger").on("click.offcanvas", function() {
+                    $el.offcanvas("show");
+                });
+
+                let path = "{{ route('web.autocompletar') }}";
+
+                $('#txt_search').autocomplete({
+                    source: function(request, response) {
+                        $.getJSON(path, {
+                                term: request.term
+                            },
+                            response
+                        );
+                    },
+                    focus: function(event, ui) {
+                        $("#txt_search").val(ui.item.value);
+                        return false;
+                    },
+                    minLength: 1,
+                    open: function(event, ui) {
+                        $(this).autocomplete("widget").css({
+                            "width": "auto"
+                        });
+                    },
+                    select: function(event, ui) {
+                        //  url = url.replace(':id', ui.item.estilo);
+                        //  document.location.href = url;
+                        //get_datos_afiliado(ui.item.data);
+                        //console.log('You selected: ' + ui.item.value + ', ' + ui.item.data);
+                    }
+                }).autocomplete("instance")._renderItem = function(ul, item) {
+                    if (item.value) {
+                        return $("<li>").append("<div><span>" + item.ruc + "</span><br><span>" + item.value +
+                                "</span></div>")
+                            .appendTo(ul);
+                    } else {
+                        return $("<li class='ui-state-disabled'>").append("<div>Cliente no encontrado</div>")
+                            .appendTo(ul);
+                    }
+
+                };
+            });
+        </script>
+    @endpush
 
 </x-plantilla>
