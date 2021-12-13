@@ -201,50 +201,83 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Tarea:</label>
-                                <input type="datetime" class="form-control">
+                                <input type="text" id="tarea" class="form-control">
                             </div>
                             <div class="form-group">
-                                {{-- <label>Fecha y Hora:</label>
-                                <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-                                    <input type="datetime" class="form-control datetimepicker-input"
-                                        data-target="#reservationdatetime">
-                                    <div class="input-group-append" data-target="#reservationdatetime"
-                                        data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div> --}}
                                 @section('plugins.TempusDominusBs4', true)
-                                @php
-                                    $config = ['format' => 'DD/MM/YYYY HH:mm',
-                                    'minDate' => "js:moment()",
-                                    'showClear' => true,];
-                                    
-                                @endphp
-                                <x-adminlte-input-date name="idLabel" :config="$config" placeholder="Choose a date..."
-                                    label="Fecha y Hora" >
-                                    <x-slot name="appendSlot">
-                                        <x-adminlte-button theme="outline-primary" icon="fas fa-lg fa-clock"
-                                            title="Set to Birthday" />
-                                    </x-slot>
-                                </x-adminlte-input-date>
+                                    @php
+                                        $config = ['format' => 'DD/MM/YYYY HH:mm', 'minDate' => 'js:moment()', 'showClear' => true];
+                                        
+                                    @endphp
+                                    <x-adminlte-input-date id="horario" name="idLabel" :config="$config"
+                                        placeholder="Escige una fecha..." label="Fecha y Hora">
+                                        <x-slot name="appendSlot">
+                                            <x-adminlte-button theme="outline-primary" icon="fas fa-lg fa-clock"
+                                                title="escoge el horario" />
+                                        </x-slot>
+                                    </x-adminlte-input-date>
 
+                                </div>
+                                <button id="guardar_recordatorio" class="btn btn-primary float-right"><i
+                                        class="fas fa-save"></i>
+                                    GUARDAR</button>
                             </div>
-                            <button class="btn btn-primary float-right"><i class="fas fa-save"></i>
-                                GUARDAR</button>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
-        </section>
+            </section>
+        </div>
+
+        @push('js')
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                });
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+                $('#guardar_recordatorio').click(function() {
+                    let fecha = $('#horario').val()+":00"
+                    fecha = fecha.split(' ');
+                    let hora = fecha[1] 
+                    fecha = fecha[0]
+                    fecha = fecha.split('/')
+                    fecha = fecha[2]+"-"+fecha[1]+"-"+fecha[0]+" "+hora
+
+                    let data = {
+                        'tarea': $('#tarea').val(),
+                        'horario': fecha,
+                    }
+                    $.post({
+                        url: '{{ route("crearTarea") }}',
+                        data: data,
+                        beforeSend: function() {},
+                        success: function(response) {
+                            if (response.trim() == 'success') {
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'Tarea Creada'
+                                })
+                                $('#horario').val('')
+                                $('#tarea').val('')
+                            }
+                        }
+                    })
+                })
+
+            </script>
+        @endpush
+
     </div>
-
-    @push('js')
-        <script>
-
-
-        </script>
-    @endpush
-
-</div>
