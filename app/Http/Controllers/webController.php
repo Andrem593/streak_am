@@ -24,7 +24,7 @@ class webController extends Controller
     {
         $gira = Gira::find($id_gira);
         $etapas = Etapa::where('id_gira', $id_gira)->get();
-        $clientes = DB::table('aw_clientes')->all();
+        $clientes = DB::table('aw_clientes')->get();
         return view('giras.show', compact('gira', 'etapas', 'clientes'));
     }
     public function create()
