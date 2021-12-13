@@ -24,9 +24,3 @@ Route::get('/historial',Historial::class)->name('fase.historial');
 Route::post('/crear-gira',[webController::class,'createGira'])->name('new.gira');
 Route::get('/autocompletar', [webController::class,'autocompletar'])->name('web.autocompletar');
 Route::post('/crear-tarea',[webController::class,'crearTarea'])->name('crearTarea');
-
-Route::get('prueba', function () {
-    // event(new App\Events\RealTimeMessage('Hello World'));
-    
-    return view('tareas');
-});
