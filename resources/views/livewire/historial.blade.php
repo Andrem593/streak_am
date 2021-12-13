@@ -31,13 +31,14 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Comentario</label>
-                                <textarea class="form-control" rows="3"
+                                <textarea class="form-control" rows="3" wire:model.defer="comentario"
                                     placeholder="Añadir nuevos comentarios ..."></textarea>
                             </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary float-right">AGREGAR</button>
+                            <button type="submit" wire:click="aggComentario()"
+                                class="btn btn-primary float-right">AGREGAR</button>
                         </div>
                     </div>
                     <div class="card">
@@ -60,35 +61,24 @@
                                     <div class="col-md-12">
                                         <!-- The time line -->
                                         <div class="timeline">
-                                            <!-- timeline time label -->
                                             <div class="time-label">
-                                                <span class="bg-red">10 Feb. 2021</span>
+                                                <span class="bg-info">10 Feb. 2021</span>
                                             </div>
-                                            <!-- /.timeline-label -->
-                                            <!-- timeline item -->
-                                            <div>
-                                                <i class="fas fa-envelope bg-blue"></i>
-                                                <div class="timeline-item">
-                                                    <span class="time"><i class="fas fa-clock"></i>
-                                                        12:05</span>
-                                                    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an
-                                                        email
-                                                    </h3>
-
-                                                    <div class="timeline-body">
-                                                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                                                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                                                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo
-                                                        kaboodle
-                                                        quora plaxo ideeli hulu weebly balihoo...
-                                                    </div>
-                                                    <div class="timeline-footer">
-                                                        <a class="btn btn-primary btn-sm">Read more</a>
-                                                        <a class="btn btn-danger btn-sm">Delete</a>
+                                            @foreach ($comentarios as $val)
+                                                <div>
+                                                    <i class="fas fa-comments bg-warning"></i>
+                                                    <div class="timeline-item">
+                                                        <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
+                                                        <h3 class="timeline-header"><a href="#">Usuario </a> comento en Etapa </h3>
+                                                        <div class="timeline-body">
+                                                            {{$val->comentario}}
+                                                        </div>
+                                                        {{-- <div class="timeline-footer">
+                                                            <a class="btn btn-success btn-sm">View comment</a>
+                                                        </div> --}}
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- END timeline item -->
+                                            @endforeach
                                             <!-- timeline item -->
                                             <div>
                                                 <i class="fas fa-user bg-green"></i>
@@ -101,55 +91,8 @@
                                                 </div>
                                             </div>
                                             <!-- END timeline item -->
-                                            <!-- timeline item -->
-                                            <div>
-                                                <i class="fas fa-comments bg-yellow"></i>
-                                                <div class="timeline-item">
-                                                    <span class="time"><i class="fas fa-clock"></i> 27 mins
-                                                        ago</span>
-                                                    <h3 class="timeline-header"><a href="#">Jay White</a> commented on
-                                                        your post
-                                                    </h3>
-                                                    <div class="timeline-body">
-                                                        Take me to your leader!
-                                                        Switzerland is small and neutral!
-                                                        We are more like Germany, ambitious and misunderstood!
-                                                    </div>
-                                                    <div class="timeline-footer">
-                                                        <a class="btn btn-warning btn-sm">View comment</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- END timeline item -->
-                                            <!-- timeline time label -->
-                                            <div class="time-label">
-                                                <span class="bg-green">3 Jan. 2021</span>
-                                            </div>
-                                            <!-- /.timeline-label -->
-                                            <!-- timeline item -->
-                                            <div>
-                                                <i class="fas fa-video bg-maroon"></i>
 
-                                                <div class="timeline-item">
-                                                    <span class="time"><i class="fas fa-clock"></i> 5 days
-                                                        ago</span>
 
-                                                    <h3 class="timeline-header"><a href="#">Mr. Doe</a> shared a video
-                                                    </h3>
-
-                                                    <div class="timeline-body">
-                                                        <div class="embed-responsive embed-responsive-16by9">
-                                                            <iframe class="embed-responsive-item"
-                                                                src="https://www.youtube.com/embed/tMWkeBIohBs"
-                                                                allowfullscreen=""></iframe>
-                                                        </div>
-                                                    </div>
-                                                    <div class="timeline-footer">
-                                                        <a href="#" class="btn btn-sm bg-maroon">See comments</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- END timeline item -->
                                             <div>
                                                 <i class="fas fa-clock bg-gray"></i>
                                             </div>
@@ -249,19 +192,19 @@
                     }
                 })
                 $('#guardar_recordatorio').click(function() {
-                    let fecha = $('#horario').val()+":00"
+                    let fecha = $('#horario').val() + ":00"
                     fecha = fecha.split(' ');
-                    let hora = fecha[1] 
+                    let hora = fecha[1]
                     fecha = fecha[0]
                     fecha = fecha.split('/')
-                    fecha = fecha[2]+"-"+fecha[1]+"-"+fecha[0]+" "+hora
+                    fecha = fecha[2] + "-" + fecha[1] + "-" + fecha[0] + " " + hora
 
                     let data = {
                         'tarea': $('#tarea').val(),
                         'horario': fecha,
                     }
                     $.post({
-                        url: '{{ route("crearTarea") }}',
+                        url: '{{ route('crearTarea') }}',
                         data: data,
                         beforeSend: function() {},
                         success: function(response) {

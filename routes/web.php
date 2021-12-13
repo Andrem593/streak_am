@@ -25,3 +25,4 @@ Route::post('/crear-gira',[webController::class,'createGira'])->name('new.gira')
 Route::get('/autocompletar', [webController::class,'autocompletar'])->name('web.autocompletar');
 Route::post('/crear-tarea',[webController::class,'crearTarea'])->name('crearTarea');
 Route::get('notifications/get',[webController::class,'buscarNotificaciones'])->name('buscarNotificaciones');
+Route::get('notificationsAll',[webController::class,'notificaciones'])->name('allNotifications');

@@ -5,11 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Etapa;
 use App\Models\Gira;
 use Illuminate\Http\Request;
-use App\Events\RealTimeMessage;
 use Illuminate\Support\Facades\DB;
-use App\Models\Aw_user;
 use App\Models\Tarea;
-use Carbon\Carbon;
 
 class webController extends Controller
 {
@@ -24,7 +21,7 @@ class webController extends Controller
     {
         $gira = Gira::find($id_gira);
         $etapas = Etapa::where('id_gira', $id_gira)->get();
-        $clientes = DB::table('aw_clientes')->all();
+        $clientes = DB::table('aw_clientes')->get();
         return view('giras.show', compact('gira', 'etapas', 'clientes'));
     }
     public function create()
@@ -116,7 +113,7 @@ class webController extends Controller
 
             $dropdownHtml .= "<a href='#' class='dropdown-item'>
                             <div class='card__message text-muted text-sm'>
-                            {$icon}Tienes un recordatorio
+                            {$icon}recordatorio pendiente
                             <p>{$not['text']}{$time}</p>
                         </div>
                           </a>";
@@ -134,5 +131,9 @@ class webController extends Controller
             'icon_color'  => 'warning',
             'dropdown'    => $dropdownHtml,
         ];
+    }
+    public function notificaciones(){
+        $tareas = Tarea::where('estado',1)->get();        
+        return view('recordatorios.index' ,compact('tareas'));
     }
 }
