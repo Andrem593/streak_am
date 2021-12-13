@@ -40,14 +40,14 @@
             }
 
             /* 
-                                                                .breadcrumb li:first-child {
-                                                                    background: #fdf9cc;
-                                                                }
+                                                                        .breadcrumb li:first-child {
+                                                                            background: #fdf9cc;
+                                                                        }
 
-                                                                .breadcrumb li:last-child {
-                                                                    background: #fddc05;
-                                                                    margin-right: 18px;
-                                                                } */
+                                                                        .breadcrumb li:last-child {
+                                                                            background: #fddc05;
+                                                                            margin-right: 18px;
+                                                                        } */
 
             .breadcrumb li:before {
                 display: none;
@@ -288,7 +288,7 @@
         <div class="row">
             <div class="col">
                 <div class="input-group input-group-sm">
-                    <input id="txt_search" class="form-control form-control-divbar" type="search"
+                    <input id="txt_search" class="form-control form-control-divbar" type="text"
                         placeholder="Buscar cliente" aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-info" type="button">
@@ -298,6 +298,22 @@
                 </div>
             </div>
         </div>
+
+        <div class="row py-1">
+            <div class="col">
+                <div class="list-group" id="myList" role="tablist">
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#home"
+                        role="tab"> <input type="checkbox" name="" id=""> Home</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#profile"
+                        role="tab">Profile</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#messages"
+                        role="tab">Messages</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#settings"
+                        role="tab">Settings</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     @push('js')
@@ -326,43 +342,50 @@
                     $el.offcanvas("show");
                 });
 
-                let path = "{{ route('web.autocompletar') }}";
+                $("#txt_search").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $("#myList a").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
 
-                $('#txt_search').autocomplete({
-                    source: function(request, response) {
-                        $.getJSON(path, {
-                                term: request.term
-                            },
-                            response
-                        );
-                    },
-                    focus: function(event, ui) {
-                        $("#txt_search").val(ui.item.value);
-                        return false;
-                    },
-                    minLength: 1,
-                    open: function(event, ui) {
-                        $(this).autocomplete("widget").css({
-                            "width": "auto"
-                        });
-                    },
-                    select: function(event, ui) {
-                        //  url = url.replace(':id', ui.item.estilo);
-                        //  document.location.href = url;
-                        //get_datos_afiliado(ui.item.data);
-                        //console.log('You selected: ' + ui.item.value + ', ' + ui.item.data);
-                    }
-                }).autocomplete("instance")._renderItem = function(ul, item) {
-                    if (item.value) {
-                        return $("<li>").append("<div><span>" + item.ruc + "</span><br><span>" + item.value +
-                                "</span></div>")
-                            .appendTo(ul);
-                    } else {
-                        return $("<li class='ui-state-disabled'>").append("<div>Cliente no encontrado</div>")
-                            .appendTo(ul);
-                    }
+                // let path = "{{ route('web.autocompletar') }}";
 
-                };
+                // $('#txt_search').autocomplete({
+                //     source: function(request, response) {
+                //         $.getJSON(path, {
+                //                 term: request.term
+                //             },
+                //             response
+                //         );
+                //     },
+                //     focus: function(event, ui) {
+                //         $("#txt_search").val(ui.item.value);
+                //         return false;
+                //     },
+                //     minLength: 1,
+                //     open: function(event, ui) {
+                //         $(this).autocomplete("widget").css({
+                //             "width": "auto"
+                //         });
+                //     },
+                //     select: function(event, ui) {
+                //         //  url = url.replace(':id', ui.item.estilo);
+                //         //  document.location.href = url;
+                //         //get_datos_afiliado(ui.item.data);
+                //         //console.log('You selected: ' + ui.item.value + ', ' + ui.item.data);
+                //     }
+                // }).autocomplete("instance")._renderItem = function(ul, item) {
+                //     if (item.value) {
+                //         return $("<li>").append("<div><span>" + item.ruc + "</span><br><span>" + item.value +
+                //                 "</span></div>")
+                //             .appendTo(ul);
+                //     } else {
+                //         return $("<li class='ui-state-disabled'>").append("<div>Cliente no encontrado</div>")
+                //             .appendTo(ul);
+                //     }
+
+                // };
             });
         </script>
     @endpush
