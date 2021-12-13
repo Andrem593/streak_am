@@ -9,7 +9,7 @@
                 <a class="btn btn-primary btn-sm" href="{{route('giras.create')}}"><i class="fas fa-plus mr-1"></i>Nueva Gira</a>
             </div>
         </div>
-    @stop
+    @stop    
     <div class="container">
         @if (!empty($_GET['message']))
             <div class="alert alert-success">

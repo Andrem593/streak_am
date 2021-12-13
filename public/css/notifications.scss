@@ -9,24 +9,17 @@ html {
   padding: 0;
   box-sizing:border-box;
 }
-body{
-  display: flex;
-  align-items:center;
-  justify-content:center;
-  min-height:100vh;
-  background-color: #eef7fe;
-}
 
 .card{
   // width:476px;
-  background: #fff;
-  padding: 20px;
-  border-radius:20px;
-  display: flex;
-  gap:14px;
+//   background: #fff;
+//   padding: 20px;
+//   border-radius:20px;
+//   display: flex;
+//   gap:14px;
   
   &__icon{
-    display: flex;
+    display: flex !important;
     align-items:center;
     justify-content:center;
     width: 55px;
