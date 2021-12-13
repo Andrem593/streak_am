@@ -6,6 +6,7 @@ use App\Models\Etapa;
 use App\Models\Gira;
 use Illuminate\Http\Request;
 use App\Events\RealTimeMessage;
+use Illuminate\Support\Facades\DB;
 
 class webController extends Controller
 {
@@ -46,5 +47,31 @@ class webController extends Controller
             ]);            
         }
         return 'success';
-    }    
+    }
+    
+    public function autocompletar(Request $request)
+    {
+
+        $data = $request->all();
+
+        $term = $data['term'];
+
+        $clientes = DB::table('aw_clientes')
+            ->where('ruc', 'LIKE', '%' . $term . '%')
+            ->orwhere('nombre', 'LIKE', '%' . $term . '%')
+            ->limit(10)   
+            ->get();
+
+        $response = array();
+
+        foreach ($clientes as $cliente) {
+            $response[] = array("value" => $cliente->nombre, "ruc" => $cliente->ruc, "id" => $cliente->id_cliente);
+        }
+
+        if (count($response) == 0) {
+            $response[] = array("value" => "");
+        }
+
+        return response()->json($response);
+    }
 }

@@ -8,8 +8,7 @@
             <div class="col my-auto text-right">
                 {{-- <a class="btn btn-primary btn-sm" href="#offCanvas" id="triggerButton"><i class="fas fa-plus mr-1"></i>Agregar
                     Cliente</a> --}}
-                <button class="btn btn-primary btn-sm js-offcanvas-trigger" data-offcanvas-trigger="off-canvas-right"><i
-                        class="fas fa-plus mr-1"></i>Agregar
+                <button class="btn btn-primary btn-sm offcanvas-trigger"><i class="fas fa-plus mr-1"></i>Agregar
                     Cliente</button>
             </div>
 
@@ -19,8 +18,8 @@
     @stop
 
     @push('css')
-
-        <link href="https://unpkg.com/js-offcanvas@1.2.8/dist/_css/prefixed/js-offcanvas.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-offcanvas@3.4.7/dist/jquery.offcanvas.min.css">
         <style>
             .breadcrumb {
                 display: inline-block;
@@ -41,14 +40,14 @@
             }
 
             /* 
-                                        .breadcrumb li:first-child {
-                                            background: #fdf9cc;
-                                        }
+                                                            .breadcrumb li:first-child {
+                                                                background: #fdf9cc;
+                                                            }
 
-                                        .breadcrumb li:last-child {
-                                            background: #fddc05;
-                                            margin-right: 18px;
-                                        } */
+                                                            .breadcrumb li:last-child {
+                                                                background: #fddc05;
+                                                                margin-right: 18px;
+                                                            } */
 
             .breadcrumb li:before {
                 display: none;
@@ -104,6 +103,11 @@
                 .breadcrumb li {
                     padding: 8px 15px 8px 30px;
                 }
+            }
+
+            #element {
+                top: 60px !important;
+                background-color: white;
             }
 
         </style>
@@ -257,45 +261,105 @@
                     </div>
                 </div>
 
+
+
             </div>
             <!-- /.card-body -->
         </div>
     </div>
 
     <!--Right-->
-    <aside class="js-offcanvas js-open" data-offcanvas-options='{"modifiers":"right,overlay"}' id="off-canvas-right"
-        role="complementary">
+
+
+    {{-- <div id="element" >
         <div class="row">
             <div class="col">
                 <h3>Agregar cliente</h3>
             </div>
         </div>
+    </div> --}}
+
+    <div id="element" data-offcanvas-duration="200" data-offcanvas-easing="ease" class="p-2">
+        <div class="row">
+            <div class="col">
+                <h5>Agregar cliente</h5>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                    <input id="txt_search" class="form-control form-control-divbar" type="search" placeholder="Buscar cliente"
                         aria-label="Search">
                     <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
+                        <button class="btn btn-info" type="button">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <button class="btn btn-primary js-offcanvas-close"
-            data-button-options='{"modifiers":"blue,hard,close-right"}'>Close</button>
-    </aside>
+        @push('js')
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
+                        integrity="sha512-+VS2+Nl1Qit71a/lbncmVsWOZ0BmPDkopw5sXAS2W+OfeceCEd9OGTQWjgVgP5QaMV4ddqOIW9XLW7UVFzkMAw=="
+                        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jquery-offcanvas@3.4.7/dist/jquery.offcanvas.min.js"></script>
+            <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    var $el = $("#element").offcanvas({
+                        effect: "slide-in-over",
+                        overlay: true,
+                        origin: "right",
+                        coverage: "400px",
+                    });
 
-    @push('js')
-        <script src="https://unpkg.com/js-offcanvas@1.2.8/dist/_js/js-offcanvas.pkgd.min.js"></script>
-        <script>
-            $(document).ready(function() {
+                    var styles = {
+                        backgroundColor: "#fff",
+                        top: "57px"
+                    };
 
-                $(document).trigger("enhance");
-            });
-        </script>
-    @endpush
+                    $(".offcanvas-element").css(styles);
+
+                    $(".offcanvas-trigger").on("click.offcanvas", function() {
+                        $el.offcanvas("show");
+                    });
+
+                    let path = "{{ route('web.autocompletar') }}";
+
+                    $('#txt_search').autocomplete({
+                        source: function(request, response) {
+                            $.getJSON(path, {
+                                    term: request.term
+                                },
+                                response
+                            );
+                        },
+                        focus: function(event, ui) {
+                            $("#txt_search").val(ui.item.value);
+                            return false;
+                        },
+                        minLength: 1,
+                        select: function(event, ui) {
+                            //  url = url.replace(':id', ui.item.estilo);
+                            //  document.location.href = url;
+                            //get_datos_afiliado(ui.item.data);
+                            //console.log('You selected: ' + ui.item.value + ', ' + ui.item.data);
+                        }
+                    }).autocomplete("instance")._renderItem = function(ul, item) {
+                        if (item.value) {
+                            return $("<li>").append("<div><span>" + item.ruc + "</span><br><span>" + item.value +
+                                    "</span></div>")
+                                .appendTo(ul);
+                        } else {
+                            return $("<li class='ui-state-disabled'>").append("<div>Cliente no encontrado</div>")
+                                .appendTo(ul);
+                        }
+
+                    };
+                });
+            </script>
+        @endpush
 
 </x-plantilla>

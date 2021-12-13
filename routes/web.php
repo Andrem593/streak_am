@@ -22,6 +22,7 @@ Route::get('/show/{id_gira}',[webController::class,'show'])->name('show');
 Route::get('/giras-create',[webController::class,'create'])->name('giras.create');
 Route::get('/historial',Historial::class)->name('fase.historial');
 Route::post('/crear-gira',[webController::class,'createGira'])->name('new.gira');
+Route::get('/autocompletar', [webController::class,'autocompletar'])->name('web.autocompletar');
 
 Route::get('prueba', function () {
     event(new App\Events\RealTimeMessage('Hello World'));
