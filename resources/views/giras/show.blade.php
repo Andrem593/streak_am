@@ -40,14 +40,14 @@
             }
 
             /* 
-                                                                        .breadcrumb li:first-child {
-                                                                            background: #fdf9cc;
-                                                                        }
+                                                                                .breadcrumb li:first-child {
+                                                                                    background: #fdf9cc;
+                                                                                }
 
-                                                                        .breadcrumb li:last-child {
-                                                                            background: #fddc05;
-                                                                            margin-right: 18px;
-                                                                        } */
+                                                                                .breadcrumb li:last-child {
+                                                                                    background: #fddc05;
+                                                                                    margin-right: 18px;
+                                                                                } */
 
             .breadcrumb li:before {
                 display: none;
@@ -103,11 +103,6 @@
                 .breadcrumb li {
                     padding: 8px 15px 8px 30px;
                 }
-            }
-
-            #element {
-                top: 60px !important;
-                background-color: white;
             }
 
         </style>
@@ -302,14 +297,11 @@
         <div class="row py-1">
             <div class="col">
                 <div class="list-group" id="myList" role="tablist">
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#home"
-                        role="tab"> <input type="checkbox" name="" id=""> Home</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#profile"
-                        role="tab">Profile</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#messages"
-                        role="tab">Messages</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#settings"
-                        role="tab">Settings</a>
+                    @foreach ($clientes as $cliente)
+                        <a class="list-group-item list-group-item-action p-2" href="#home" role="tab"><button
+                                class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button><span
+                                class="pl-2">{{ $cliente->nombre }}</span></a>
+                    @endforeach
                 </div>
             </div>
         </div>
