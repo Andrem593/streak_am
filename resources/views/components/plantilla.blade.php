@@ -9,6 +9,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{url('css/notifications.scss')}}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @livewireStyles()
 @stop
 

@@ -14,7 +14,6 @@ class ShowGira extends Component
     public function mount($id_gira)
     {
         $this->id_gira = $id_gira;
-        $this->clientes = 'SIN CLIENTES';
     }
 
     public function render()
@@ -28,6 +27,5 @@ class ShowGira extends Component
     public function listar()
     {
         // $this->clientes = DB::table('aw_clientes')->get();
-        $this->clientes = 'UN CLIENTE';
     }
 }

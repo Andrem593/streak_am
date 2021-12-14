@@ -20,98 +20,15 @@
     @push('css')
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-offcanvas@3.4.7/dist/jquery.offcanvas.min.css">
-        <style>
-            .breadcrumb {
-                display: inline-block;
-                padding: 0;
-                margin: 0;
-                background: transparent;
-                overflow: hidden;
-            }
-
-            .breadcrumb li {
-                float: left;
-                padding: 8px 15px 8px 25px;
-                background: #fdec82;
-                font-size: 16px;
-                font-weight: bold;
-                color: #777;
-                position: relative;
-            }
-
-            /* 
-                                                                                            .breadcrumb li:first-child {
-                                                                                                background: #fdf9cc;
-                                                                                            }
-            
-                                                                                            .breadcrumb li:last-child {
-                                                                                                background: #fddc05;
-                                                                                                margin-right: 18px;
-                                                                                            } */
-
-            .breadcrumb li:before {
-                display: none;
-            }
-
-            .breadcrumb li:after {
-                content: "";
-                display: block;
-                border-left: 20px solid #fdec82;
-                border-top: 20px solid transparent;
-                border-bottom: 20px solid transparent;
-                position: absolute;
-                top: 0;
-                right: -20px;
-                z-index: 1;
-                -webkit-filter: drop-shadow(1px 0px 0px rgba(0, 0, 0, .5));
-                filter: drop-shadow(1px 0px 0px rgba(0, 0, 0, .5));
-            }
-
-            .breadcrumb li.bg-primary:after {
-                border-left: 20px solid #007BFF;
-            }
-
-            .breadcrumb li.bg-secondary:after {
-                border-left: 20px solid #6C757D;
-            }
-
-            .breadcrumb li.bg-info:after {
-                border-left: 20px solid #17A2B8;
-            }
-
-            .breadcrumb li.bg-warning:after {
-                border-left: 20px solid #FFC107;
-            }
-
-            .breadcrumb li.bg-danger:after {
-                border-left: 20px solid #DC3545;
-            }
-
-            .breadcrumb li.bg-success:after {
-                border-left: 20px solid #28A745;
-            }
-
-
-
-            .breadcrumb li a {
-                font-size: 16px;
-                font-weight: bold;
-                color: #777;
-            }
-
-            @media only screen and (max-width: 479px) {
-                .breadcrumb li {
-                    padding: 8px 15px 8px 30px;
-                }
-            }
-
-        </style>
     @endpush
 
     <div class="container">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">{{ $gira->nombre }} {{$clientes}}</h3>
+                <div class="float-right">
+                    @livewire('off-canvas')
+                </div>
             </div>
             <div class="card-body text-center p-0">
                 <div class="row p-2">
@@ -274,8 +191,7 @@
             </div>
         </div> --}}
 
-    <div id="element" data-offcanvas-duration="200" data-offcanvas-easing="ease" class="p-2"
-        style="overflow-y: scroll; height: 100vh">
+    {{-- <div id="element" data-offcanvas-duration="200" data-offcanvas-easing="ease" class="p-2" style="overflow-y: scroll; height: 100vh">
         <div class="row" style="padding-top: 57px">
             <div class="col">
                 <h5>Agregar cliente</h5>
@@ -309,8 +225,7 @@
                 </div>
             </div>
         </div>
-
-    </div>
+    </div> --}}
 
     @push('js')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
@@ -320,29 +235,29 @@
         <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
         <script>
             $(document).ready(function() {
-                var $el = $("#element").offcanvas({
-                    effect: "slide-in-over",
-                    overlay: true,
-                    origin: "right",
-                    coverage: "400px",
-                });
+                // var $el = $("#element").offcanvas({
+                //     effect: "slide-in-over",
+                //     overlay: true,
+                //     origin: "right",
+                //     coverage: "400px",
+                // });
 
-                var styles = {
-                    backgroundColor: "#fff",
-                };
+                // var styles = {
+                //     backgroundColor: "#fff",
+                // };
 
-                $(".offcanvas-element").css(styles);
+                // $(".offcanvas-element").css(styles);
 
-                $(".offcanvas-trigger").on("click.offcanvas", function() {
-                    $el.offcanvas("show");
-                });
+                // $(".offcanvas-trigger").on("click.offcanvas", function() {
+                //     $el.offcanvas("show");
+                // });
 
-                $("#txt_search").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#myList a").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
+                // $("#txt_search").on("keyup", function() {
+                //     var value = $(this).val().toLowerCase();
+                //     $("#myList a").filter(function() {
+                //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                //     });
+                // });
 
                 // let path = "{{ route('web.autocompletar') }}";
 
