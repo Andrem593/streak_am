@@ -8,6 +8,18 @@
   z-index: 100;
   padding-top: 57px
 }
+.closeCanvas{
+font-size: 2rem !important;
+height: 2.5rem;
+width: 2.5rem;
+border-radius: 50%;
+}
+.closeCanvas:hover{
+background-color: rgba(207, 207, 207, 0.5);
+
+
+transition: 0.1s ease;
+}
 #overley{
   position: fixed;
   z-index: 50;

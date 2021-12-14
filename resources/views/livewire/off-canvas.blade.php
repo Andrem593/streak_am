@@ -5,15 +5,28 @@
         Cliente</button>
     {{-- elemento off canvas --}}
     <div id="canvas" class="offcavas shadow {{ $open == true ? 'move-to-init' : 'move-to-left' }}">
-        <div class="offcanvas-header p-2">
-            <h5>AGREGAR CLIENTES</h5>
+        <div class="offcanvas-header p-3 border-bottom shadow-sm">
+            <div class="row">
+                <div class="col-8">
+                    <span class="text-muted" style="font-size: 12px">STREAK</span>
+                    <h5 class="fw-bolder">Agregar Clientes</h5>
+                </div>
+                <div class="col my-auto">
+                    <div class="float-right">
+                        <button type="button" wire:click="$set('open',false)" class="close closeCanvas" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="offcanvas-body p-2">
             <div class="row">
                 <div class="col">
                     <div class="input-group input-group-sm">
-                        <input id="txt_search" wire:model="buscar" class="form-control form-control-divbar" type="text"
-                            placeholder="Buscar cliente" aria-label="Search">
+                        <input id="txt_search" wire:model="buscar" class="form-control form-control-divbar"
+                            type="search" placeholder="Buscar cliente" aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-info" type="button">
                                 <i class="fas fa-search"></i>
@@ -25,11 +38,11 @@
             <div class="row py-1">
                 <div class="col">
                     <div class="list-group" id="myList" role="tablist">
-                        
                         @empty(!$clientes)
                             @foreach ($clientes as $cliente)
-                                <a class="list-group-item list-group-item-action p-2" href="#home" role="tab"><button
-                                        class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button><span
+                                <a class="list-group-item list-group-item-action p-2" id="{{ $cliente->id_cliente }}"
+                                    role="tab"><button class="btn btn-sm btn-primary"><i
+                                            class="fas fa-plus"></i></button><span
                                         class="pl-2">{{ $cliente->nombre }}</span></a>
                             @endforeach
                         @endempty
