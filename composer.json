@@ -6,11 +6,18 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "beyondcode/laravel-websockets": "dev-master",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "jeroennoten/laravel-adminlte": "^3.7",
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "laraveles/spanish": "^1.5",
+        "livewire/livewire": "^2.8",
+        "nesbot/carbon": "^2.55",
+        "pusher/pusher-php-server": "^7.0",
+        "twbs/bootstrap": "5.0.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
