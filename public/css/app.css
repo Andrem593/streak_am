@@ -19,6 +19,9 @@
   transform: translateX(400px);
   transition: 0.1s ease;
 }
+.d-none{
+  transition: 0.1s ease;
+}
 .move-to-init {
   transform: translateX(0px);
   transition: 0.1s ease;
