@@ -101,7 +101,7 @@
                                     <span class="badge badge-success">{{$gira->estado}}</span>
                                 </td>
                                 <td class="project-actions text-right">
-                                    <a class="btn btn-primary btn-sm" href="{{ route('show',$gira->id) }}">
+                                    <a class="btn btn-primary btn-sm" href="{{ route('fase.gira',$gira->id) }}">
                                         <i class="fas fa-folder">
                                         </i>
                                     </a>

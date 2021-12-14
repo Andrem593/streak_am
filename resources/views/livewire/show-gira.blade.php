@@ -1,15 +1,15 @@
-<x-plantilla>
+<div>
     @section('content_header')
         <div class="row d-flex justify-content-around">
             <div class="col"></div>
             <div class="col text-center">
-                <h2 class="fw-bold my-2">{{ $gira->nombre }}</h2>
+                <h2 class="fw-bold my-2">{{ $gira->nombre }}</h2> 
             </div>
             <div class="col my-auto text-right">
                 {{-- <a class="btn btn-primary btn-sm" href="#offCanvas" id="triggerButton"><i class="fas fa-plus mr-1"></i>Agregar
-                    Cliente</a> --}}
-                <button class="btn btn-primary btn-sm offcanvas-trigger"><i class="fas fa-plus mr-1"></i>Agregar
-                    Cliente</button>
+                        Cliente</a> --}}
+                <button class="btn btn-primary btn-sm offcanvas-trigger" ><i class="fas fa-plus mr-1"></i>Agregar
+                    Cliente</button>                
             </div>
 
 
@@ -40,14 +40,14 @@
             }
 
             /* 
-                                                                                .breadcrumb li:first-child {
-                                                                                    background: #fdf9cc;
-                                                                                }
-
-                                                                                .breadcrumb li:last-child {
-                                                                                    background: #fddc05;
-                                                                                    margin-right: 18px;
-                                                                                } */
+                                                                                            .breadcrumb li:first-child {
+                                                                                                background: #fdf9cc;
+                                                                                            }
+            
+                                                                                            .breadcrumb li:last-child {
+                                                                                                background: #fddc05;
+                                                                                                margin-right: 18px;
+                                                                                            } */
 
             .breadcrumb li:before {
                 display: none;
@@ -111,7 +111,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{ $gira->nombre }}</h3>
+                <h3 class="card-title">{{ $gira->nombre }} {{$clientes}}</h3>
             </div>
             <div class="card-body text-center p-0">
                 <div class="row p-2">
@@ -267,14 +267,15 @@
 
 
     {{-- <div id="element" >
-        <div class="row">
-            <div class="col">
-                <h3>Agregar cliente</h3>
+            <div class="row">
+                <div class="col">
+                    <h3>Agregar cliente</h3>
+                </div>
             </div>
-        </div>
-    </div> --}}
+        </div> --}}
 
-    <div id="element" data-offcanvas-duration="200" data-offcanvas-easing="ease" class="p-2" style="overflow-y: scroll; height: 100vh">
+    <div id="element" data-offcanvas-duration="200" data-offcanvas-easing="ease" class="p-2"
+        style="overflow-y: scroll; height: 100vh">
         <div class="row" style="padding-top: 57px">
             <div class="col">
                 <h5>Agregar cliente</h5>
@@ -297,11 +298,14 @@
         <div class="row py-1">
             <div class="col">
                 <div class="list-group" id="myList" role="tablist">
-                    @foreach ($clientes as $cliente)
-                        <a class="list-group-item list-group-item-action p-2" href="#home" role="tab"><button
-                                class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button><span
-                                class="pl-2">{{ $cliente->nombre }}</span></a>
-                    @endforeach
+                    
+                    @empty(!$clientes)
+                        @foreach ($clientes as $cliente)
+                            <a class="list-group-item list-group-item-action p-2" href="#home" role="tab"><button
+                                    class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button><span
+                                    class="pl-2">{{ $cliente->nombre }}</span></a>
+                        @endforeach
+                    @endempty
                 </div>
             </div>
         </div>
@@ -324,7 +328,7 @@
                 });
 
                 var styles = {
-                    backgroundColor: "#fff",                    
+                    backgroundColor: "#fff",
                 };
 
                 $(".offcanvas-element").css(styles);
@@ -381,4 +385,4 @@
         </script>
     @endpush
 
-</x-plantilla>
+</div>

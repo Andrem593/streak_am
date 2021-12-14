@@ -24,6 +24,7 @@ class webController extends Controller
         $clientes = DB::table('aw_clientes')->get();
         return view('giras.show', compact('gira', 'etapas', 'clientes'));
     }
+    
     public function create()
     {
         $gira = new Gira();
