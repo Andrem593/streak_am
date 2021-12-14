@@ -24,7 +24,7 @@
                         <ol class="breadcrumb">
                             @foreach ($etapas as $etapa)
                                 <li class="{{ $etapa->color }}"><a data-toggle="collapse"
-                                        href="#card{{ $etapa->id }}">{{ $etapa->nombre }}</a>
+                                        href="#card{{ $etapa->id }}" class="my-auto"> {{ $etapa->nombre }}</a>
                                 </li>
                             @endforeach
                         </ol>
