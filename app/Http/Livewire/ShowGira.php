@@ -3,13 +3,16 @@
 namespace App\Http\Livewire;
 
 use App\Models\Etapa;
+use App\Models\EtapaHasCliente;
 use App\Models\Gira;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class ShowGira extends Component
 {
-    public $id_gira, $clientes;
+    public $id_gira, $clientes, $collapse = false , $primeraEtapa;
+
+    protected $listeners = ['RenderizarTabla' => 'renderizarTabla'];
 
     public function mount($id_gira)
     {
@@ -20,12 +23,17 @@ class ShowGira extends Component
     {
         $gira = Gira::find($this->id_gira);
         $etapas = Etapa::where('id_gira', $this->id_gira)->get();
-        //$clientes = DB::table('aw_clientes')->get();
-        return view('livewire.show-gira', compact('gira', 'etapas'))->layout('components.plantilla');
-    }
+        $clientes_x_etapa = EtapaHasCliente::join('aw_clientes','aw_clientes.id_cliente','=','etapa_has_clientes.id_cliente')
+            ->join('etapas','etapas.id','=','etapa_has_clientes.id_etapa')
+            ->join('giras','giras.id','=','etapas.id_gira')->select('aw_clientes.*','etapas.id AS id_etapa')->where('giras.id',$this->id_gira)->get();
 
-    public function listar()
+        return view('livewire.show-gira', compact('gira', 'etapas','clientes_x_etapa'))->layout('components.plantilla');
+    }
+    public function renderizarTabla($collapse)
     {
-        // $this->clientes = DB::table('aw_clientes')->get();
+        $this->collapse = $collapse;
+        $etapa = Etapa::where('id_gira', $this->id_gira)->first();
+        $this->primeraEtapa = $etapa->id;
+        $this->render();
     }
 }

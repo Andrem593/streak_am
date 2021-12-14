@@ -7,9 +7,6 @@
             </div>
             <div class="col my-auto text-right">        
             </div>
-
-
-
         </div>
     @stop
 
@@ -18,7 +15,7 @@
             <div class="card-header">
                 <h3 class="card-title">{{ $gira->nombre }} {{$clientes}}</h3>
                 <div class="float-right">
-                    @livewire('off-canvas')
+                    @livewire('off-canvas',['id_gira'=>$id_gira] )
                 </div>
             </div>
             <div class="card-body text-center p-0">
@@ -50,113 +47,44 @@
                                         </h4>
                                     </div>
                                 </a>
-                                <div id="card{{ $etapa->id }}" class="collapse" data-parent="#accordion"
+                                <div id="card{{ $etapa->id }}" class="collapse {{$collapse == true && $etapa->id == $primeraEtapa  ? 'show' : ''}}" data-parent="#accordion"
                                     style="">
                                     <div class="card-body">
-                                        <table class="table table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 10px">&nbsp;</th>
-                                                    <th style="width: 10px">#</th>
-                                                    <th>Asignado a</th>
-                                                    <th>Zona</th>
-                                                    <th>Nombre</th>
-                                                    <th>Etapa</th>
-                                                    <th>Teléfono</th>
-                                                    <th>RUC</th>
-                                                    <th>Notas</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><a href="{{ route('fase.historial') }}"
-                                                            class="btn btn-sm btn-info"><i
-                                                                class="fas fa-edit"></i></a>
-                                                    </td>
-                                                    <td><input type="checkbox" name="prueba" id="prueba"></td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>
-                                                        <div class="progress progress-xs">
-                                                            <div class="progress-bar progress-bar-danger"
-                                                                style="width: 55%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="badge bg-danger">55%</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><button class="btn btn-sm btn-info"><i
-                                                                class="fas fa-edit"></i></button></td>
-                                                    <td><input type="checkbox" name="prueba" id="prueba"></td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>
-                                                        <div class="progress progress-xs">
-                                                            <div class="progress-bar progress-bar-danger"
-                                                                style="width: 55%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="badge bg-danger">55%</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><button class="btn btn-sm btn-info"><i
-                                                                class="fas fa-edit"></i></button></td>
-                                                    <td><input type="checkbox" name="prueba" id="prueba"></td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>
-                                                        <div class="progress progress-xs">
-                                                            <div class="progress-bar progress-bar-danger"
-                                                                style="width: 55%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="badge bg-danger">55%</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><button class="btn btn-sm btn-info"><i
-                                                                class="fas fa-edit"></i></button></td>
-                                                    <td><input type="checkbox" name="prueba" id="prueba"></td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>
-                                                        <div class="progress progress-xs">
-                                                            <div class="progress-bar progress-bar-danger"
-                                                                style="width: 55%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="badge bg-danger">55%</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><button class="btn btn-sm btn-info"><i
-                                                                class="fas fa-edit"></i></button></td>
-                                                    <td><input type="checkbox" name="prueba" id="prueba"></td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>Update software</td>
-                                                    <td>
-                                                        <div class="progress progress-xs">
-                                                            <div class="progress-bar progress-bar-danger"
-                                                                style="width: 55%"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="badge bg-danger">55%</span></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        @empty(!$clientes_x_etapa)
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 10px">&nbsp;</th>
+                                                        <th style="width: 10px">#</th>
+                                                        <th>Asignado a</th>
+                                                        <th>Zona</th>
+                                                        <th>Nombre</th>
+                                                        <th>Teléfono</th>
+                                                        <th>RUC</th>
+                                                        <th>Notas</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($clientes_x_etapa as $cliente)  
+                                                        @if ($etapa->id == $cliente->id_etapa)                                                            
+                                                            <tr>
+                                                                <td><a href="{{ route('fase.historial') }}"
+                                                                        class="btn btn-sm btn-info"><i
+                                                                            class="fas fa-edit"></i></a>
+                                                                </td>
+                                                                <td><input type="checkbox"/></td>
+                                                                <td>Usuario</td>
+                                                                <td>{{$cliente->ciudad}}</td>
+                                                                <td>{{$cliente->nombre}}</td>
+                                                                <td>{{$cliente->telefono}}</td>
+                                                                <td>{{$cliente->ruc}}</td>
+                                                                <td><span class="badge bg-danger">55%</span></td>
+                                                            </tr>
+                                                        @endif                                                      
+                                                    @endforeach                                                    
+                                                </tbody>
+                                            </table>
+                                        @endempty
                                     </div>
                                 </div>
                             </div>
