@@ -42,9 +42,12 @@
                             <div class="card card-{{ $color }} card-outline">
                                 <a class="d-block w-100 collapsed" data-toggle="collapse"
                                     href="#card{{ $etapa->id }}" aria-expanded="false">
-                                    <div class="card-header">
+                                    <div class="card-header my-auto">
                                         <h4 class="card-title w-100 text-{{ $color }}">
                                             {{ $etapa->nombre }}
+                                            @empty(!$etapa->total)                                                
+                                            <span class="badge badge-{{ $color }} right">{{ $etapa->total }}</span>
+                                            @endempty
                                         </h4>
                                     </div>
                                 </a>
