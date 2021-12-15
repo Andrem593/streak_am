@@ -86,9 +86,6 @@
                                                             <td>{{ $cliente->ruc }}</td>
                                                             <td><span class="badge bg-danger">55%</span></td>
                                                         </tr>
-                                                    @else
-                                                        <tr><td colspan="8"><h5>Sin clientes</h5></td></tr>
-                                                        
                                                     @endif
                                                 @endforeach
                                             </tbody>
