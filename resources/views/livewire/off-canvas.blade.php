@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col">
                     <div class="input-group input-group-sm">
-                        <input id="txt_search" wire:model="buscar" class="form-control form-control-divbar" type="text"
+                        <input id="txt_search" wire:model="buscar" class="form-control form-control-divbar" type="search"
                             placeholder="Buscar cliente" aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-info" type="button">
