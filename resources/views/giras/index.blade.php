@@ -3,7 +3,19 @@
         <div class="row d-flex justify-content-around">
             <div class="col"></div>
             <div class="col text-center">
-                <h2 class="fw-bold my-2">Modulo de Giras Streak</h2>
+                @php
+                    if (!empty($_GET['idUsuario'])) {
+                        $user = DB::table('aw_users')
+                            ->where('id_usuario', $_GET['idUsuario'])
+                            ->first();
+                        session(['id_usuario' => $_GET['idUsuario']]);
+                    }else {
+                        $user = DB::table('aw_users')
+                            ->where('id_usuario', session('id_usuario'))
+                            ->first();
+                    }
+                @endphp
+                <h2 class="fw-bold my-2">Bienvenido a STREAK {{ $user->nombre_usuario }}</h2>
             </div>
             <div class="col my-auto text-right">
                 <a class="btn btn-primary btn-sm" href="{{route('giras.create')}}"><i class="fas fa-plus mr-1"></i>Nueva Gira</a>
