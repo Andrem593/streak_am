@@ -22,13 +22,17 @@ class ShowGira extends Component
     public function render()
     {
         $gira = Gira::find($this->id_gira);
-        $etapas = Etapa::where('id_gira', $this->id_gira)->get();
+        $etapas = DB::table('etapa_has_clientes')->rightjoin('etapas', 'etapas.id', '=', 'etapa_has_clientes.id_etapa')
+        ->where('etapas.id_gira', $this->id_gira)
+        ->select('etapas.*', DB::raw('count(etapa_has_clientes.id_etapa) as total'))
+        ->groupBy('etapas.id')
+        ->get();
         $clientes_x_etapa = EtapaHasCliente::join('aw_clientes','aw_clientes.id_cliente','=','etapa_has_clientes.id_cliente')
             ->join('etapas','etapas.id','=','etapa_has_clientes.id_etapa')
             ->join('giras','giras.id','=','etapas.id_gira')->select('aw_clientes.*','etapas.id AS id_etapa')->where('giras.id',$this->id_gira)->get();
         $clientes_x_etapa_D = EtapaHasCliente::join('aw_clientes','aw_clientes.id_cliente','=','etapa_has_clientes.id_cliente')
             ->join('etapas','etapas.id','=','etapa_has_clientes.id_etapa')
-            ->join('giras','giras.id','=','etapas.id_gira')->select('etapas.id AS id_etapa')->where('giras.id',$this->id_gira)->distinct()->get();
+            ->join('giras','giras.id','=','etapas.id_gira')->select('etapas.id AS id_etapa')->where('giras.id',$this->id_gira)->distinct('etapas.id')->get();
         $i = 1;
         return view('livewire.show-gira', compact('gira', 'etapas','clientes_x_etapa','clientes_x_etapa_D','i'))->layout('components.plantilla');
     }
