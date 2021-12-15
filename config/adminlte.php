@@ -239,7 +239,7 @@ return [
             'dropdown_flabel' => 'Todos los recordatorios', // The label for the dropdown footer link (optional).
             'update_cfg'   => [
                 'url' => 'notifications/get',         // The url to periodically fetch new data (optional).
-                'period' => 30,                       // The update period for get new data (in seconds, optional).
+                'period' => 60,                       // The update period for get new data (in seconds, optional).
             ],
         ],
         [
