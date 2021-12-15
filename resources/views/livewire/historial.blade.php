@@ -66,29 +66,28 @@
                                                     <span class="bg-info">10 Feb. 2021</span>
                                                 </div>
                                                 @foreach ($comentarios as $val)
-                                                    <div>
-                                                        <i class="fas fa-comments bg-warning"></i>
-                                                        <div class="timeline-item">
-                                                            <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
-                                                            <h3 class="timeline-header"><a href="#">{{$val->nombre_usuario}} </a> comento en {{$val->nombre_etapa}} </h3>
-                                                            <div class="timeline-body">
-                                                                {{$val->comentario}}
+                                                    @if ($val->tipo == 'comentario')                                                        
+                                                        <div>
+                                                            <i class="fas fa-comments bg-warning"></i>
+                                                            <div class="timeline-item">
+                                                                <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
+                                                                <h3 class="timeline-header"><a href="#">{{$val->nombre_usuario}} </a> comento en {{$val->nombre_etapa}} </h3>
+                                                                <div class="timeline-body">
+                                                                    {{$val->comentario}}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    @else
+                                                        <div>
+                                                            <i class="fas fa-user bg-green"></i>
+                                                            <div class="timeline-item">
+                                                                <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
+                                                                <h3 class="timeline-header no-border"><a href="#">{{$val->nombre_usuario}}</a>
+                                                                    {{$val->comentario}} <span class="badge {{$val->color}}">{{$val->nombre_etapa}}</span></h3>
+                                                            </div>
+                                                        </div>
+                                                    @endif
                                                 @endforeach
-                                                <!-- timeline item -->
-                                                <div>
-                                                    <i class="fas fa-user bg-green"></i>
-                                                    <div class="timeline-item">
-                                                        <span class="time"><i class="fas fa-clock"></i> 5 mins
-                                                            ago</span>
-                                                        <h3 class="timeline-header no-border"><a href="#">Sarah Young</a>
-                                                            accepted
-                                                            your friend request</h3>
-                                                    </div>
-                                                </div>
-                                                <!-- END timeline item -->
                                                 <div>
                                                     <i class="fas fa-clock bg-gray"></i>
                                                 </div>
@@ -123,8 +122,8 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleSelectBorderWidth2">Modificar la Etapa Actual</label>
-                                <select wire:change="cambiarEtapa({{$etapa_actual}})" wire:model='etapa_actual' class="custom-select form-control-border border-width-2">
+                                <label>Modificar la Etapa Actual</label>
+                                <select wire:change="cambiarEtapa" wire:model='etapa_actual' class="custom-select form-control-border border-width-2 border-info">
                                     @foreach ($etapas_gira as $etapa )                                       
                                         <option value="{{$etapa->id}}">{{$etapa->nombre}}</option>                                        
                                     @endforeach

@@ -26,16 +26,11 @@ class ShowGira extends Component
         $clientes_x_etapa = EtapaHasCliente::join('aw_clientes','aw_clientes.id_cliente','=','etapa_has_clientes.id_cliente')
             ->join('etapas','etapas.id','=','etapa_has_clientes.id_etapa')
             ->join('giras','giras.id','=','etapas.id_gira')->select('aw_clientes.*','etapas.id AS id_etapa')->where('giras.id',$this->id_gira)->get();
-<<<<<<< HEAD
-        $i = 1;        
-        return view('livewire.show-gira', compact('gira', 'etapas','clientes_x_etapa','i'))->layout('components.plantilla');
-=======
         $clientes_x_etapa_D = EtapaHasCliente::join('aw_clientes','aw_clientes.id_cliente','=','etapa_has_clientes.id_cliente')
             ->join('etapas','etapas.id','=','etapa_has_clientes.id_etapa')
             ->join('giras','giras.id','=','etapas.id_gira')->select('etapas.id AS id_etapa')->where('giras.id',$this->id_gira)->distinct()->get();
         $i = 1;
         return view('livewire.show-gira', compact('gira', 'etapas','clientes_x_etapa','clientes_x_etapa_D','i'))->layout('components.plantilla');
->>>>>>> 3ae4343b856f24f2d0a2d0d1aed9a97b8bfd6790
     }
     public function renderizarTabla($collapse)
     {
