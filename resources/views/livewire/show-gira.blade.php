@@ -34,6 +34,9 @@
 
                 <div class="row">
                     <div class="col-12" id="accordion">
+                        @php
+                           $flag = 0; 
+                        @endphp
                         @foreach ($etapas as $etapa)
                             @php
                                 $color = explode('-', $etapa->color);
@@ -56,44 +59,59 @@
                                     data-parent="#accordion" style="">
                                     <div class="card-body">
                                         @empty(!$clientes_x_etapa)
-                                        <table class="table table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 10px">&nbsp;</th>
-                                                    <th style="width: 10px">#</th>
-                                                    <th>Asignado a</th>
-                                                    <th>Zona</th>
-                                                    <th>Nombre</th>
-                                                    <th>Teléfono</th>
-                                                    <th>RUC</th>
-                                                    <th>Notas</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($clientes_x_etapa as $cliente)
-                                                    @if ($etapa->id == $cliente->id_etapa)
-                                                        <tr>
-                                                            <td><a href="{{ route('fase.historial',['id_cliente'=>$cliente->id_cliente,
-                                                                'id_etapa'=>$cliente->id_etapa,'id_gira'=>$id_gira] ) }}"
-                                                                    class="btn btn-sm btn-info"><i
-                                                                        class="fas fa-edit"></i></a>
-                                                            </td>
-                                                            <td><input type="checkbox" /></td>
-                                                            <td>Usuario</td>
-                                                            <td>{{ $cliente->ciudad }}</td>
-                                                            <td>{{ $cliente->nombre }}</td>
-                                                            <td>{{ $cliente->telefono }}</td>
-                                                            <td>{{ $cliente->ruc }}</td>
-                                                            <td><span class="badge bg-danger">55%</span></td>
-                                                        </tr>
-                                                    @endif
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                            @foreach ($clientes_x_etapa_D as $item)
+                                                @if ($item->id_etapa == $etapa->id)
+                                                @php
+                                                    $flag = 1;                                                    
+                                                @endphp
+                                                @endif
+                                            @endforeach
+                                            @if ($flag)
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 10px">&nbsp;</th>
+                                                        <th style="width: 10px">#</th>
+                                                        <th>Asignado a</th>
+                                                        <th>Zona</th>
+                                                        <th>Nombre</th>
+                                                        <th>Teléfono</th>
+                                                        <th>RUC</th>
+                                                        <th>Notas</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($clientes_x_etapa as $cliente)
+                                                        @if ($etapa->id == $cliente->id_etapa)
+                                                            <tr>
+                                                                <td><a href="{{ route('fase.historial',['id_cliente'=>$cliente->id_cliente,
+                                                                    'id_etapa'=>$cliente->id_etapa,'id_gira'=>$id_gira] ) }}"
+                                                                        class="btn btn-sm btn-info"><i
+                                                                            class="fas fa-edit"></i></a>
+                                                                </td>
+                                                                <td><input type="checkbox" /></td>
+                                                                <td>Usuario</td>
+                                                                <td>{{ $cliente->ciudad }}</td>
+                                                                <td>{{ $cliente->nombre }}</td>
+                                                                <td>{{ $cliente->telefono }}</td>
+                                                                <td>{{ $cliente->ruc }}</td>
+                                                                <td><span class="badge bg-danger">55%</span></td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                                
+                                            @else
+                                                <h6>Sin Clientes</h6>
+                                            @endif
                                         @endempty
                                     </div>
                                 </div>
                             </div>
+                            @php                                
+                                $flag = 0;
+                            @endphp
                         @endforeach
                     </div>
                 </div>
