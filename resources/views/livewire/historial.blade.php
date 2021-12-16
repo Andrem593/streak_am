@@ -61,33 +61,35 @@
                                     <div class="col-md-12">
                                         <!-- The time line -->
                                         <div class="timeline">
-                                            @if ($comentarios->count() > 0)                                                
-                                                <div class="time-label">
-                                                    <span class="bg-info">10 Feb. 2021</span>
-                                                </div>
-                                                @foreach ($comentarios as $val)
-                                                    @if ($val->tipo == 'comentario')                                                        
-                                                        <div>
-                                                            <i class="fas fa-comments bg-warning"></i>
-                                                            <div class="timeline-item">
-                                                                <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
-                                                                <h3 class="timeline-header"><a href="#">{{$val->nombre_usuario}} </a> comento en {{$val->nombre_etapa}} </h3>
-                                                                <div class="timeline-body">
-                                                                    {{$val->comentario}}
+                                            @if ($comentarios->count() > 0)
+                                                @foreach ($comentDay as $key => $item )                                                    
+                                                    <div class="time-label">
+                                                        <span class="bg-info">{{$key}}</span>
+                                                    </div>                                                                                           
+                                                    @foreach ($item as $val)
+                                                        @if ($val->tipo == 'comentario')                                                        
+                                                            <div>
+                                                                <i class="fas fa-comments bg-warning"></i>
+                                                                <div class="timeline-item">
+                                                                    <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
+                                                                    <h3 class="timeline-header"><a href="#">{{$val->nombre_usuario}} </a> comento en {{$val->nombre_etapa}} </h3>
+                                                                    <div class="timeline-body">
+                                                                        {{$val->comentario}}
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    @else
-                                                        <div>
-                                                            <i class="fas fa-user bg-green"></i>
-                                                            <div class="timeline-item">
-                                                                <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
-                                                                <h3 class="timeline-header no-border"><a href="#">{{$val->nombre_usuario}}</a>
-                                                                    {{$val->comentario}} <span class="badge {{$val->color}}">{{$val->nombre_etapa}}</span></h3>
+                                                        @else
+                                                            <div>
+                                                                <i class="fas fa-user bg-green"></i>
+                                                                <div class="timeline-item">
+                                                                    <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
+                                                                    <h3 class="timeline-header no-border"><a href="#">{{$val->nombre_usuario}}</a>
+                                                                        {{$val->comentario}} <span class="badge {{$val->color}}">{{$val->nombre_etapa}}</span></h3>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    @endif
-                                                @endforeach
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach     
                                                 <div>
                                                     <i class="fas fa-clock bg-gray"></i>
                                                 </div>

@@ -6,6 +6,7 @@ use App\Models\Comentario;
 use App\Models\Etapa;
 use App\Models\EtapaHasCliente;
 use App\Models\Gira;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -32,9 +33,13 @@ class Historial extends Component
         ->join('etapas','etapas.id','=','comentarios.id_etapa')
         ->select('comentarios.*','aw_users.nombre_usuario','etapas.nombre as nombre_etapa','etapas.color')        
         ->OrderBy('id','DESC')->get();
+        $comentDay = $comment->groupBy(function ($item) {
+            return $item->created_at->format('Y-m-d');
+        });
+        
         $usuario = DB::table('aw_users')->where('id_usuario',session('id_usuario'))->first('nombre_usuario');
         $this->comentarios = $comment;
-        return view('livewire.historial',compact('cliente','usuario','gira','etapas_gira'))->layout('components.plantilla');
+        return view('livewire.historial',compact('cliente','usuario','gira','etapas_gira','comentDay'))->layout('components.plantilla');
     }
     public function aggComentario()
     {
