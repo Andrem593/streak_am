@@ -15,7 +15,6 @@ class webController extends Controller
         $giras = Gira::all();
         $i = 1;
         return view('giras.index', compact('giras', 'i'));
-        // return view('welcome');
     }
     public function show($id_gira)
     {

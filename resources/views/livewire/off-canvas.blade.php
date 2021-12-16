@@ -40,8 +40,8 @@
                     <div class="list-group" id="myList" role="tablist">
                         @empty(!$clientes)
                             @foreach ($clientes as $cliente)
-                                <a class="list-group-item list-group-item-action p-2" wire:click="addCliente({{ $cliente->id_cliente }})"
-                                    role="tab"><button class="btn btn-sm btn-primary"><i
+                                <a class="list-group-item list-group-item-action p-2" role="tab">
+                                    <button class="btn btn-sm btn-primary" wire:loading.attr="disabled" wire:click="addCliente({{ $cliente->id_cliente }})"><i
                                             class="fas fa-plus"></i></button><span
                                         class="pl-2">{{ $cliente->nombre }}</span></a>
                             @endforeach
