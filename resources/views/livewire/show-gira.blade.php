@@ -90,7 +90,7 @@
                                                         @foreach ($clientes_x_etapa as $cliente)
                                                             @if ($etapa->id == $cliente->id_etapa)
                                                                 <tr>
-                                                                    <td><a href="{{                                                                     <td><a href="route('fase.historial', ['id_cliente' => $cliente->id_cliente, 'id_etapa' => $cliente->id_etapa, 'id_gira' => $id_gira]) }}"
+                                                                    <td><a href="{{route('fase.historial', ['id_cliente' => $cliente->id_cliente, 'id_etapa' => $cliente->id_etapa, 'id_gira' => $id_gira]) }}"
                                                                             class="btn btn-sm btn-info"><i
                                                                                 class="fas fa-edit"></i></a>
                                                                     </td>
