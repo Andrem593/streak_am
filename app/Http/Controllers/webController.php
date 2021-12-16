@@ -42,10 +42,11 @@ class webController extends Controller
             'descripcion' => $request->descripcion,
             'estado' => $request->estado,
         ]);
-        foreach ($request->etapas as $val) {
+        foreach ($request->etapas as $i =>$val) {
             Etapa::create([
                 'nombre' => $val[0],
                 'color' => $val[1],
+                'orden' => $i,
                 'id_gira' => $gira->id,
             ]);
         }
@@ -62,13 +63,19 @@ class webController extends Controller
             'descripcion'=>$request->descripcion,
             'estado'=>$request->estado,
         ]);
-        Etapa::where('id_gira',$request->id)->delete();
-        foreach ($request->etapas as $val) {
-            Etapa::create([
-                'nombre' => $val[0],
-                'color' => $val[1],
-                'id_gira' => $request->id,
-            ]);
+        foreach ($request->etapas as $i => $val) {
+            if ($val[2] != '') {
+                Etapa::where('id',$val[2])->update([
+                    'orden'=>$i
+                ]);
+            }else{
+                Etapa::create([
+                    'nombre'=>$val[0],
+                    'color'=>$val[1],
+                    'orden'=>$i,
+                    'id_gira'=>$request->id,
+                ]);
+            }
         }
         return 'success';
     }
@@ -76,7 +83,7 @@ class webController extends Controller
     {
         $gira = Gira::find($id_gira);
         $estados = ['Activa','Inactiva','Cancelada','Completada'];
-        $etapas = Etapa::where('id_gira',$id_gira)->get();
+        $etapas = Etapa::where('id_gira',$id_gira)->orderBy('orden')->get();
         return view('giras.edit', compact('gira','estados','etapas'));
     }
 

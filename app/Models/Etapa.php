@@ -11,5 +11,6 @@ class Etapa extends Model
         'nombre',
         'color',
         'id_gira',
+        'orden',
     ];
 }

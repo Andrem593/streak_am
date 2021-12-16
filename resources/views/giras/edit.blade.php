@@ -66,7 +66,7 @@
                         <!-- the events -->
                         <div id="sortable">
                             @foreach ($etapas as $etapa)
-                                <div class="external-event {{$etapa->color}}">{{$etapa->nombre}} <div class="float-right">
+                                <div id="{{$etapa->id}}" class="external-event {{$etapa->color}}">{{$etapa->nombre}} <div class="float-right">
                                     <a class="delete" href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div>
                                 </div>
                             @endforeach
@@ -137,7 +137,7 @@
                     color = color[1];
                     if ($('#nombre_fase').val() != '') {
                         $('#sortable').append(
-                            '<div class="external-event bg-' + color + '">' + $('#nombre_fase').val() +
+                            '<div id="" class="external-event bg-' + color + '">' + $('#nombre_fase').val() +
                             ' <div class="float-right"><a class="delete" href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div></div>'
                         )
                     }
@@ -155,9 +155,10 @@
                 $.each(elemento,function (i,v) {
                     let nombre = $(this).text().trim()
                     let color = $(this).attr('class')
+                    let id = $(this).attr('id');
                     color = color.split(' ')
                     color = color[1]
-                    etapas.push([nombre,color])
+                    etapas.push([nombre,color,id])
                 })
                 data = {
                     id:$('#id_gira').val(),
@@ -166,11 +167,12 @@
                     estado:$('#estado').val(),
                     etapas:etapas,
                 }
+
                 $.post({
                         url: '{{route("edit.gira")}}',
                         data: data,
                         success: function(response) {
-                            window.location="{{route('giras')}}?edit=true";
+                            window.location="{{redirect()->back()->getTargetUrl()}}?edit=true";
                         }
                     })
             })

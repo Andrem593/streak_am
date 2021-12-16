@@ -27,6 +27,7 @@ class ShowGira extends Component
         ->where('etapas.id_gira', $this->id_gira)
         ->select('etapas.*', DB::raw('count(etapa_has_clientes.id_etapa) as total'))
         ->groupBy('etapas.id')
+        ->orderBy('orden')
         ->get();
         $clientes_x_etapa = EtapaHasCliente::join('aw_clientes','aw_clientes.id_cliente','=','etapa_has_clientes.id_cliente')
             ->join('etapas','etapas.id','=','etapa_has_clientes.id_etapa')

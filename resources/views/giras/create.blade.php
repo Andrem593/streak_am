@@ -177,6 +177,7 @@
                     etapas:etapas,
                 }
 
+
                 $.post({
                         url: '{{route("new.gira")}}',
                         data: data,
