@@ -22,7 +22,7 @@
             </div>
 
         </div>
-        <div class="offcanvas-body p-2" style="overflow-y: scroll;height: 100vh;">
+        <div class="offcanvas-body p-2">
             <div class="row">
                 <div class="col">
                     <div class="input-group input-group-sm">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row py-1">
+            <div class="row py-1" style="overflow-y: scroll; height: 100vh;">
                 <div class="col">
                     <div class="list-group" id="myList" role="tablist">
                         @empty(!$clientes)
