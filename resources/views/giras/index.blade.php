@@ -21,7 +21,7 @@
                 <a class="btn btn-primary btn-sm" href="{{route('giras.create')}}"><i class="fas fa-plus mr-1"></i>Nueva Gira</a>
             </div>
         </div>
-    @stop    
+    @stop
     <div class="container">
         @if (!empty($_GET['message']))
             <div class="alert alert-success">
@@ -65,7 +65,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($giras as $gira)                        
+                        @foreach ($giras as $gira)
                             <tr>
                                 <td>
                                     {{$i++}}
@@ -76,7 +76,7 @@
                                     </a>
                                     <br>
                                     <small>
-                                        Creada {{$gira->created_at}}
+                                        Creada {{$gira->created_at->diffForHumans()}}
                                     </small>
                                 </td>
                                 <td>
@@ -127,7 +127,7 @@
                                     </a>
                                 </td>
                             </tr>
-                        @endforeach                        
+                        @endforeach
                     </tbody>
                 </table>
             </div>
