@@ -21,11 +21,15 @@
                 <a class="btn btn-primary btn-sm" href="{{route('giras.create')}}"><i class="fas fa-plus mr-1"></i>Nueva Gira</a>
             </div>
         </div>
-    @stop    
+    @stop
     <div class="container">
         @if (!empty($_GET['message']))
             <div class="alert alert-success">
                 <p>GIRA CREADA CORRECTAMENTE</p>
+            </div>
+        @elseif (!empty($_GET['edit']))
+            <div class="alert alert-info">
+                <p>GIRA EDITADA CORRECTAMENTE</p>
             </div>
         @endif
         <div class="card">
@@ -65,7 +69,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($giras as $gira)                        
+                        @foreach ($giras as $gira)
                             <tr>
                                 <td>
                                     {{$i++}}
@@ -76,7 +80,7 @@
                                     </a>
                                     <br>
                                     <small>
-                                        Creada {{$gira->created_at}}
+                                        Creada {{$gira->created_at->diffForHumans()}}
                                     </small>
                                 </td>
                                 <td>
@@ -117,7 +121,7 @@
                                         <i class="fas fa-folder">
                                         </i>
                                     </a>
-                                    <a class="btn btn-info btn-sm" href="#">
+                                    <a class="btn btn-info btn-sm" href="{{route('giras.edit',$gira->id)}}">
                                         <i class="fas fa-pencil-alt">
                                         </i>
                                     </a>
@@ -127,7 +131,7 @@
                                     </a>
                                 </td>
                             </tr>
-                        @endforeach                        
+                        @endforeach
                     </tbody>
                 </table>
             </div>

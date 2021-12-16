@@ -194,21 +194,28 @@
                         'tarea': $('#tarea').val(),
                         'horario': fecha,
                     }
-                    $.post({
-                        url: '{{ route('crearTarea') }}',
-                        data: data,
-                        beforeSend: function() {},
-                        success: function(response) {
-                            if (response.trim() == 'success') {
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: 'Tarea Creada'
-                                })
-                                $('#horario').val('')
-                                $('#tarea').val('')
+                    if($('#tarea').val() != '' &&  $('#horario').val() != '' ){
+                        $.post({
+                            url: '{{ route('crearTarea') }}',
+                            data: data,
+                            beforeSend: function() {},
+                            success: function(response) {
+                                if (response.trim() == 'success') {
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'Tarea Creada'
+                                    })
+                                    $('#horario').val('')
+                                    $('#tarea').val('')
+                                }
                             }
-                        }
-                    })
+                        })
+                    }else{
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Verifique los campos vacios'
+                        })
+                    }
                 })
 
             </script>

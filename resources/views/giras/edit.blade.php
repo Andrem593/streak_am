@@ -3,7 +3,7 @@
         <div class="row d-flex justify-content-around">
             <div class="col"></div>
             <div class="col text-center">
-                <h2 class="fw-bold my-2">Modulo de Giras Streak</h2>
+                <h2 class="fw-bold my-2">EDITAR {{$gira->nombre}} </h2>
             </div>
             <div class="col my-auto text-right">
                 <a class="btn btn-secondary btn-sm" href="{{ route('giras') }}"><i
@@ -16,7 +16,7 @@
             <div class="col-md-6">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Crear Gira</h3>
+                        <h3 class="card-title">Datos de Gira</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -27,7 +27,8 @@
                     <div class="card-body" style="display: block;">
                         <div class="form-group">
                             <label for="nombre">Nombre de Gira</label>
-                            <input type="text" id="nombre" class="form-control" required>
+                            <input type="text" id="nombre" value="{{$gira->nombre}}" class="form-control" required>
+                            <input type="hidden" id="id_gira" value="{{$gira->id}}">
                         </div>
                         <div class="form-group">
                             <label for="descripcion">Descripcion</label>
@@ -36,14 +37,15 @@
                         <div class="form-group">
                             <label for="inputStatus">Estado</label>
                             <select id="estado" class="form-control custom-select" required>
-                                <option selected="" value='' disabled="">Selecciona</option>
-                                <option value="ACTIVA">Activa</option>
-                                <option value="INACTIVA">Inactiva</option>
-                                <option value="CANCELADA">Cancelada</option>
-                                <option value="COMPLETADA">Completada</option>
+                                <option value="{{strtoupper($gira->estado)}}">{{ucfirst(strtolower($gira->estado))}}</option>
+                                @foreach ($estados as $estado )
+                                    @if (strtoupper($gira->estado) != strtoupper($estado))
+                                        <option value="{{strtoupper($estado)}}">{{$estado}}</option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
-                        <button class="btn btn-primary w-100" id="btn-crear">GUARDAR</button>
+                        <button class="btn btn-primary w-100" id="btn-editar">EDITAR</button>
 
                     </div>
                     <!-- /.card-body -->
@@ -63,23 +65,11 @@
                     <div class="card-body">
                         <!-- the events -->
                         <div id="sortable">
-                            <div class="external-event bg-success">B/D CLIENTES <div class="float-right"><a
-                                        class="delete" href="#" style="color: #fff"><i class="fas fa-trash"></i></a>
+                            @foreach ($etapas as $etapa)
+                                <div class="external-event {{$etapa->color}}">{{$etapa->nombre}} <div class="float-right">
+                                    <a class="delete" href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div>
                                 </div>
-                            </div>
-                            <div class="external-event bg-warning">POR VISITAR <div class="float-right"><a
-                                        class="delete" href="#" style="color: #fff"><i class="fas fa-trash"></i></a>
-                                </div>
-                            </div>
-                            <div class="external-event bg-info">POR LLAMAR <div class="float-right"><a class="delete"
-                                        href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div>
-                            </div>
-                            <div class="external-event bg-primary">VISITAS <div class="float-right"><a class="delete"
-                                        href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div>
-                            </div>
-                            <div class="external-event bg-danger">LLAMADAS <div class="float-right"><a class="delete"
-                                        href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -126,7 +116,6 @@
             $(function() {
                 $("#sortable").sortable();
             });
-
         </script>
         <script>
             $.ajaxSetup({
@@ -160,7 +149,7 @@
                     elemento.remove();
                 })
             });
-            $(document).on('click','#btn-crear',function (e) {
+            $(document).on('click','#btn-editar',function (e) {
                 let etapas = [];
                 let elemento = $('#sortable .external-event');
                 $.each(elemento,function (i,v) {
@@ -171,19 +160,17 @@
                     etapas.push([nombre,color])
                 })
                 data = {
+                    id:$('#id_gira').val(),
                     nombre:$('#nombre').val(),
                     descripcion:$('#descripcion').val(),
                     estado:$('#estado').val(),
                     etapas:etapas,
                 }
-
                 $.post({
-                        url: '{{route("new.gira")}}',
+                        url: '{{route("edit.gira")}}',
                         data: data,
-                        beforeSend: function() {
-                        },
                         success: function(response) {
-                            window.location="{{route('giras')}}?message=true";
+                            window.location="{{route('giras')}}?edit=true";
                         }
                     })
             })
