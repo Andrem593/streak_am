@@ -10,13 +10,14 @@ use Livewire\Component;
 
 class ShowGira extends Component
 {
-    public $id_gira, $clientes, $collapse = false , $primeraEtapa;
+    public $id_gira, $clientes, $collapse = false , $primeraEtapa, $selectedClientes = [], $selectAll = false, $options = false;
 
     protected $listeners = ['RenderizarTabla' => 'renderizarTabla'];
 
     public function mount($id_gira)
     {
         $this->id_gira = $id_gira;
+        $this->selectedClientes = collect();
     }
 
     public function render()
