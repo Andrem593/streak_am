@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tarea;
 use Carbon\Carbon;
+use finfo;
 
 class webController extends Controller
 {
@@ -49,6 +50,34 @@ class webController extends Controller
             ]);
         }
         return 'success';
+    }
+    public function editarGira(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|max:50|min:5',
+            'estado' => 'required',
+        ]);
+        Gira::where('id',$request->id)->update([
+            'nombre'=>$request->nombre,
+            'descripcion'=>$request->descripcion,
+            'estado'=>$request->estado,
+        ]);
+        Etapa::where('id_gira',$request->id)->delete();
+        foreach ($request->etapas as $val) {
+            Etapa::create([
+                'nombre' => $val[0],
+                'color' => $val[1],
+                'id_gira' => $request->id,
+            ]);
+        }
+        return 'success';
+    }
+    public function edit($id_gira)
+    {
+        $gira = Gira::find($id_gira);
+        $estados = ['Activa','Inactiva','Cancelada','Completada'];
+        $etapas = Etapa::where('id_gira',$id_gira)->get();
+        return view('giras.edit', compact('gira','estados','etapas'));
     }
 
     public function autocompletar(Request $request)

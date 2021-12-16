@@ -27,6 +27,10 @@
             <div class="alert alert-success">
                 <p>GIRA CREADA CORRECTAMENTE</p>
             </div>
+        @elseif (!empty($_GET['edit']))
+            <div class="alert alert-info">
+                <p>GIRA EDITADA CORRECTAMENTE</p>
+            </div>
         @endif
         <div class="card">
             <div class="card-header">
@@ -117,7 +121,7 @@
                                         <i class="fas fa-folder">
                                         </i>
                                     </a>
-                                    <a class="btn btn-info btn-sm" href="#">
+                                    <a class="btn btn-info btn-sm" href="{{route('giras.edit',$gira->id)}}">
                                         <i class="fas fa-pencil-alt">
                                         </i>
                                     </a>
