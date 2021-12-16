@@ -19,7 +19,7 @@ class OffCanvas extends Component
     }
     public function addCliente($cliente)
     {
-        $etapa = Etapa::where('id_gira',$this->id_gira)->first();
+        $etapa = Etapa::where('id_gira',$this->id_gira)->orderBy('orden')->first();
         EtapaHasCliente::create([
             'id_etapa'=>$etapa->id,
             'id_cliente'=>$cliente,

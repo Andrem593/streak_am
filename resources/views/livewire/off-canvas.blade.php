@@ -1,8 +1,7 @@
 <div>
     {{-- elemento a mostrar boton abrir off canvas --}}
     <button class="btn btn-primary btn-sm offcanvas-trigger" wire:click="$set('open',true)"><i
-            class="fas fa-plus mr-1"></i>Agregar
-        Cliente</button>
+            class="fas fa-user-plus"></i></button>
     {{-- elemento off canvas --}}
     <div id="canvas" class="offcavas shadow {{ $open == true ? 'move-to-init' : 'move-to-left' }}">
         <div class="offcanvas-header p-3 border-bottom shadow-sm">

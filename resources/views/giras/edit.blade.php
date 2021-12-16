@@ -6,7 +6,7 @@
                 <h2 class="fw-bold my-2">EDITAR {{$gira->nombre}} </h2>
             </div>
             <div class="col my-auto text-right">
-                <a class="btn btn-secondary btn-sm" href="{{ route('giras') }}"><i
+                <a class="btn btn-secondary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
                         class="fas fa-arrow-left mr-1"></i>Regresar</a>
             </div>
         </div>
@@ -143,10 +143,35 @@
                     }
                 })
                 $(document).on('click','#sortable .delete',function (){
+                    let id = $(this).parents().parents().attr('id');
                     let elemento = $(this).parents().parents();
-                    elemento = elemento[0];
-                    console.log(elemento)
-                    elemento.remove();
+                    let data = {
+                        id:id,
+                    }
+                    if (id != '') {
+                        $.post({
+                            url: '{{route("etapa.validacionClientes")}}',
+                            data: data,
+                            success: function(response) {
+                                if (response == 0) {
+                                    elemento = elemento[0];
+                                    elemento.remove();
+                                }else{
+                                    Swal.fire({
+                                        title:'NO se puede borrar Etapa !',
+                                        text:'Tienes '+response+' clientes registrado en la etapa, debes de moverlos para poder eliminar la etapa actual',
+                                        icon:'error',
+                                        confirmButtonColor: '#d33',
+                                    })
+                                }
+                            }
+                        })
+                    }else{
+                        elemento = elemento[0];
+                        elemento.remove();
+                    }
+
+
                 })
             });
             $(document).on('click','#btn-editar',function (e) {

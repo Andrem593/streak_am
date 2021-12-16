@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Etapa;
+use App\Models\EtapaHasCliente;
 use App\Models\Gira;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tarea;
 use Carbon\Carbon;
+use Etapas;
 use finfo;
 
 class webController extends Controller
@@ -188,5 +190,14 @@ class webController extends Controller
         ]);
 
         return 'success';
+    }
+    public function validacionClientesEtapa(Request $request)
+    {
+        $etapa = EtapaHasCliente::where('id_etapa',$request->id)->get();
+        if ($etapa->count() == 0 ) {
+            Etapa::where('id',$request->id)->delete();
+        }
+        return $etapa->count();
+
     }
 }

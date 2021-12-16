@@ -16,8 +16,11 @@
                 <div class="float-left{{ $options ? '' : ' d-none' }}">
                     Elementos seleccionados: {{count($selectedClientes)}}
                 </div>
-                <div class="float-right">
-                    @livewire('off-canvas',['id_gira'=>$id_gira] )
+                <div class="float-right row">
+                    <a href="{{route('giras.edit',$id_gira)}}" class="btn btn-info btn-sm mr-2">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    @livewire('off-canvas',['id_gira'=>$id_gira])
                 </div>
             </div>
             <div class="card-body text-center p-0">
@@ -36,8 +39,8 @@
 
                 <div class="row">
                     <div class="col-12" id="accordion">
-                        @php                            
-                           $flag = 0; 
+                        @php
+                           $flag = 0;
                         @endphp
                         @foreach ($etapas as $etapa)
                             @php
@@ -50,7 +53,7 @@
                                     <div class="card-header my-auto">
                                         <h4 class="card-title w-100 text-{{ $color }}">
                                             {{ $etapa->nombre }}
-                                            @empty(!$etapa->total)                                                
+                                            @empty(!$etapa->total)
                                             <span class="badge badge-{{ $color }} right">{{ $etapa->total }}</span>
                                             @endempty
                                         </h4>
@@ -64,7 +67,7 @@
                                             @foreach ($clientes_x_etapa_D as $item)
                                                 @if ($item->id_etapa == $etapa->id)
                                                 @php
-                                                    $flag = 1;                                                    
+                                                    $flag = 1;
                                                 @endphp
                                                 @endif
                                             @endforeach
@@ -103,7 +106,7 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
-                                                
+
                                             @else
                                                 <h6>Sin Clientes</h6>
                                             @endif
@@ -111,7 +114,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @php                                
+                            @php
                                 $flag = 0;
                             @endphp
                         @endforeach

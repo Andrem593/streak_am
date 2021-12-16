@@ -86,19 +86,19 @@
                                 <td>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
-                                            <img alt="Avatar" class="table-avatar"
+                                            <img alt="Avatar" class="table-avatar" title="{{$user->nombre_usuario}}"
                                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPgS1h_HJXlk30XL589iPYN7jbjLdXRYKxA&usqp=CAU">
                                         </li>
                                         <li class="list-inline-item">
-                                            <img alt="Avatar" class="table-avatar"
+                                            <img alt="Avatar" class="table-avatar" title="{{$user->nombre_usuario}}"
                                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPgS1h_HJXlk30XL589iPYN7jbjLdXRYKxA&usqp=CAU">
                                         </li>
                                         <li class="list-inline-item">
-                                            <img alt="Avatar" class="table-avatar"
+                                            <img alt="Avatar" class="table-avatar" title="{{$user->nombre_usuario}}"
                                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPgS1h_HJXlk30XL589iPYN7jbjLdXRYKxA&usqp=CAU">
                                         </li>
                                         <li class="list-inline-item">
-                                            <img alt="Avatar" class="table-avatar"
+                                            <img alt="Avatar" class="table-avatar" title="{{$user->nombre_usuario}}"
                                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPgS1h_HJXlk30XL589iPYN7jbjLdXRYKxA&usqp=CAU">
                                         </li>
                                     </ul>
