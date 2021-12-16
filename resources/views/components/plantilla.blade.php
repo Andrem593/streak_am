@@ -45,7 +45,7 @@
                 },
             });
             $.get({
-                url: "leerNotificacion/"+id,
+                url: "{{url('leerNotificacion')}}/"+id,
                 success: function(response) {
                     if (response.trim() == 'success') {
                         Toast.fire({
