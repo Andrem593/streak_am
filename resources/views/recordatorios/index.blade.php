@@ -12,9 +12,9 @@
         </div>
     @stop
     <div>
-        
+
         <div class="card shadow p-2">
-            @if ($tareas->count() > 0)                
+            @if ($tareas->count() > 0)
                 <div class="card-header">
                     <h3 class="card-title">Tienes Actualemente {{$tareas->count()}} recordatorios pendientes</h3>
 
@@ -27,9 +27,9 @@
                 <div class="card-body pb-3">
                     <div class="list-group">
 
-                    
+
                         @foreach ($tareas as $tarea)
-                            <a href="#" class="notification-element">                                                    
+                            <a href="#" class="notification-element">
                                 <div class="card__message row border-bottom py-3">
                                     <div class="col-2 col-md-1 my-auto  text-center">
                                         <svg width="2rem" height="2rem" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,10 +49,33 @@
                                         <p class="mb-0">{{$tarea->tarea}}</p>
                                     </div>
                                 </div>
-                            </a> 
+                            </a>
                         @endforeach
                     </div>
                 </div>
+            @else
+            <div class="card-header">
+                <h3 class="card-title">Actualemente <b>NO</b> tienes recordatorios pendientes</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                </div>
+                <!-- /.card-tools -->
+            </div>
+            <div class="card-body pb-3">
+                <div class="list-group">
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="{{url('images/notificaciones.svg')}}" alt="sin notificaciones" width="100%">
+                        </div>
+                        <div class="col my-auto">
+                            <p class="text-muted" style="font-size: 2rem">Puedes crear recordatorios en el apartado de historial del clientes para empezar a tener notificaciones.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @endif
         </div>
     </div>

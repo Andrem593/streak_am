@@ -62,12 +62,12 @@
                                         <!-- The time line -->
                                         <div class="timeline">
                                             @if ($comentarios->count() > 0)
-                                                @foreach ($comentDay as $key => $item )                                                    
+                                                @foreach ($comentDay as $key => $item )
                                                     <div class="time-label">
                                                         <span class="bg-info">{{$key}}</span>
-                                                    </div>                                                                                           
+                                                    </div>
                                                     @foreach ($item as $val)
-                                                        @if ($val->tipo == 'comentario')                                                        
+                                                        @if ($val->tipo == 'comentario')
                                                             <div>
                                                                 <i class="fas fa-comments bg-warning"></i>
                                                                 <div class="timeline-item">
@@ -89,7 +89,7 @@
                                                             </div>
                                                         @endif
                                                     @endforeach
-                                                @endforeach     
+                                                @endforeach
                                                 <div>
                                                     <i class="fas fa-clock bg-gray"></i>
                                                 </div>
@@ -126,8 +126,8 @@
                             <div class="form-group">
                                 <label>Modificar la Etapa Actual</label>
                                 <select wire:change="cambiarEtapa" wire:model='etapa_actual' class="custom-select form-control-border border-width-2 border-info">
-                                    @foreach ($etapas_gira as $etapa )                                       
-                                        <option value="{{$etapa->id}}">{{$etapa->nombre}}</option>                                        
+                                    @foreach ($etapas_gira as $etapa )
+                                        <option value="{{$etapa->id}}">{{$etapa->nombre}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -152,7 +152,7 @@
                                 @section('plugins.TempusDominusBs4', true)
                                     @php
                                         $config = ['format' => 'DD/MM/YYYY HH:mm', 'minDate' => 'js:moment()', 'showClear' => true];
-                                        
+
                                     @endphp
                                     <x-adminlte-input-date id="horario" name="idLabel" :config="$config"
                                         placeholder="Escige una fecha..." label="Fecha y Hora">
@@ -176,23 +176,12 @@
         </div>
 
         @push('js')
-            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                 });
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                })
                 $('#guardar_recordatorio').click(function() {
                     let fecha = $('#horario').val() + ":00"
                     fecha = fecha.split(' ');

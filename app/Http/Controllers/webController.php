@@ -7,6 +7,7 @@ use App\Models\Gira;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tarea;
+use Carbon\Carbon;
 
 class webController extends Controller
 {
@@ -23,7 +24,7 @@ class webController extends Controller
         $clientes = DB::table('aw_clientes')->get();
         return view('giras.show', compact('gira', 'etapas', 'clientes'));
     }
-    
+
     public function create()
     {
         $gira = new Gira();
@@ -78,6 +79,7 @@ class webController extends Controller
     public function crearTarea(Request $request)
     {
         Tarea::create([
+            'id_usuario'=>session('id_usuario'),
             'tarea' => $request->tarea,
             'horario' => $request->horario
         ]);
@@ -85,7 +87,13 @@ class webController extends Controller
     }
     public function buscarNotificaciones()
     {
-        $tareas = Tarea::where('estado',1)->get();
+        $fecha_actual = Carbon::now();
+        $fecha_actual = $fecha_actual->toDateTimeString();
+        Tarea::where('horario','<=',$fecha_actual)->where('estado',1)->update([
+            'estado'=> 2
+        ]);
+        $tareas = Tarea::where('estado',2)->where('id_usuario',session('id_usuario'))
+        ->get();
         $notifications = [];
 
         foreach ($tareas as  $tarea) {
@@ -93,6 +101,7 @@ class webController extends Controller
                 'icon' => 'fas fa-fw fa-clock',
                 'text' => $tarea->tarea,
                 'time' => $tarea->created_at->diffForHumans(),
+                'id'   => $tarea->id,
             ]);
         };
 
@@ -111,7 +120,7 @@ class webController extends Controller
                    {$not['time']}
                  </span>";
 
-            $dropdownHtml .= "<a href='#' class='dropdown-item'>
+            $dropdownHtml .= "<a href='#' id='{$not['id']}' class='notify dropdown-item'>
                             <div class='card__message text-muted text-sm'>
                             {$icon}recordatorio pendiente
                             <p>{$not['text']}{$time}</p>
@@ -133,7 +142,15 @@ class webController extends Controller
         ];
     }
     public function notificaciones(){
-        $tareas = Tarea::where('estado',1)->get();        
+        $tareas = Tarea::where('estado',2)->where('id_usuario',session('id_usuario'))->get();
         return view('recordatorios.index' ,compact('tareas'));
+    }
+    public function marcarLeida($id_notificacion)
+    {
+        $tarea = Tarea::where('id',$id_notificacion)->update([
+            'estado'=>3,
+        ]);
+
+        return 'success';
     }
 }
