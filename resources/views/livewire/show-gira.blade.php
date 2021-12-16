@@ -13,7 +13,9 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{ $gira->nombre }} {{ $clientes }}</h3>
+                <div class="float-left{{ $options ? '' : ' d-none' }}">
+                    Elementos seleccionados: {{count($selectedClientes)}}
+                </div>
                 <div class="float-right">
                     @livewire('off-canvas',['id_gira'=>$id_gira] )
                 </div>
@@ -34,7 +36,7 @@
 
                 <div class="row">
                     <div class="col-12" id="accordion">
-                        @php
+                        @php                            
                            $flag = 0; 
                         @endphp
                         @foreach ($etapas as $etapa)
@@ -56,7 +58,7 @@
                                 </a>
                                 <div id="card{{ $etapa->id }}"
                                     class="collapse {{ $collapse == true && $etapa->id == $primeraEtapa ? 'show' : '' }}"
-                                    data-parent="#accordion" style="">
+                                    data-parent="#accordion" style="" wire:ignore.self>
                                     <div class="card-body">
                                         @empty(!$clientes_x_etapa)
                                             @foreach ($clientes_x_etapa_D as $item)
@@ -89,7 +91,7 @@
                                                                         class="btn btn-sm btn-info"><i
                                                                             class="fas fa-edit"></i></a>
                                                                 </td>
-                                                                <td><input type="checkbox" /></td>
+                                                                <td><input type="checkbox" wire:model="selectedClientes" value="{{ $cliente->id_cliente }}"></td>
                                                                 <td>Usuario</td>
                                                                 <td>{{ $cliente->ciudad }}</td>
                                                                 <td>{{ $cliente->nombre }}</td>

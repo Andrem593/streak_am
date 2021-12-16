@@ -22,6 +22,7 @@ class ShowGira extends Component
 
     public function render()
     {
+        $this->options = count($this->selectedClientes) > 0;
         $gira = Gira::find($this->id_gira);
         $etapas = DB::table('etapa_has_clientes')->rightjoin('etapas', 'etapas.id', '=', 'etapa_has_clientes.id_etapa')
         ->where('etapas.id_gira', $this->id_gira)
@@ -35,7 +36,7 @@ class ShowGira extends Component
             ->join('etapas','etapas.id','=','etapa_has_clientes.id_etapa')
             ->join('giras','giras.id','=','etapas.id_gira')->select('etapas.id AS id_etapa')->where('giras.id',$this->id_gira)->distinct('etapas.id')->get();
         $i = 1;
-        return view('livewire.show-gira', compact('gira', 'etapas','clientes_x_etapa','clientes_x_etapa_D','i'))->layout('components.plantilla');
+        return view('livewire.show-gira', compact('gira', 'etapas','clientes_x_etapa','clientes_x_etapa_D','i'))->layout('components.plantilla');        
     }
     public function renderizarTabla($collapse)
     {
