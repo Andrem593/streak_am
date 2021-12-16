@@ -13,7 +13,8 @@
                 </div>
                 <div class="col my-auto">
                     <div class="float-right">
-                        <button type="button" wire:click="$set('open',false)" class="close closeCanvas" aria-label="Close">
+                        <button type="button" wire:click="$set('open',false)" class="close closeCanvas"
+                            aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -25,8 +26,8 @@
             <div class="row">
                 <div class="col">
                     <div class="input-group input-group-sm">
-                        <input id="txt_search" wire:model="buscar" class="form-control form-control-divbar" type="search"
-                            placeholder="Buscar cliente" aria-label="Search">
+                        <input id="txt_search" wire:model="buscar" class="form-control form-control-divbar"
+                            type="search" placeholder="Buscar cliente" aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-info" type="button">
                                 <i class="fas fa-search"></i>
@@ -35,13 +36,14 @@
                     </div>
                 </div>
             </div>
-            <div class="row py-1">
+            <div class="row py-1" style="overflow-y: scroll; height: 100vh;">
                 <div class="col">
                     <div class="list-group" id="myList" role="tablist">
                         @empty(!$clientes)
                             @foreach ($clientes as $cliente)
                                 <a class="list-group-item list-group-item-action p-2" role="tab">
-                                    <button class="btn btn-sm btn-primary" wire:loading.attr="disabled" wire:click="addCliente({{ $cliente->id_cliente }})"><i
+                                    <button class="btn btn-sm btn-primary" wire:loading.attr="disabled"
+                                        wire:click="addCliente({{ $cliente->id_cliente }})"><i
                                             class="fas fa-plus"></i></button><span
                                         class="pl-2">{{ $cliente->nombre }}</span></a>
                             @endforeach
