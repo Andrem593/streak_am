@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Comentario;
 use App\Models\Etapa;
 use App\Models\EtapaHasCliente;
 use App\Models\Gira;
@@ -10,7 +11,7 @@ use Livewire\Component;
 
 class ShowGira extends Component
 {
-    public $id_gira, $clientes, $collapse = false , $primeraEtapa, $selectedClientes = [], $selectAll = false, $options = false;
+    public $id_gira, $clientes, $collapse = false , $primeraEtapa, $selectedClientes = [], $selectAll = false, $options = false, $selectedEtapa;
 
     protected $listeners = ['RenderizarTabla' => 'renderizarTabla'];
 
@@ -50,5 +51,29 @@ class ShowGira extends Component
     public function clearSelected()
     {
         $this->selectedClientes = [];
+    }
+
+    public function changeEtapa(){ 
+
+        if(!empty($this->selectedEtapa))
+        {
+            foreach ($this->selectedClientes as $value) {
+                
+                EtapaHasCliente::where('id_cliente',$value)->update([
+                    'id_etapa'=>$this->selectedEtapa,
+                ]);
+                Comentario::create([     
+                    'id_usuario'=>session('id_usuario'),       
+                    'id_cliente'=>$value,
+                    'id_etapa'=>$this->selectedEtapa,
+                    'tipo'=>'cambio_etapa',
+                    'comentario'=>'cambió la etapa a',
+                ]);
+    
+            }
+            $this->selectedClientes = [];
+            $this->render();
+        }       
+
     }
 }

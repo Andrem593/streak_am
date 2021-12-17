@@ -13,25 +13,26 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <div class="float-left{{ $options ? ' ' : ' d-none ' }}bg-light rounded shadow-sm py-1 px-2">
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool align-middle" wire:click="clearSelected"><i
-                                class="fas fa-times"></i>
-                        </button>
-                        <span class="align-middle">{{ count($selectedClientes) }}
-                            {{ count($selectedClientes) > 1 ? 'Clientes seleccionados' : 'Cliente seleccionado' }}</span>
-                        <span class="align-middle border-right"></span>
-                        <span class="align-middle pl-1 d-inline">
-                            <select class="custom-select w-25" id="cmb_etapa" wire:change="changeEtapa" wire:model='etapa_actual'>
-                                <option value="">Pasar a etapa</option>
-                                @foreach ($etapas as $etapa)
-                                    <option value="{{ $etapa->id }}">{{ $etapa->nombre }}</option>
-                                @endforeach
-                            </select>
-                        </span>
-                        <span class="align-middle px-2"><i class="fas fa-ellipsis-v"></i></span>
-                        <button type="button" class="align-middle btn btn-tool bg-danger"><i class="fas fa-trash"></i>
-                        </button>
+                <div class="float-left{{ $options ? ' d-inline-block ' : ' d-none ' }}bg-light rounded shadow-sm py-1 px-2 w-50">
+                    <div class="card-tool">
+                            <button type="button" class="btn btn-tool align-middle" wire:click="clearSelected"><i
+                                    class="fas fa-times"></i>
+                            </button>
+                            <span class="align-middle"><strong>{{ count($selectedClientes) }}</strong>
+                                {{ count($selectedClientes) > 1 ? 'Clientes seleccionados' : 'Cliente seleccionado' }}</span>
+                                <span class="align-middle border-right"></span>
+                                <span class="align-middle pl-1 d-inline">
+                                    <select class="custom-select text-center" id="cmb_etapa" wire:change="changeEtapa" wire:model='selectedEtapa' style="width: 34% !important;">
+                                        <option value="">Pasar a etapa</option>
+                                        @foreach ($etapas as $etapa)
+                                            <option value="{{ $etapa->id }}">{{ $etapa->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                </span>
+                        
+                            <span class="align-middle px-2"><i class="fas fa-ellipsis-v"></i></span>
+                            <button type="button" class="align-middle btn btn-tool bg-danger"><i class="fas fa-trash"></i>
+                            </button>
                     </div>
 
                 </div>
