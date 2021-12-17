@@ -13,6 +13,7 @@ use Livewire\Component;
 class Historial extends Component
 {
     public $comentarios, $comentario,$id_etapa,$id_cliente,$id_gira, $etapa_actual , $etapa_has_cliente;
+    public $select, $errorComentario;
 
     public function mount($id_cliente,$id_etapa,$id_gira)
     {
@@ -26,6 +27,7 @@ class Historial extends Component
     }
     public function render()
     {
+        $this->errorComentario = '';
         $cliente = DB::table('aw_clientes')->where('id_cliente',$this->id_cliente)->first();
         $gira = Gira::find($this->id_gira);
         $etapas_gira = Etapa::where('id_gira',$this->id_gira)->get();        
@@ -43,15 +45,22 @@ class Historial extends Component
     }
     public function aggComentario()
     {
-        $comentario = $this->comentario;
-        Comentario::create([     
-            'id_usuario'=>session('id_usuario'),       
-            'id_cliente'=>$this->id_cliente,
-            'id_etapa'=>$this->id_etapa,
-            'tipo'=>'comentario',
-            'comentario'=>$comentario,
-        ]);
-        $this->comentario = '';
+        if ($this->select != '') {            
+            $comentario = $this->comentario;
+            Comentario::create([     
+                'id_usuario'=>session('id_usuario'),       
+                'id_cliente'=>$this->id_cliente,
+                'id_etapa'=>$this->id_etapa,
+                'tipo'=>'comentario',
+                'tipo_gestion'=>$this->select,
+                'comentario'=>$comentario,
+            ]);
+            $this->comentario = '';
+            $this->select = '';
+            $this->errorComentario = '';
+        }else{
+            $this->errorComentario = 'Debe llenar todos los campos para continuar';
+        }
     }
     public function cambiarEtapa(){      
         EtapaHasCliente::find($this->etapa_has_cliente)->update([
