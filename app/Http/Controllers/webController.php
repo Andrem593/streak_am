@@ -119,7 +119,8 @@ class webController extends Controller
         Tarea::create([
             'id_usuario'=>session('id_usuario'),
             'tarea' => $request->tarea,
-            'horario' => $request->horario
+            'horario' => $request->horario,
+            'tipo_gestion'=>$request->tipo_gestion,
         ]);
         return 'success';
     }

@@ -15,7 +15,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="card {{empty($errorComentario)? 'collapsed-card': ''}}">
+                    <div class="card {{$open ? '': 'collapsed-card'}}">
                         <div class="card-header">
                             <h3 class="card-title text-success fw-bold"><i class="fas fa-sticky-note"></i> AGREGAR
                                 COMENTARIOS</h3>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Tipo de Gestion</label>
-                                <select class="custom-select" wire:model.defer="select">
+                                <select class="custom-select" wire:model="select">
                                     <option value="" selected>Seleccione una opcion</option>
                                     <option value="PEDIDO">PEDIDO</option>
                                     <option value="COBRANZAS">COBRANZAS</option>
@@ -44,6 +44,12 @@
                                     <option value="VISITAS">VISITAS</option>
                                 </select>                                
                             </div>
+                            @if ($select == 'COBRANZAS')
+                                <div class="form-group">
+                                    <label for="">Valor Recaudado</label>
+                                    <input type="number" wire:model.defer='valor_recudado' class="form-control" >
+                                </div>
+                            @endif
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -85,7 +91,10 @@
                                                                     <h3 class="timeline-header"><a href="#">{{$val->nombre_usuario}} </a> comento en {{$val->nombre_etapa}} </h3>
                                                                     <div class="timeline-body">
                                                                         <p class="my-2">{{$val->comentario}}</p>
-                                                                        <p><b>Tipo de Gestion:</b> {{$val->tipo_gestion}}</p>                                                                    
+                                                                        <span><b>Tipo de Gestion:</b> {{$val->tipo_gestion}}</span>   
+                                                                        @empty(!$val->valor_recaudado)                                                                            
+                                                                            <span class="ml-4"><b>Valores recaudado:</b> {{number_format($val->valor_recaudado,2)}}</span>                                                                 
+                                                                        @endempty
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -166,6 +175,16 @@
                                 <input type="text" id="tarea" class="form-control">
                             </div>
                             <div class="form-group">
+                                <label for="">Tipo de Gestion</label>
+                                <select id="select_recordatorio" class="custom-select">
+                                    <option value="" selected>Seleccione una opcion</option>
+                                    <option value="PEDIDO">PEDIDO</option>
+                                    <option value="COBRANZAS">COBRANZAS</option>
+                                    <option value="LLAMADAS">LLAMADAS</option>
+                                    <option value="VISITAS">VISITAS</option>
+                                </select>                                
+                            </div>
+                            <div class="form-group">
                                 @section('plugins.TempusDominusBs4', true)
                                     @php
                                         $config = ['format' => 'DD/MM/YYYY HH:mm', 'minDate' => 'js:moment()', 'showClear' => true];
@@ -210,8 +229,9 @@
                     let data = {
                         'tarea': $('#tarea').val(),
                         'horario': fecha,
+                        'tipo_gestion': $('#select_recordatorio').val(),
                     }
-                    if($('#tarea').val() != '' &&  $('#horario').val() != '' ){
+                    if($('#tarea').val() != '' &&  $('#horario').val() != '' && $('#select_recordatorio').val() != '' ){
                         $.post({
                             url: '{{ route('crearTarea') }}',
                             data: data,

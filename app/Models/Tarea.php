@@ -12,5 +12,6 @@ class Tarea extends Model
         'id_usuario',
         'tarea',
         'horario',
+        'tipo_gestion'
     ];
 }
