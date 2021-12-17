@@ -59,17 +59,21 @@ class ShowGira extends Component
         {
             foreach ($this->selectedClientes as $value) {
                 
-                EtapaHasCliente::where('id_cliente',$value)->update([
-                    'id_etapa'=>$this->selectedEtapa,
-                ]);
-                Comentario::create([     
-                    'id_usuario'=>session('id_usuario'),       
-                    'id_cliente'=>$value,
-                    'id_etapa'=>$this->selectedEtapa,
-                    'tipo'=>'cambio_etapa',
-                    'comentario'=>'cambió la etapa a',
-                ]);
-    
+                
+                $val = EtapaHasCliente::where('id_cliente',$value)->first();
+
+                if($val->id_etapa != $this->selectedEtapa){
+                    EtapaHasCliente::where('id',$val->id)->update([
+                        'id_etapa'=>$this->selectedEtapa,
+                    ]);
+                    Comentario::create([     
+                        'id_usuario'=>session('id_usuario'),       
+                        'id_cliente'=>$value,
+                        'id_etapa'=>$this->selectedEtapa,
+                        'tipo'=>'cambio_etapa',
+                        'comentario'=>'cambió la etapa a',
+                    ]);
+                }
             }
             $this->selectedClientes = [];
             $this->render();
