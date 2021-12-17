@@ -11,5 +11,6 @@ class Gira extends Model
         'nombre',
         'descripcion',
         'estado',
+        'id_usuario'
     ];
 }

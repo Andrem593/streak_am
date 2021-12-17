@@ -16,7 +16,7 @@ class webController extends Controller
 {
     public function index()
     {
-        $giras = Gira::all();
+        $giras = Gira::leftJoin('aw_users','aw_users.id_usuario','=','giras.id_usuario')->select('giras.*','aw_users.nombre_usuario')->get();
         $i = 1;
         return view('giras.index', compact('giras', 'i'));
     }
@@ -31,7 +31,8 @@ class webController extends Controller
     public function create()
     {
         $gira = new Gira();
-        return view('giras.create', compact('gira'));
+        $usuarios = DB::table('aw_users')->where('tipo_usuario','vendedor')->get(['id_usuario','nombre_usuario']);
+        return view('giras.create', compact('gira','usuarios'));
     }
     public function createGira(Request $request)
     {
@@ -43,6 +44,7 @@ class webController extends Controller
             'nombre' => trim(strtoupper($request->nombre)),
             'descripcion' => $request->descripcion,
             'estado' => $request->estado,
+            'id_usuario'=>$request->vendedor,
         ]);
         foreach ($request->etapas as $i =>$val) {
             Etapa::create([

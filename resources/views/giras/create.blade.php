@@ -43,6 +43,15 @@
                                 <option value="COMPLETADA">Completada</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="inputStatus">Vendedor Asignado</label>
+                            <select id="usuario_asignado" class="form-control custom-select" required>
+                                <option selected="" value='' disabled="">Selecciona</option>
+                                @foreach ($usuarios as $user )                                    
+                                    <option value="{{$user->id_usuario}}">{{$user->nombre_usuario}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <button class="btn btn-primary w-100" id="btn-crear">GUARDAR</button>
 
                     </div>
@@ -174,6 +183,7 @@
                     nombre:$('#nombre').val(),
                     descripcion:$('#descripcion').val(),
                     estado:$('#estado').val(),
+                    vendedor:$('#usuario_asignado').val(),
                     etapas:etapas,
                 }
 
@@ -181,8 +191,6 @@
                 $.post({
                         url: '{{route("new.gira")}}',
                         data: data,
-                        beforeSend: function() {
-                        },
                         success: function(response) {
                             window.location="{{route('giras')}}?message=true";
                         }
