@@ -13,7 +13,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <div class="float-left{{ $options ? ' ' : ' d-none ' }}bg-light rounded shadow py-1 px-2">
+                <div class="float-left{{ $options ? ' ' : ' d-none ' }}bg-light rounded shadow-sm py-1 px-2">
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool align-middle" wire:click="clearSelected"><i
                                 class="fas fa-times"></i>
