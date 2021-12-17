@@ -46,4 +46,9 @@ class ShowGira extends Component
         $this->primeraEtapa = $etapa->id;
         $this->render();
     }
+
+    public function clearSelected()
+    {
+        $this->selectedClientes = [];
+    }
 }

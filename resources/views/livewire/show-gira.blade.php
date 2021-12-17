@@ -13,11 +13,23 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <div class="float-left{{ $options ? '' : ' d-none' }}">
-                    <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    Elementos seleccionados: {{ count($selectedClientes) }}
+                <div class="float-left{{ $options ? ' ' : ' d-none ' }}bg-light rounded shadow py-1 px-2">
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool align-middle" wire:click="clearSelected"><i class="fas fa-times"></i>
+                        </button>
+                        <span class="align-middle">{{ count($selectedClientes) }} {{ count($selectedClientes) > 1 ? 'Clientes seleccionados' : 'Cliente seleccionado' }}</span>
+                        <span class="align-middle border-right"></span>
+                        <span class="align-middle pl-1 d-inline">
+                            <select class="form-control-sm" id="cmb_etapa">
+                                <option value="">Pasar a etapa</option>
+                                <option value="1">Clientes</option>
+                            </select>
+                        </span>
+                        <span class="align-middle px-2"><i class="fas fa-ellipsis-v"></i></span>
+                        <button type="button" class="align-middle btn btn-tool bg-danger"><i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                                        
                 </div>
                 <div class="float-right row">
                     <a href="{{route('giras.edit',$id_gira)}}" class="btn btn-info btn-sm mr-2">
