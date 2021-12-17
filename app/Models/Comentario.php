@@ -14,5 +14,6 @@ class Comentario extends Model
         'id_etapa',
         'tipo',
         'comentario',
+        'tipo_gestion',
     ];
 }

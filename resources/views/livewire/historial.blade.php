@@ -15,7 +15,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="card collapsed-card">
+                    <div class="card {{empty($errorComentario)? 'collapsed-card': ''}}">
                         <div class="card-header">
                             <h3 class="card-title text-success fw-bold"><i class="fas fa-sticky-note"></i> AGREGAR
                                 COMENTARIOS</h3>
@@ -30,9 +30,19 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Comentario de {{$usuario->nombre_usuario}}</label>
+                                <label for="">Comentario de {{$usuario->nombre_usuario}}</label>
                                 <textarea class="form-control" rows="3" wire:model.defer="comentario"
                                     placeholder="Añadir nuevos comentarios ..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Tipo de Gestion</label>
+                                <select class="custom-select" wire:model.defer="select">
+                                    <option value="" selected>Seleccione una opcion</option>
+                                    <option value="PEDIDO">PEDIDO</option>
+                                    <option value="COBRANZAS">COBRANZAS</option>
+                                    <option value="LLAMADAS">LLAMADAS</option>
+                                    <option value="VISITAS">VISITAS</option>
+                                </select>                                
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -74,7 +84,8 @@
                                                                     <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
                                                                     <h3 class="timeline-header"><a href="#">{{$val->nombre_usuario}} </a> comento en {{$val->nombre_etapa}} </h3>
                                                                     <div class="timeline-body">
-                                                                        {{$val->comentario}}
+                                                                        <p class="my-2">{{$val->comentario}}</p>
+                                                                        <p><b>Tipo de Gestion:</b> {{$val->tipo_gestion}}</p>                                                                    
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -112,6 +123,12 @@
                     </div>
                 </div>
                 <div class="col-md-4">
+                    @empty (!$errorComentario)                        
+                        <div class="callout callout-danger">
+                            <h5>{{$usuario->nombre_usuario}} tu comentario no pudo ser agregado!</h5>
+                            <p>Verifica que el campo de comentario y tipo de gestion no esten vacios.</p>
+                        </div>
+                    @endempty
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title text-info"><i class="fas fa-caret-right"></i> ETAPAS</h3>

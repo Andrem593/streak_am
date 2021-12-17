@@ -20,6 +20,7 @@ class Comentarios extends Migration
             $table->integer('id_etapa')->nullable();
             $table->string('tipo')->nullable();
             $table->longText('comentario')->nullable();
+            $table->string('tipo_gestion')->nullable();
             $table->integer('estado')->default(1);
             $table->timestamps();
         });
