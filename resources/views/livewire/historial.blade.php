@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <label for="">Tipo de Gestion</label>
                                 <select class="custom-select" wire:model.defer="select">
-                                    <option value="" selected disabled>Seleccione una opcion</option>
+                                    <option value="" selected>Seleccione una opcion</option>
                                     <option value="PEDIDO">PEDIDO</option>
                                     <option value="COBRANZAS">COBRANZAS</option>
                                     <option value="LLAMADAS">LLAMADAS</option>
@@ -123,6 +123,12 @@
                     </div>
                 </div>
                 <div class="col-md-4">
+                    @empty (!$errorComentario)                        
+                        <div class="callout callout-danger">
+                            <h5>{{$usuario->nombre_usuario}} tu comentario no pudo ser agregado!</h5>
+                            <p>Verifica que el campo de comentario y tipo de gestion no esten vacios..</p>
+                        </div>
+                    @endempty
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title text-info"><i class="fas fa-caret-right"></i> ETAPAS</h3>

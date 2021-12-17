@@ -27,7 +27,6 @@ class Historial extends Component
     }
     public function render()
     {
-        $this->errorComentario = '';
         $cliente = DB::table('aw_clientes')->where('id_cliente',$this->id_cliente)->first();
         $gira = Gira::find($this->id_gira);
         $etapas_gira = Etapa::where('id_gira',$this->id_gira)->get();        
