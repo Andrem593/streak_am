@@ -15,24 +15,28 @@
             <div class="card-header">
                 <div class="float-left{{ $options ? ' ' : ' d-none ' }}bg-light rounded shadow py-1 px-2">
                     <div class="card-tools">
-                        <button type="button" class="btn btn-tool align-middle" wire:click="clearSelected"><i class="fas fa-times"></i>
+                        <button type="button" class="btn btn-tool align-middle" wire:click="clearSelected"><i
+                                class="fas fa-times"></i>
                         </button>
-                        <span class="align-middle">{{ count($selectedClientes) }} {{ count($selectedClientes) > 1 ? 'Clientes seleccionados' : 'Cliente seleccionado' }}</span>
+                        <span class="align-middle">{{ count($selectedClientes) }}
+                            {{ count($selectedClientes) > 1 ? 'Clientes seleccionados' : 'Cliente seleccionado' }}</span>
                         <span class="align-middle border-right"></span>
                         <span class="align-middle pl-1 d-inline">
-                            <select class="form-control-sm" id="cmb_etapa">
+                            <select class="custom-select w-25" id="cmb_etapa" wire:change="changeEtapa" wire:model='etapa_actual'>
                                 <option value="">Pasar a etapa</option>
-                                <option value="1">Clientes</option>
+                                @foreach ($etapas as $etapa)
+                                    <option value="{{ $etapa->id }}">{{ $etapa->nombre }}</option>
+                                @endforeach
                             </select>
                         </span>
                         <span class="align-middle px-2"><i class="fas fa-ellipsis-v"></i></span>
                         <button type="button" class="align-middle btn btn-tool bg-danger"><i class="fas fa-trash"></i>
                         </button>
-                      </div>
-                                        
+                    </div>
+
                 </div>
                 <div class="float-right row">
-                    <a href="{{route('giras.edit',$id_gira)}}" class="btn btn-info btn-sm mr-2">
+                    <a href="{{ route('giras.edit', $id_gira) }}" class="btn btn-info btn-sm mr-2">
                         <i class="fas fa-edit"></i>
                     </a>
                     @livewire('off-canvas',['id_gira'=>$id_gira])
@@ -105,7 +109,7 @@
                                                         @foreach ($clientes_x_etapa as $cliente)
                                                             @if ($etapa->id == $cliente->id_etapa)
                                                                 <tr>
-                                                                    <td><a href="{{route('fase.historial', ['id_cliente' => $cliente->id_cliente, 'id_etapa' => $cliente->id_etapa, 'id_gira' => $id_gira]) }}"
+                                                                    <td><a href="{{ route('fase.historial', ['id_cliente' => $cliente->id_cliente, 'id_etapa' => $cliente->id_etapa, 'id_gira' => $id_gira]) }}"
                                                                             class="btn btn-sm btn-info"><i
                                                                                 class="fas fa-edit"></i></a>
                                                                     </td>
