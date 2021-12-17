@@ -126,7 +126,7 @@
                     @empty (!$errorComentario)                        
                         <div class="callout callout-danger">
                             <h5>{{$usuario->nombre_usuario}} tu comentario no pudo ser agregado!</h5>
-                            <p>Verifica que el campo de comentario y tipo de gestion no esten vacios..</p>
+                            <p>Verifica que el campo de comentario y tipo de gestion no esten vacios.</p>
                         </div>
                     @endempty
                     <div class="card">
