@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RecordatorioMailable;
 use App\Models\Comentario;
 use App\Models\Etapa;
 use App\Models\EtapaHasCliente;
@@ -10,16 +11,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tarea;
 use Carbon\Carbon;
-use Etapas;
-use finfo;
+use Illuminate\Support\Facades\Mail;
 
 class webController extends Controller
 {
     public function index()
     {
+        if (!empty($_GET['idUsuario'])) {
+            $user = DB::table('aw_users')
+                ->where('id_usuario', $_GET['idUsuario'])
+                ->first();
+            session(['id_usuario' => $_GET['idUsuario']]);
+        } else {
+            $user = DB::table('aw_users')
+                ->where('id_usuario', session('id_usuario'))
+                ->first();
+        }
         $giras = Gira::leftJoin('aw_users','aw_users.id_usuario','=','giras.id_usuario')->select('giras.*','aw_users.nombre_usuario')->get();
-        $i = 1;
-        return view('giras.index', compact('giras', 'i'));
+        $i = 1;        
+        return view('giras.index', compact('giras', 'i','user'));
     }
     public function show($id_gira)
     {
@@ -132,8 +142,19 @@ class webController extends Controller
         $fecha_actual = Carbon::now();
         $fecha_actual = $fecha_actual->toDateTimeString();
         Tarea::where('horario','<=',$fecha_actual)->where('estado',1)->update([
-            'estado'=> 2
+            'estado'=> 4
         ]);
+        // verificar si debe enviar correo
+        $enviarEmail = Tarea::where('estado',4)->get();
+        foreach ($enviarEmail as $value) {     
+            $usuario = DB::table('aw_users')->where('id_usuario',$value->id_usuario)->first();            
+            $correo = new RecordatorioMailable($value);
+            Mail::to($usuario->usuario)->send($correo);   
+            Tarea::where('estado',4)->update([
+                'estado'=> 2
+            ]);
+        }
+
         $tareas = Tarea::where('estado',2)->where('id_usuario',session('id_usuario'))
         ->get();
         $notifications = [];
@@ -145,8 +166,7 @@ class webController extends Controller
                 'time' => $tarea->created_at->diffForHumans(),
                 'id'   => $tarea->id,
             ]);
-        };
-
+        };        
         // Now, we create the notification dropdown main content.
 
         $dropdownHtml = '';
