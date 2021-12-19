@@ -29,10 +29,12 @@
                                         @endforeach
                                     </select>
                                 </span>
-                        
+                            @if ($usuario->tipo_usuario == 'administrador')
                             <span class="align-middle px-2"><i class="fas fa-ellipsis-v"></i></span>
-                            <button type="button" class="align-middle btn btn-tool bg-danger"><i class="fas fa-trash"></i>
-                            </button>
+                            <button type="button" class="align-middle btn btn-tool bg-danger" wire:click="deleteClientes"><i class="fas fa-trash"></i>
+                            </button>    
+                            @endif
+                            
                     </div>
 
                 </div>
@@ -99,11 +101,11 @@
                                                             <th style="width: 10px">&nbsp;</th>
                                                             <th style="width: 10px">#</th>
                                                             <th>Asignado a</th>
-                                                            <th>Zona</th>
+                                                            <th>Provincia</th>
+                                                            <th>Ciudad</th>
                                                             <th>Nombre</th>
                                                             <th>Teléfono</th>
                                                             <th>RUC</th>
-                                                            <th>Notas</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -118,10 +120,10 @@
                                                                             value="{{ $cliente->id_cliente }}"></td>
                                                                     <td>Usuario</td>
                                                                     <td>{{ $cliente->ciudad }}</td>
+                                                                    <td>{{ $cliente->ciudad }}</td>
                                                                     <td>{{ $cliente->nombre }}</td>
                                                                     <td>{{ $cliente->telefono }}</td>
                                                                     <td>{{ $cliente->ruc }}</td>
-                                                                    <td><span class="badge bg-danger">55%</span></td>
                                                                 </tr>
                                                             @endif
                                                         @endforeach

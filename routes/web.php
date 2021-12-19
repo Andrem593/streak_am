@@ -4,6 +4,7 @@ use App\Http\Controllers\webController;
 use App\Http\Livewire\Historial;
 use Illuminate\Support\Facades\Route;
 use App\Events\RealTimeMessage;
+use App\Http\Livewire\Reporte;
 use App\Http\Livewire\ShowGira;
 
 /*
@@ -24,6 +25,8 @@ Route::get('/giras-create',[webController::class,'create'])->name('giras.create'
 Route::get('/giras-edit/{id_gira}',[webController::class,'edit'])->name('giras.edit');
 Route::get('/historial/{id_cliente}/{id_etapa}/{id_gira}',Historial::class)->name('fase.historial');
 Route::get('/show-gira/{id_gira}',ShowGira::class)->name('fase.gira');
+Route::get('/reporte',Reporte::class)->name('fase.reporte');
+Route::post('/reporteTable',[Reporte::class,'reporte'])->name('fase.dataTable');
 Route::post('/crear-gira',[webController::class,'createGira'])->name('new.gira');
 Route::post('/editar-gira',[webController::class,'editarGira'])->name('edit.gira');
 Route::get('/autocompletar', [webController::class,'autocompletar'])->name('web.autocompletar');

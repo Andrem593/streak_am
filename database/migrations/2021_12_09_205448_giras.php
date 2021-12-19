@@ -18,6 +18,7 @@ class Giras extends Migration
             $table->string('nombre');
             $table->string('descripcion')->nullable();
             $table->string('estado')->default('INACTIVO');
+            $table->integer('id_usuario');
             $table->timestamps();
         });
     }

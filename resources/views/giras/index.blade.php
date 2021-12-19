@@ -1,25 +1,30 @@
 <x-plantilla>
     @section('content_header')
         <div class="row d-flex justify-content-around">
-            <div class="col"></div>
+            @php
+                if (!empty($_GET['idUsuario'])) {
+                    $user = DB::table('aw_users')
+                        ->where('id_usuario', $_GET['idUsuario'])
+                        ->first();
+                    session(['id_usuario' => $_GET['idUsuario']]);
+                } else {
+                    $user = DB::table('aw_users')
+                        ->where('id_usuario', session('id_usuario'))
+                        ->first();
+                }
+            @endphp
+            <div class="col my-auto text-left">
+                @if ($user->tipo_usuario == 'administrador')
+                    <a class="btn btn-warning btn-sm" href="{{ route('fase.reporte') }}"><i class="fas fa-file-alt"></i> Reportes</a>
+                @endif
+            </div>
             <div class="col text-center">
-                @php
-                    if (!empty($_GET['idUsuario'])) {
-                        $user = DB::table('aw_users')
-                            ->where('id_usuario', $_GET['idUsuario'])
-                            ->first();
-                        session(['id_usuario' => $_GET['idUsuario']]);
-                    }else {
-                        $user = DB::table('aw_users')
-                            ->where('id_usuario', session('id_usuario'))
-                            ->first();
-                    }
-                @endphp
                 <h2 class="fw-bold my-2">Bienvenido a STREAK {{ $user->nombre_usuario }}</h2>
             </div>
             <div class="col my-auto text-right">
-                @if($user->tipo_usuario == 'administrador')                    
-                    <a class="btn btn-primary btn-sm" href="{{route('giras.create')}}"><i class="fas fa-plus mr-1"></i>Nueva Gira</a>
+                @if ($user->tipo_usuario == 'administrador')
+                    <a class="btn btn-primary btn-sm" href="{{ route('giras.create') }}"><i class="fas fa-plus mr-1"></i>Nueva
+                        Gira</a>
                 @endif
             </div>
         </div>
@@ -72,30 +77,31 @@
                     </thead>
                     <tbody>
                         @foreach ($giras as $gira)
-                            @if ($user->tipo_usuario != 'administrador')                                
-                                @if ($user->id_usuario == $gira->id_usuario)                                
+                            @if ($user->tipo_usuario != 'administrador')
+                                @if ($user->id_usuario == $gira->id_usuario)
                                     <tr>
                                         <td>
-                                            {{$i++}}
+                                            {{ $i++ }}
                                         </td>
                                         <td>
                                             <a>
-                                                {{$gira->nombre}}
+                                                {{ $gira->nombre }}
                                             </a>
                                             <br>
                                             <small>
-                                                Creada {{$gira->created_at->diffForHumans()}}
+                                                Creada {{ $gira->created_at->diffForHumans() }}
                                             </small>
                                         </td>
                                         <td>
                                             <ul class="list-inline">
                                                 <li class="list-inline-item">
-                                                    <img alt="Avatar" class="table-avatar" title="{{$gira->nombre_usuario}}"
+                                                    <img alt="Avatar" class="table-avatar"
+                                                        title="{{ $gira->nombre_usuario }}"
                                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPgS1h_HJXlk30XL589iPYN7jbjLdXRYKxA&usqp=CAU">
                                                 </li>
                                                 <li class="list-inline-item">
-                                                    <span class="badge bg-dark">{{$gira->nombre_usuario}}</span>
-                                                </li>                                                
+                                                    <span class="badge bg-dark">{{ $gira->nombre_usuario }}</span>
+                                                </li>
                                             </ul>
                                         </td>
                                         <td class="project_progress">
@@ -109,14 +115,15 @@
                                             </small>
                                         </td>
                                         <td class="project-state">
-                                            <span class="badge badge-success">{{$gira->estado}}</span>
+                                            <span class="badge badge-success">{{ $gira->estado }}</span>
                                         </td>
                                         <td class="project-actions text-right">
-                                            <a class="btn btn-primary btn-sm" href="{{ route('fase.gira',$gira->id) }}">
+                                            <a class="btn btn-primary btn-sm"
+                                                href="{{ route('fase.gira', $gira->id) }}">
                                                 <i class="fas fa-folder">
                                                 </i>
                                             </a>
-                                            <a class="btn btn-info btn-sm" href="{{route('giras.edit',$gira->id)}}">
+                                            <a class="btn btn-info btn-sm" href="{{ route('giras.edit', $gira->id) }}">
                                                 <i class="fas fa-pencil-alt">
                                                 </i>
                                             </a>
@@ -130,26 +137,27 @@
                             @else
                                 <tr>
                                     <td>
-                                        {{$i++}}
+                                        {{ $i++ }}
                                     </td>
                                     <td>
                                         <a>
-                                            {{$gira->nombre}}
+                                            {{ $gira->nombre }}
                                         </a>
                                         <br>
                                         <small>
-                                            Creada {{$gira->created_at->diffForHumans()}}
+                                            Creada {{ $gira->created_at->diffForHumans() }}
                                         </small>
                                     </td>
                                     <td>
                                         <ul class="list-inline">
                                             <li class="list-inline-item">
-                                                <img alt="Avatar" class="table-avatar" title="{{$gira->nombre_usuario}}"
+                                                <img alt="Avatar" class="table-avatar"
+                                                    title="{{ $gira->nombre_usuario }}"
                                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPgS1h_HJXlk30XL589iPYN7jbjLdXRYKxA&usqp=CAU">
                                             </li>
                                             <li class="list-inline-item">
-                                                <span class="badge bg-dark">{{$gira->nombre_usuario}}</span>
-                                            </li> 
+                                                <span class="badge bg-dark">{{ $gira->nombre_usuario }}</span>
+                                            </li>
                                         </ul>
                                     </td>
                                     <td class="project_progress">
@@ -163,14 +171,14 @@
                                         </small>
                                     </td>
                                     <td class="project-state">
-                                        <span class="badge badge-success">{{$gira->estado}}</span>
+                                        <span class="badge badge-success">{{ $gira->estado }}</span>
                                     </td>
                                     <td class="project-actions text-right">
-                                        <a class="btn btn-primary btn-sm" href="{{ route('fase.gira',$gira->id) }}">
+                                        <a class="btn btn-primary btn-sm" href="{{ route('fase.gira', $gira->id) }}">
                                             <i class="fas fa-folder">
                                             </i>
                                         </a>
-                                        <a class="btn btn-info btn-sm" href="{{route('giras.edit',$gira->id)}}">
+                                        <a class="btn btn-info btn-sm" href="{{ route('giras.edit', $gira->id) }}">
                                             <i class="fas fa-pencil-alt">
                                             </i>
                                         </a>

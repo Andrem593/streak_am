@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comentario;
 use App\Models\Etapa;
 use App\Models\EtapaHasCliente;
 use App\Models\Gira;
@@ -202,5 +203,17 @@ class webController extends Controller
         }
         return $etapa->count();
 
+    }
+
+    public function reporte()
+    {
+        $response = '';
+        $comment = Comentario::where('id_usuario',session('id_usuario'))->join('aw_clientes','aw_clientes.id_cliente','=','comentarios.id_cliente')
+        ->select('comentarios.*','aw_clientes.*')->get();
+        if (count($comment) == 0) {
+            $comment = 'no data';
+        }
+        $response = json_encode($comment);
+        return $response;
     }
 }

@@ -17,7 +17,8 @@ class Etapas extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('color');
-            $table->string('id_gira');            
+            $table->string('id_gira'); 
+            $table->integer('orden');           
             $table->timestamps();
         });
     }

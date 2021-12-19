@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class ShowGira extends Component
 {
-    public $id_gira, $clientes, $collapse = false , $primeraEtapa, $selectedClientes = [], $selectAll = false, $options = false, $selectedEtapa;
+    public $id_gira, $clientes, $collapse = false, $primeraEtapa, $selectedClientes = [], $selectAll = false, $options = false, $selectedEtapa;
 
     protected $listeners = ['RenderizarTabla' => 'renderizarTabla'];
 
@@ -26,19 +26,20 @@ class ShowGira extends Component
         $this->options = count($this->selectedClientes) > 0;
         $gira = Gira::find($this->id_gira);
         $etapas = DB::table('etapa_has_clientes')->rightjoin('etapas', 'etapas.id', '=', 'etapa_has_clientes.id_etapa')
-        ->where('etapas.id_gira', $this->id_gira)
-        ->select('etapas.*', DB::raw('count(etapa_has_clientes.id_etapa) as total'))
-        ->groupBy('etapas.id')
-        ->orderBy('orden')
-        ->get();
-        $clientes_x_etapa = EtapaHasCliente::join('aw_clientes','aw_clientes.id_cliente','=','etapa_has_clientes.id_cliente')
-            ->join('etapas','etapas.id','=','etapa_has_clientes.id_etapa')
-            ->join('giras','giras.id','=','etapas.id_gira')->select('aw_clientes.*','etapas.id AS id_etapa')->where('giras.id',$this->id_gira)->get();
-        $clientes_x_etapa_D = EtapaHasCliente::join('aw_clientes','aw_clientes.id_cliente','=','etapa_has_clientes.id_cliente')
-            ->join('etapas','etapas.id','=','etapa_has_clientes.id_etapa')
-            ->join('giras','giras.id','=','etapas.id_gira')->select('etapas.id AS id_etapa')->where('giras.id',$this->id_gira)->distinct('etapas.id')->get();
+            ->where('etapas.id_gira', $this->id_gira)
+            ->select('etapas.*', DB::raw('count(etapa_has_clientes.id_etapa) as total'))
+            ->groupBy('etapas.id')
+            ->orderBy('orden')
+            ->get();
+        $clientes_x_etapa = EtapaHasCliente::join('aw_clientes', 'aw_clientes.id_cliente', '=', 'etapa_has_clientes.id_cliente')
+            ->join('etapas', 'etapas.id', '=', 'etapa_has_clientes.id_etapa')
+            ->join('giras', 'giras.id', '=', 'etapas.id_gira')->select('aw_clientes.*', 'etapas.id AS id_etapa')->where('giras.id', $this->id_gira)->get();
+        $clientes_x_etapa_D = EtapaHasCliente::join('aw_clientes', 'aw_clientes.id_cliente', '=', 'etapa_has_clientes.id_cliente')
+            ->join('etapas', 'etapas.id', '=', 'etapa_has_clientes.id_etapa')
+            ->join('giras', 'giras.id', '=', 'etapas.id_gira')->select('etapas.id AS id_etapa')->where('giras.id', $this->id_gira)->distinct('etapas.id')->get();
         $i = 1;
-        return view('livewire.show-gira', compact('gira', 'etapas','clientes_x_etapa','clientes_x_etapa_D','i'))->layout('components.plantilla');        
+        $usuario = DB::table('aw_users')->where('id_usuario', session('id_usuario'))->first('tipo_usuario');
+        return view('livewire.show-gira', compact('gira', 'etapas', 'clientes_x_etapa', 'clientes_x_etapa_D', 'i', 'usuario'))->layout('components.plantilla');
     }
     public function renderizarTabla($collapse)
     {
@@ -53,31 +54,39 @@ class ShowGira extends Component
         $this->selectedClientes = [];
     }
 
-    public function changeEtapa(){ 
+    public function changeEtapa()
+    {
 
-        if(!empty($this->selectedEtapa))
-        {
+        if (!empty($this->selectedEtapa)) {
             foreach ($this->selectedClientes as $value) {
-                
-                
-                $val = EtapaHasCliente::where('id_cliente',$value)->first();
 
-                if($val->id_etapa != $this->selectedEtapa){
-                    EtapaHasCliente::where('id',$val->id)->update([
-                        'id_etapa'=>$this->selectedEtapa,
+
+                $val = EtapaHasCliente::where('id_cliente', $value)->first();
+
+                if ($val->id_etapa != $this->selectedEtapa) {
+                    EtapaHasCliente::where('id', $val->id)->update([
+                        'id_etapa' => $this->selectedEtapa,
                     ]);
-                    Comentario::create([     
-                        'id_usuario'=>session('id_usuario'),       
-                        'id_cliente'=>$value,
-                        'id_etapa'=>$this->selectedEtapa,
-                        'tipo'=>'cambio_etapa',
-                        'comentario'=>'cambió la etapa a',
+                    Comentario::create([
+                        'id_usuario' => session('id_usuario'),
+                        'id_cliente' => $value,
+                        'id_etapa' => $this->selectedEtapa,
+                        'tipo' => 'cambio_etapa',
+                        'comentario' => 'cambió la etapa a',
                     ]);
                 }
             }
             $this->selectedClientes = [];
             $this->render();
-        }       
+        }
+    }
+    public function deleteClientes()
+    {
 
+        foreach ($this->selectedClientes as $value) {
+            $val = EtapaHasCliente::where('id_cliente', $value)->delete();
+        }
+        $this->selectedClientes = [];
+        $this->render();
     }
 }
