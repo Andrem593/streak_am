@@ -2,20 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RecordatorioMailable;
+use App\Models\Comentario;
 use App\Models\Etapa;
+use App\Models\EtapaHasCliente;
 use App\Models\Gira;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tarea;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class webController extends Controller
 {
     public function index()
     {
-        $giras = Gira::all();
-        $i = 1;
-        return view('giras.index', compact('giras', 'i'));
-        // return view('welcome');
+        if (!empty($_GET['idUsuario'])) {
+            $user = DB::table('aw_users')
+                ->where('id_usuario', $_GET['idUsuario'])
+                ->first();
+            session(['id_usuario' => $_GET['idUsuario']]);
+        } else {
+            $user = DB::table('aw_users')
+                ->where('id_usuario', session('id_usuario'))
+                ->first();
+        }
+        $giras = Gira::leftJoin('aw_users','aw_users.id_usuario','=','giras.id_usuario')->select('giras.*','aw_users.nombre_usuario')->get();
+        $i = 1;        
+        return view('giras.index', compact('giras', 'i','user'));
     }
     public function show($id_gira)
     {
@@ -24,10 +38,12 @@ class webController extends Controller
         $clientes = DB::table('aw_clientes')->get();
         return view('giras.show', compact('gira', 'etapas', 'clientes'));
     }
+
     public function create()
     {
         $gira = new Gira();
-        return view('giras.create', compact('gira'));
+        $usuarios = DB::table('aw_users')->where('tipo_usuario','vendedor')->get(['id_usuario','nombre_usuario']);
+        return view('giras.create', compact('gira','usuarios'));
     }
     public function createGira(Request $request)
     {
@@ -39,15 +55,51 @@ class webController extends Controller
             'nombre' => trim(strtoupper($request->nombre)),
             'descripcion' => $request->descripcion,
             'estado' => $request->estado,
+            'id_usuario'=>$request->vendedor,
         ]);
-        foreach ($request->etapas as $val) {
+        foreach ($request->etapas as $i =>$val) {
             Etapa::create([
                 'nombre' => $val[0],
                 'color' => $val[1],
+                'orden' => $i,
                 'id_gira' => $gira->id,
             ]);
         }
         return 'success';
+    }
+    public function editarGira(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|max:50|min:5',
+            'estado' => 'required',
+        ]);
+        Gira::where('id',$request->id)->update([
+            'nombre'=>$request->nombre,
+            'descripcion'=>$request->descripcion,
+            'estado'=>$request->estado,
+        ]);
+        foreach ($request->etapas as $i => $val) {
+            if ($val[2] != '') {
+                Etapa::where('id',$val[2])->update([
+                    'orden'=>$i
+                ]);
+            }else{
+                Etapa::create([
+                    'nombre'=>$val[0],
+                    'color'=>$val[1],
+                    'orden'=>$i,
+                    'id_gira'=>$request->id,
+                ]);
+            }
+        }
+        return 'success';
+    }
+    public function edit($id_gira)
+    {
+        $gira = Gira::find($id_gira);
+        $estados = ['Activa','Inactiva','Cancelada','Completada'];
+        $etapas = Etapa::where('id_gira',$id_gira)->orderBy('orden')->get();
+        return view('giras.edit', compact('gira','estados','etapas'));
     }
 
     public function autocompletar(Request $request)
@@ -78,14 +130,33 @@ class webController extends Controller
     public function crearTarea(Request $request)
     {
         Tarea::create([
+            'id_usuario'=>session('id_usuario'),
             'tarea' => $request->tarea,
-            'horario' => $request->horario
+            'horario' => $request->horario,
+            'tipo_gestion'=>$request->tipo_gestion,
         ]);
         return 'success';
     }
     public function buscarNotificaciones()
     {
-        $tareas = Tarea::where('estado',1)->get();
+        $fecha_actual = Carbon::now();
+        $fecha_actual = $fecha_actual->toDateTimeString();
+        Tarea::where('horario','<=',$fecha_actual)->where('estado',1)->update([
+            'estado'=> 4
+        ]);
+        // verificar si debe enviar correo
+        $enviarEmail = Tarea::where('estado',4)->get();
+        foreach ($enviarEmail as $value) {     
+            $usuario = DB::table('aw_users')->where('id_usuario',$value->id_usuario)->first();            
+            $correo = new RecordatorioMailable($value);
+            Mail::to($usuario->usuario)->send($correo);   
+            Tarea::where('estado',4)->update([
+                'estado'=> 2
+            ]);
+        }
+
+        $tareas = Tarea::where('estado',2)->where('id_usuario',session('id_usuario'))
+        ->get();
         $notifications = [];
 
         foreach ($tareas as  $tarea) {
@@ -93,9 +164,9 @@ class webController extends Controller
                 'icon' => 'fas fa-fw fa-clock',
                 'text' => $tarea->tarea,
                 'time' => $tarea->created_at->diffForHumans(),
+                'id'   => $tarea->id,
             ]);
-        };
-
+        };        
         // Now, we create the notification dropdown main content.
 
         $dropdownHtml = '';
@@ -111,7 +182,7 @@ class webController extends Controller
                    {$not['time']}
                  </span>";
 
-            $dropdownHtml .= "<a href='#' class='dropdown-item'>
+            $dropdownHtml .= "<a href='#' id='{$not['id']}' class='notify dropdown-item'>
                             <div class='card__message text-muted text-sm'>
                             {$icon}recordatorio pendiente
                             <p>{$not['text']}{$time}</p>
@@ -133,7 +204,36 @@ class webController extends Controller
         ];
     }
     public function notificaciones(){
-        $tareas = Tarea::where('estado',1)->get();        
+        $tareas = Tarea::where('estado',2)->where('id_usuario',session('id_usuario'))->get();
         return view('recordatorios.index' ,compact('tareas'));
+    }
+    public function marcarLeida($id_notificacion)
+    {
+        $tarea = Tarea::where('id',$id_notificacion)->update([
+            'estado'=>3,
+        ]);
+
+        return 'success';
+    }
+    public function validacionClientesEtapa(Request $request)
+    {
+        $etapa = EtapaHasCliente::where('id_etapa',$request->id)->get();
+        if ($etapa->count() == 0 ) {
+            Etapa::where('id',$request->id)->delete();
+        }
+        return $etapa->count();
+
+    }
+
+    public function reporte()
+    {
+        $response = '';
+        $comment = Comentario::where('id_usuario',session('id_usuario'))->join('aw_clientes','aw_clientes.id_cliente','=','comentarios.id_cliente')
+        ->select('comentarios.*','aw_clientes.*')->get();
+        if (count($comment) == 0) {
+            $comment = 'no data';
+        }
+        $response = json_encode($comment);
+        return $response;
     }
 }

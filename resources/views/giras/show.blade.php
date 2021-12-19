@@ -274,8 +274,8 @@
         </div>
     </div> --}}
 
-    <div id="element" data-offcanvas-duration="200" data-offcanvas-easing="ease" class="p-2">
-        <div class="row">
+    <div id="element" data-offcanvas-duration="200" data-offcanvas-easing="ease" class="p-2" style="overflow-y: scroll; height: 100vh">
+        <div class="row" style="padding-top: 57px">
             <div class="col">
                 <h5>Agregar cliente</h5>
             </div>
@@ -324,8 +324,7 @@
                 });
 
                 var styles = {
-                    backgroundColor: "#fff",
-                    top: "57px"
+                    backgroundColor: "#fff",                    
                 };
 
                 $(".offcanvas-element").css(styles);

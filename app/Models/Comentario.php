@@ -13,6 +13,8 @@ class Comentario extends Model
         'id_cliente',
         'id_etapa',
         'tipo',
+        'valor_recaudado',
         'comentario',
+        'tipo_gestion',
     ];
 }

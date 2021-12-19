@@ -24,7 +24,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-body" style="display: block;">                        
+                    <div class="card-body" style="display: block;">
                         <div class="form-group">
                             <label for="nombre">Nombre de Gira</label>
                             <input type="text" id="nombre" class="form-control" required>
@@ -43,8 +43,17 @@
                                 <option value="COMPLETADA">Completada</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="inputStatus">Vendedor Asignado</label>
+                            <select id="usuario_asignado" class="form-control custom-select" required>
+                                <option selected="" value='' disabled="">Selecciona</option>
+                                @foreach ($usuarios as $user )                                    
+                                    <option value="{{$user->id_usuario}}">{{$user->nombre_usuario}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <button class="btn btn-primary w-100" id="btn-crear">GUARDAR</button>
-                       
+
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -160,7 +169,7 @@
                     elemento.remove();
                 })
             });
-            $(document).on('click','#btn-crear',function (e) {                
+            $(document).on('click','#btn-crear',function (e) {
                 let etapas = [];
                 let elemento = $('#sortable .external-event');
                 $.each(elemento,function (i,v) {
@@ -172,16 +181,17 @@
                 })
                 data = {
                     nombre:$('#nombre').val(),
-                    descripcion:$('#descricion').text(),
-                    estado:$('#estado').val(),    
-                    etapas:etapas,                
+                    descripcion:$('#descripcion').val(),
+                    estado:$('#estado').val(),
+                    vendedor:$('#usuario_asignado').val(),
+                    etapas:etapas,
                 }
+
+
                 $.post({
                         url: '{{route("new.gira")}}',
                         data: data,
-                        beforeSend: function() {                            
-                        },
-                        success: function(response) {                            
+                        success: function(response) {
                             window.location="{{route('giras')}}?message=true";
                         }
                     })

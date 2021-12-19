@@ -3,7 +3,7 @@
         <div class="row d-flex justify-content-around">
             <div class="col"></div>
             <div class="col text-center">
-                <h5 class="fw-bold my-2">B/D CLIENTES <i class="fas fa-chevron-right"></i> JUAN PEREZ PIGUAVE</h5>
+                <h5 class="fw-bold my-2">{{$gira->nombre}} <i class="fas fa-chevron-right"></i> {{$cliente->nombre}}</h5>
             </div>
             <div class="col my-auto text-right">
                 <a class="btn btn-secondary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
@@ -15,7 +15,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="card collapsed-card">
+                    <div class="card {{$open ? '': 'collapsed-card'}}">
                         <div class="card-header">
                             <h3 class="card-title text-success fw-bold"><i class="fas fa-sticky-note"></i> AGREGAR
                                 COMENTARIOS</h3>
@@ -30,10 +30,26 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Comentario</label>
+                                <label for="">Comentario de {{$usuario->nombre_usuario}}</label>
                                 <textarea class="form-control" rows="3" wire:model.defer="comentario"
                                     placeholder="Añadir nuevos comentarios ..."></textarea>
                             </div>
+                            <div class="form-group">
+                                <label for="">Tipo de Gestion</label>
+                                <select class="custom-select" wire:model="select">
+                                    <option value="" selected>Seleccione una opcion</option>
+                                    <option value="PEDIDO">PEDIDO</option>
+                                    <option value="COBRANZAS">COBRANZAS</option>
+                                    <option value="LLAMADAS">LLAMADAS</option>
+                                    <option value="VISITAS">VISITAS</option>
+                                </select>                                
+                            </div>
+                            @if ($select == 'COBRANZAS')
+                                <div class="form-group">
+                                    <label for="">Valor Recaudado</label>
+                                    <input type="number" wire:model.defer='valor_recudado' class="form-control" >
+                                </div>
+                            @endif
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -61,41 +77,51 @@
                                     <div class="col-md-12">
                                         <!-- The time line -->
                                         <div class="timeline">
-                                            <div class="time-label">
-                                                <span class="bg-info">10 Feb. 2021</span>
-                                            </div>
-                                            @foreach ($comentarios as $val)
+                                            @if ($comentarios->count() > 0)
+                                                @foreach ($comentDay as $key => $item )
+                                                    <div class="time-label">
+                                                        <span class="bg-info">{{$key}}</span>
+                                                    </div>
+                                                    @foreach ($item as $val)
+                                                        @if ($val->tipo == 'comentario')
+                                                            <div>
+                                                                <i class="fas fa-comments bg-warning"></i>
+                                                                <div class="timeline-item">
+                                                                    <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
+                                                                    <h3 class="timeline-header"><a href="#">{{$val->nombre_usuario}} </a> comento en {{$val->nombre_etapa}} </h3>
+                                                                    <div class="timeline-body">
+                                                                        <p class="my-2">{{$val->comentario}}</p>
+                                                                        <span><b>Tipo de Gestion:</b> {{$val->tipo_gestion}}</span>   
+                                                                        @empty(!$val->valor_recaudado)                                                                            
+                                                                            <span class="ml-4"><b>Valores recaudado:</b> {{number_format($val->valor_recaudado,2)}}</span>                                                                 
+                                                                        @endempty
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <div>
+                                                                <i class="fas fa-user bg-green"></i>
+                                                                <div class="timeline-item">
+                                                                    <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
+                                                                    <h3 class="timeline-header no-border"><a href="#">{{$val->nombre_usuario}}</a>
+                                                                        {{$val->comentario}} <span class="badge {{$val->color}}">{{$val->nombre_etapa}}</span></h3>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
                                                 <div>
-                                                    <i class="fas fa-comments bg-warning"></i>
+                                                    <i class="fas fa-clock bg-gray"></i>
+                                                </div>
+                                            @else
+                                                <div>
+                                                    <i class="fas fa-clock bg-gray"></i>
                                                     <div class="timeline-item">
-                                                        <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
-                                                        <h3 class="timeline-header"><a href="#">Usuario </a> comento en Etapa </h3>
-                                                        <div class="timeline-body">
-                                                            {{$val->comentario}}
-                                                        </div>
-                                                        {{-- <div class="timeline-footer">
-                                                            <a class="btn btn-success btn-sm">View comment</a>
-                                                        </div> --}}
+                                                        <h3 class="timeline-header no-border">
+                                                            Sin comentarios Hasta el momento</h3>
                                                     </div>
                                                 </div>
-                                            @endforeach
-                                            <!-- timeline item -->
-                                            <div>
-                                                <i class="fas fa-user bg-green"></i>
-                                                <div class="timeline-item">
-                                                    <span class="time"><i class="fas fa-clock"></i> 5 mins
-                                                        ago</span>
-                                                    <h3 class="timeline-header no-border"><a href="#">Sarah Young</a>
-                                                        accepted
-                                                        your friend request</h3>
-                                                </div>
-                                            </div>
-                                            <!-- END timeline item -->
-
-
-                                            <div>
-                                                <i class="fas fa-clock bg-gray"></i>
-                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <!-- /.col -->
@@ -106,6 +132,12 @@
                     </div>
                 </div>
                 <div class="col-md-4">
+                    @empty (!$errorComentario)                        
+                        <div class="callout callout-danger">
+                            <h5>{{$usuario->nombre_usuario}} tu comentario no pudo ser agregado!</h5>
+                            <p>Verifica que el campo de comentario y tipo de gestion no esten vacios.</p>
+                        </div>
+                    @endempty
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title text-info"><i class="fas fa-caret-right"></i> ETAPAS</h3>
@@ -118,15 +150,11 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleSelectBorderWidth2">Modificar la Etapa Actual</label>
-                                <select class="custom-select form-control-border border-width-2"
-                                    id="exampleSelectBorderWidth2">
-                                    <option>B/D Clientes</option>
-                                    <option>Por visitar</option>
-                                    <option>Por Llamar</option>
-                                    <option>Visitas</option>
-                                    <option>Llamadas</option>
-                                    <option>Pedidos</option>
+                                <label>Modificar la Etapa Actual</label>
+                                <select wire:change="cambiarEtapa" wire:model='etapa_actual' class="custom-select form-control-border border-width-2 border-info">
+                                    @foreach ($etapas_gira as $etapa )
+                                        <option value="{{$etapa->id}}">{{$etapa->nombre}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -147,10 +175,20 @@
                                 <input type="text" id="tarea" class="form-control">
                             </div>
                             <div class="form-group">
+                                <label for="">Tipo de Gestion</label>
+                                <select id="select_recordatorio" class="custom-select">
+                                    <option value="" selected>Seleccione una opcion</option>
+                                    <option value="PEDIDO">PEDIDO</option>
+                                    <option value="COBRANZAS">COBRANZAS</option>
+                                    <option value="LLAMADAS">LLAMADAS</option>
+                                    <option value="VISITAS">VISITAS</option>
+                                </select>                                
+                            </div>
+                            <div class="form-group">
                                 @section('plugins.TempusDominusBs4', true)
                                     @php
                                         $config = ['format' => 'DD/MM/YYYY HH:mm', 'minDate' => 'js:moment()', 'showClear' => true];
-                                        
+
                                     @endphp
                                     <x-adminlte-input-date id="horario" name="idLabel" :config="$config"
                                         placeholder="Escige una fecha..." label="Fecha y Hora">
@@ -174,23 +212,12 @@
         </div>
 
         @push('js')
-            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                 });
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                })
                 $('#guardar_recordatorio').click(function() {
                     let fecha = $('#horario').val() + ":00"
                     fecha = fecha.split(' ');
@@ -202,22 +229,30 @@
                     let data = {
                         'tarea': $('#tarea').val(),
                         'horario': fecha,
+                        'tipo_gestion': $('#select_recordatorio').val(),
                     }
-                    $.post({
-                        url: '{{ route('crearTarea') }}',
-                        data: data,
-                        beforeSend: function() {},
-                        success: function(response) {
-                            if (response.trim() == 'success') {
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: 'Tarea Creada'
-                                })
-                                $('#horario').val('')
-                                $('#tarea').val('')
+                    if($('#tarea').val() != '' &&  $('#horario').val() != '' && $('#select_recordatorio').val() != '' ){
+                        $.post({
+                            url: '{{ route('crearTarea') }}',
+                            data: data,
+                            beforeSend: function() {},
+                            success: function(response) {
+                                if (response.trim() == 'success') {
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'Tarea Creada'
+                                    })
+                                    $('#horario').val('')
+                                    $('#tarea').val('')
+                                }
                             }
-                        }
-                    })
+                        })
+                    }else{
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Verifique los campos vacios'
+                        })
+                    }
                 })
 
             </script>
