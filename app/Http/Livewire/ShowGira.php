@@ -36,7 +36,8 @@ class ShowGira extends Component
             ->join('giras', 'giras.id', '=', 'etapas.id_gira')
             ->leftjoin('cat_ciudad', 'cat_ciudad.descripcion', '=', 'aw_clientes.ciudad')
             ->leftjoin('cat_provincia', 'cat_provincia.id_provincia', '=', 'cat_ciudad.id_provincia')
-            ->select('aw_clientes.*', 'etapas.id AS id_etapa', 'cat_provincia.descripcion AS nombre_provincia')->where('giras.id', $this->id_gira)->get();
+            ->leftjoin('aw_users', 'aw_users.id_usuario', '=', 'etapa_has_clientes.id_usuario')
+            ->select('aw_clientes.*', 'etapas.id AS id_etapa', 'cat_provincia.descripcion AS nombre_provincia', 'aw_users.nombre_usuario')->where('giras.id', $this->id_gira)->get();
         $clientes_x_etapa_D = EtapaHasCliente::join('aw_clientes', 'aw_clientes.id_cliente', '=', 'etapa_has_clientes.id_cliente')
             ->join('etapas', 'etapas.id', '=', 'etapa_has_clientes.id_etapa')            
             ->join('giras', 'giras.id', '=', 'etapas.id_gira')->select('etapas.id AS id_etapa')->where('giras.id', $this->id_gira)->distinct('etapas.id')->get();
