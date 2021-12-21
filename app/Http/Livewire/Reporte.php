@@ -12,7 +12,7 @@ class Reporte extends Component
 {
     public function render()
     {
-        $gira = Gira::where('id_usuario',session('id_usuario'))->get();        
+        $gira = Gira::all();        
         $usuario = DB::table('aw_users')->where('id_usuario',session('id_usuario'))->first('nombre_usuario');
         $usuarios = DB::table('aw_users')->where('tipo_usuario','vendedor')->get();
         return view('livewire.reporte',compact('usuario','usuarios','gira'))->layout('components.plantilla');
