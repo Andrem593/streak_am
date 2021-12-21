@@ -26,16 +26,20 @@ class ShowGira extends Component
         $this->options = count($this->selectedClientes) > 0;
         $gira = Gira::find($this->id_gira);
         $etapas = DB::table('etapa_has_clientes')->rightjoin('etapas', 'etapas.id', '=', 'etapa_has_clientes.id_etapa')
-            ->where('etapas.id_gira', $this->id_gira)
+            ->where('etapas.id_gira', $this->id_gira)            
             ->select('etapas.*', DB::raw('count(etapa_has_clientes.id_etapa) as total'))
             ->groupBy('etapas.id')
             ->orderBy('orden')
             ->get();
         $clientes_x_etapa = EtapaHasCliente::join('aw_clientes', 'aw_clientes.id_cliente', '=', 'etapa_has_clientes.id_cliente')
             ->join('etapas', 'etapas.id', '=', 'etapa_has_clientes.id_etapa')
-            ->join('giras', 'giras.id', '=', 'etapas.id_gira')->select('aw_clientes.*', 'etapas.id AS id_etapa')->where('giras.id', $this->id_gira)->get();
+            ->join('giras', 'giras.id', '=', 'etapas.id_gira')
+            ->leftjoin('cat_ciudad', 'cat_ciudad.descripcion', '=', 'aw_clientes.ciudad')
+            ->leftjoin('cat_provincia', 'cat_provincia.id_provincia', '=', 'cat_ciudad.id_provincia')
+            ->leftjoin('aw_users', 'aw_users.id_usuario', '=', 'etapa_has_clientes.id_usuario')
+            ->select('aw_clientes.*', 'etapas.id AS id_etapa', 'cat_provincia.descripcion AS nombre_provincia', 'aw_users.nombre_usuario')->where('giras.id', $this->id_gira)->get();
         $clientes_x_etapa_D = EtapaHasCliente::join('aw_clientes', 'aw_clientes.id_cliente', '=', 'etapa_has_clientes.id_cliente')
-            ->join('etapas', 'etapas.id', '=', 'etapa_has_clientes.id_etapa')
+            ->join('etapas', 'etapas.id', '=', 'etapa_has_clientes.id_etapa')            
             ->join('giras', 'giras.id', '=', 'etapas.id_gira')->select('etapas.id AS id_etapa')->where('giras.id', $this->id_gira)->distinct('etapas.id')->get();
         $i = 1;
         $usuario = DB::table('aw_users')->where('id_usuario', session('id_usuario'))->first('tipo_usuario');

@@ -118,8 +118,8 @@
                                                                     </td>
                                                                     <td><input type="checkbox" wire:model="selectedClientes"
                                                                             value="{{ $cliente->id_cliente }}"></td>
-                                                                    <td>Usuario</td>
-                                                                    <td>{{ $cliente->ciudad }}</td>
+                                                                    <td>{{ $cliente->nombre_usuario }}</td>
+                                                                    <td>{{ $cliente->nombre_provincia }}</td>
                                                                     <td>{{ $cliente->ciudad }}</td>
                                                                     <td>{{ $cliente->nombre }}</td>
                                                                     <td>{{ $cliente->telefono }}</td>
