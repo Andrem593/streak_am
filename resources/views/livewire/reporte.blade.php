@@ -17,10 +17,15 @@
                         <div class="form-group">
                             <label for="cmb_user">Vendedor</label>
                             <select class="custom-select" id="cmb_user">
+                                
+                                @if (count($usuarios) == 1)
+                                    <option value="{{ $usuarios[0]->id_usuario }}">{{ $usuarios[0]->nombre_usuario }}</option>
+                                @else
                                 <option value="">Seleccionar vendedor</option>
                                 @foreach ($usuarios as $item)
                                     <option value="{{ $item->id_usuario }}">{{ $item->nombre_usuario }}</option>
                                 @endforeach
+                                @endif
                             </select>
                         </div>
                     </div>
