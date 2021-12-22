@@ -95,6 +95,7 @@
                                                 @endif
                                             @endforeach
                                             @if ($flag)
+                                            <div class="table-responsive">
                                                 <table class="table table-sm">
                                                     <thead>
                                                         <tr>
@@ -129,7 +130,7 @@
                                                         @endforeach
                                                     </tbody>
                                                 </table>
-
+                                            </div>
                                             @else
                                                 <h6>Sin Clientes</h6>
                                             @endif
