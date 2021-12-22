@@ -15,9 +15,9 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="cmb_user">Usuario</label>
+                            <label for="cmb_user">Vendedor</label>
                             <select class="custom-select" id="cmb_user">
-                                <option value="">Seleccionar usuario</option>
+                                <option value="">Seleccionar vendedor</option>
                                 @foreach ($usuarios as $item)
                                     <option value="{{ $item->id_usuario }}">{{ $item->nombre_usuario }}</option>
                                 @endforeach
@@ -73,7 +73,7 @@
                         <tr>
                             <th>FECHA</th>
                             <th>CLIENTE</th>
-                            <th>TIPO</th>
+                            <th>TIPO GESTION</th>
                             <th>GESTION</th>
                         </tr>
                     </thead>
@@ -130,17 +130,6 @@
 
                 "destroy": true,
                 "processing": true,
-                // "ajax": {
-                //     "url": "{{ route('fase.dataTable') }}",
-                //     "method": "POST",
-                //     "dataSrc": function(json) {
-                //         if (json == 'no data') {
-                //             return [];
-                //         } else {
-                //             return json;
-                //         }
-                //     },
-                // },
                 "columns": [{
                         "data": "created_at",
                         "render": function(data, type, row) {
@@ -152,7 +141,7 @@
                         "data": "nombre"
                     },
                     {
-                        "data": "tipo",
+                        "data": "tipo_gestion",
                     },
                     {
                         "data": 'comentario',
@@ -163,13 +152,6 @@
                     [-1, 10, 25, 50],
                     ["Todos", 10, 25, 50]
                 ],
-                // "columnDefs": [{
-                //         "targets": [3],
-                //         "orderable": false,
-                //         "searchable": false
-                //     },
-                //     //{ "width": "1%", "targets": 0 }
-                // ],
                 "order": [
                     [0, 'desc']
                 ],
@@ -232,10 +214,6 @@
                     },
                     minLength: 1,
                     select: function(event, ui) {
-                        //  url = url.replace(':id', ui.item.estilo);
-                        //  document.location.href = url;
-                        //get_datos_afiliado(ui.item.data);
-                        //console.log('You selected: ' + ui.item.value + ', ' + ui.item.data);
                         $('#id_cliente').val(ui.item.id);
                     }
                 }).autocomplete("instance")._renderItem = function(ul, item) {

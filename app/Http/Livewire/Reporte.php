@@ -23,7 +23,7 @@ class Reporte extends Component
 
         $response = '';
         $comment = Comentario::join('aw_clientes','aw_clientes.id_cliente','=','comentarios.id_cliente')
-        ->select('comentarios.*','aw_clientes.*');
+        ->select('comentarios.*','aw_clientes.*')->where('tipo','<>','cambio_etapa');
         if(!empty($request->id_usuario)){
             $comment->where('comentarios.id_usuario',$request->id_usuario);
         }
