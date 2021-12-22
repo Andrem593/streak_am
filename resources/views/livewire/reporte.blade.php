@@ -74,6 +74,9 @@
                             <th>FECHA</th>
                             <th>CLIENTE</th>
                             <th>TIPO GESTION</th>
+                            <th>GIRA</th>
+                            <th>ETAPA</th>
+                            <th>VENDEDOR</th>
                             <th>GESTION</th>
                         </tr>
                     </thead>
@@ -142,6 +145,15 @@
                     },
                     {
                         "data": "tipo_gestion",
+                    },
+                    {
+                        "data": "nombre_gira",
+                    },
+                    {
+                        "data": "nombre_etapa",
+                    },
+                    {
+                        "data": "nombre_usuario",
                     },
                     {
                         "data": 'comentario',

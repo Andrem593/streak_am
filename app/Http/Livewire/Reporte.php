@@ -13,8 +13,13 @@ class Reporte extends Component
     public function render()
     {
         $gira = Gira::all();        
-        $usuario = DB::table('aw_users')->where('id_usuario',session('id_usuario'))->first('nombre_usuario');
-        $usuarios = DB::table('aw_users')->where('tipo_usuario','vendedor')->get();
+        $usuario = DB::table('aw_users')->where('id_usuario',session('id_usuario'))->first('nombre_usuario','tipo_usuario','id_usuario');
+        $usuarios = DB::table('aw_users')->where('tipo_usuario','vendedor');
+        dd($usuario);
+        if($usuario->tipo_usuario != 'administrador'){
+            $usuarios->where('id_usuario',$usuario->id_usuario);
+        }
+        $usuarios->get();
         return view('livewire.reporte',compact('usuario','usuarios','gira'))->layout('components.plantilla');
     }
 
@@ -22,13 +27,13 @@ class Reporte extends Component
     {
 
         $response = '';
-        $comment = Comentario::join('aw_clientes','aw_clientes.id_cliente','=','comentarios.id_cliente')
-        ->select('comentarios.*','aw_clientes.*')->where('tipo','<>','cambio_etapa');
+        $comment = Comentario::join('aw_clientes','aw_clientes.id_cliente','=','comentarios.id_cliente')->join('etapas','etapas.id','=','comentarios.id_etapa')->join('giras','giras.id','=','etapas.id_gira')->join('aw_users','aw_users.id_usuario','=','giras.id_usuario')
+        ->select('comentarios.*','aw_clientes.*','giras.nombre as nombre_gira','etapas.nombre as nombre_etapa', 'aw_users.nombre_usuario')->where('tipo','<>','cambio_etapa');
         if(!empty($request->id_usuario)){
             $comment->where('comentarios.id_usuario',$request->id_usuario);
         }
         if(!empty($request->id_gira)){
-            $comment->join('etapas','etapas.id','=','comentarios.id_etapa')->join('giras','giras.id','=','etapas.id_gira')->where('giras.id',$request->id_gira);
+            $comment->where('giras.id',$request->id_gira);
         }
         if(!empty($request->id_cliente)){
             $comment->where('aw_clientes.id_cliente',$request->id_cliente);
