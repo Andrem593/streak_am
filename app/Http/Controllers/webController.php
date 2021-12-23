@@ -27,7 +27,15 @@ class webController extends Controller
                 ->where('id_usuario', session('id_usuario'))
                 ->first();
         }
-        $giras = Gira::leftJoin('aw_users','aw_users.id_usuario','=','giras.id_usuario')->select('giras.*','aw_users.nombre_usuario')->get();
+        
+        $giras = Gira::leftJoin('aw_users','aw_users.id_usuario','=','giras.id_usuario')->select('giras.*','aw_users.nombre_usuario');
+        if($user->tipo_usuario == 'vendedor'){
+            $giras->where('aw_users.id_usuario', session('id_usuario'));
+        }
+        if (!empty($_GET['id_cliente'])) {
+            $giras->join('etapas','etapas.id_gira','=','giras.id')->join('etapa_has_clientes','etapa_has_clientes.id_etapa','=','etapas.id')->join('aw_clientes','aw_clientes.id_cliente','=','etapa_has_clientes.id_cliente')->where('aw_clientes.id_cliente', $_GET['id_cliente']);
+        }
+        $giras = $giras->get();
         $i = 1;        
         return view('giras.index', compact('giras', 'i','user'));
     }
