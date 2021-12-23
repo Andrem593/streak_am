@@ -134,6 +134,7 @@ class webController extends Controller
             'tarea' => $request->tarea,
             'horario' => $request->horario,
             'tipo_gestion'=>$request->tipo_gestion,
+            'nombre_cliente'=>$request->nombre_cliente,
         ]);
         return 'success';
     }

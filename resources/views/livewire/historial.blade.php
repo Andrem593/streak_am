@@ -3,7 +3,7 @@
         <div class="row d-flex justify-content-around">
             <div class="col"></div>
             <div class="col text-center">
-                <h5 class="fw-bold my-2">{{$gira->nombre}} <i class="fas fa-chevron-right"></i> {{$cliente->nombre}}</h5>
+                <h5 class="fw-bold my-2">{{$gira->nombre}} <i class="fas fa-chevron-right"></i> <span id="nombre_cliente">{{$cliente->nombre}}</span></h5>
             </div>
             <div class="col my-auto text-right">
                 <a class="btn btn-secondary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
@@ -230,23 +230,25 @@
                         'tarea': $('#tarea').val(),
                         'horario': fecha,
                         'tipo_gestion': $('#select_recordatorio').val(),
+                        'nombre_cliente': $('#nombre_cliente').text(),
                     }
+                    console.log(data);
                     if($('#tarea').val() != '' &&  $('#horario').val() != '' && $('#select_recordatorio').val() != '' ){
-                        $.post({
-                            url: '{{ route('crearTarea') }}',
-                            data: data,
-                            beforeSend: function() {},
-                            success: function(response) {
-                                if (response.trim() == 'success') {
-                                    Toast.fire({
-                                        icon: 'success',
-                                        title: 'Tarea Creada'
-                                    })
-                                    $('#horario').val('')
-                                    $('#tarea').val('')
-                                }
-                            }
-                        })
+                        // $.post({
+                        //     url: '{{ route('crearTarea') }}',
+                        //     data: data,
+                        //     beforeSend: function() {},
+                        //     success: function(response) {
+                        //         if (response.trim() == 'success') {
+                        //             Toast.fire({
+                        //                 icon: 'success',
+                        //                 title: 'Tarea Creada'
+                        //             })
+                        //             $('#horario').val('')
+                        //             $('#tarea').val('')
+                        //         }
+                        //     }
+                        // })
                     }else{
                         Toast.fire({
                             icon: 'error',
