@@ -68,7 +68,7 @@
                         <tbody>
                             <div class="row p-0 m-0">
                                 <div class="col p-1">
-                                    <form class="form-inline ml-3" method="GET" action="{{ route('giras') }}">
+                                    {{-- <form class="form-inline ml-3" method="GET" action="{{ route('giras') }}"> --}}
                                         <div class="input-group input-group-sm">
                                             <input type="hidden" id="id_cliente" name="id_cliente">
                                             <input class="form-control form-control-navbar" type="search"
@@ -79,7 +79,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </form>
+                                    {{-- </form> --}}
                                 </div>
                             </div>
                             @if(count($giras) > 0)                                
@@ -186,7 +186,8 @@
             $('#txt_cliente').autocomplete({
                 source: function(request, response) {
                     $.getJSON(path, {
-                            term: request.term
+                            term: request.term,
+                            only: 'etapaCliente'
                         },
                         response
                     );
@@ -198,6 +199,7 @@
                 minLength: 1,
                 select: function(event, ui) {
                     $('#id_cliente').val(ui.item.id);
+                    $(location).attr('href', '{{ url("historial") }}/' + ui.item.id + '/' + ui.item.id_etapa + '/' + ui.item.id_gira);
                 }
             }).autocomplete("instance")._renderItem = function(ul, item) {
                 if (item.value) {
