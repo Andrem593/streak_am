@@ -4,6 +4,7 @@ use App\Http\Controllers\webController;
 use App\Http\Livewire\Historial;
 use Illuminate\Support\Facades\Route;
 use App\Events\RealTimeMessage;
+use App\Http\Livewire\Cartera;
 use App\Http\Livewire\Reporte;
 use App\Http\Livewire\ShowGira;
 
@@ -26,6 +27,8 @@ Route::get('/giras-edit/{id_gira}',[webController::class,'edit'])->name('giras.e
 Route::get('/historial/{id_cliente}/{id_etapa}/{id_gira}',Historial::class)->name('fase.historial');
 Route::get('/show-gira/{id_gira}',ShowGira::class)->name('fase.gira');
 Route::get('/reporte',Reporte::class)->name('fase.reporte');
+Route::get('/cartera',[webController::class, 'cartera'])->name('fase.cartera');
+Route::post('/cargar-excel',[webController::class,'saveExcel'])->name('fase.cargarExcel');
 Route::post('/reporteTable',[Reporte::class,'reporte'])->name('fase.dataTable');
 Route::post('/crear-gira',[webController::class,'createGira'])->name('new.gira');
 Route::post('/editar-gira',[webController::class,'editarGira'])->name('edit.gira');

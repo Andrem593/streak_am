@@ -16,6 +16,7 @@
         "laraveles/spanish": "^1.5",
         "livewire/livewire": "^2.8",
         "nesbot/carbon": "^2.55",
+        "phpoffice/phpspreadsheet": "^1.20",
         "pusher/pusher-php-server": "^7.0",
         "twbs/bootstrap": "5.0.2"
     },
