@@ -213,8 +213,17 @@
                 dataTable.draw();
             }
             $('#cmb_user').change(function(){
-                vendedor = $('#cmb_user option:selected').text().trim();
-                console.log(dataTable.buttons(0).action());
+                vendedor = $('#cmb_user option:selected').text().trim();                
+                let boton = dataTable.buttons(0);
+                boton.remove();
+                dataTable.button().add(0,{
+                    extend: 'excelHtml5',
+                    text: '<i class="fas fa-file-excel"></i> ',
+                    titleAttr: 'Exportar a Excel',
+                    className: 'btn btn-success',
+                    filename: 'REPORTE STREAK',
+                    title:'VENDEDOR:'+vendedor.toUpperCase(),
+                })
             })    
             $(document).ready(function() {
                 $('#txt_fecha').daterangepicker({
