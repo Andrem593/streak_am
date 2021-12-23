@@ -304,50 +304,31 @@ class webController extends Controller
 
         dd($data);
 
-        // foreach ($data as $key => $row) {
-        //     if ($key >= 1) {
+        foreach ($data as $key => $row) {
+            if ($key == 0) {
+                
+            }else{
 
-        //         $marca_id = DB::table('marcas')->where('nombre', 'like', '%' . $row[3] . '%')->value('id');
+                $insert_data = array(
+                    'codigo'  => $row[0],
+                    'cliente'  => $row[1],
+                    'tipo_cliente'  => $row[2],
+                    'zona'  => $row[3],
+                    'gira'  => $row[4],
+                    'vendedor' => $row[5],
+                    'n_documento'  => $row[6],
+                    'tipo_documento'  => $row[7],
+                    'f_comercial'  => $row[8],
+                    'fecha_emision'  => $row[9],
+                    'total'  => $row[10],
+                    'saldo_factura'  => $row[11],
+                    'saldo'  => $row[12],
+                    'fecha'  => $row[13],
+                );
 
-        //         if (empty($marca_id)) {
-        //             $marca_id = DB::table('marcas')->insertGetId(
-        //                 array('nombre' => $row[3], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s'))
-        //             );
-        //         }
-
-        //         $proveedor_id = DB::table('proveedores')->where('nombre', 'like', '%' . $row[7] . '%')->value('id');
-
-        //         if (empty($proveedor_id)) {
-        //             $proveedor_id = DB::table('proveedores')->insertGetId(
-        //                 array('nombre' => $row[7], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s'))
-        //             );
-        //         }
-
-        //         $insert_data = array(
-        //             'sku'  => $row[0],
-        //             'nombre_producto'  => $row[1],
-        //             'descripcion'  => $row[2],
-        //             'marca_id'  => $marca_id,
-        //             'grupo' => $row[4],
-        //             'seccion'  => $row[5],
-        //             'clasificacion'  => $row[6],
-        //             'proveedor_id'  => $proveedor_id,
-        //             'estilo'  => $row[8],
-        //             'color'  => $row[9],
-        //             'talla'  => $row[10],
-        //             'cantidad_inicial'  => $row[11],
-        //             'stock'  => $row[11],
-        //             'valor_venta'  => $row[12],
-        //             'nombre_mostrar'  => $row[13],
-        //             'categoria'  => $row[14],
-        //             'subcategoria'  => $row[15],
-        //             'precio_empresaria'  => $row[16],
-        //             'descuento'  => $row[17]
-        //         );
-
-        //         //Producto::create($insert_data);
-        //     }
-        // }
+                //Producto::create($insert_data);
+            }
+        }
 
         return redirect()->route('giras')
             ->with('success', 'Productos cargados correctamente');

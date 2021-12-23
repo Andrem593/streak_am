@@ -15,6 +15,7 @@ class Carteras extends Migration
     {
         Schema::create('carteras', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('codigo');
             $table->string('cliente');
             $table->string('tipo_cliente');
             $table->string('zona');
