@@ -109,6 +109,13 @@
     color: #777;
 }
 
+.text-oculto{
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @media only screen and (max-width: 479px) {
     .breadcrumb li {
         padding: 8px 15px 8px 30px;

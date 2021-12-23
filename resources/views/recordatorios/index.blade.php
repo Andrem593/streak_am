@@ -16,7 +16,7 @@
         <div class="card shadow p-2">
             @if ($tareas->count() > 0)
                 <div class="card-header">
-                    <h3 class="card-title">Tienes Actualemente {{$tareas->count()}} recordatorios pendientes</h3>
+                    <h3 class="card-title">Tienes Actualmente {{$tareas->count()}} recordatorios</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -30,7 +30,7 @@
                         <div class="col">
                             <div class="list-group">
                                 @foreach ($tareas as $tarea)
-                                    <a href="#" id="{{$tarea->id}}" class="notify notification-element">
+                                    <a href="#" id="{{$tarea->id}}" class="notification-element">
                                         <div class="card__message row border-bottom py-3">
                                             <div class="col-2 col-md-1 my-auto  text-center">
                                                 <svg width="2rem" height="2rem" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,9 +45,16 @@
                                                         fill="#4CE364" />
                                                 </svg>
                                             </div>
-                                            <div class="col">
+                                            <div class="col-8">                                                
                                                 <span class="text-muted">Recordatorio pendiente {{$tarea->created_at->diffForHumans()}}</span>
+                                                <p class="text-muted p-0 m-0">Cliente: {{$tarea->nombre_cliente}}</p>
                                                 <p class="mb-0">{{$tarea->tarea}}</p>
+                                            </div>
+                                            <div class="col-12 col-md-3 text-right">
+                                                <span class="text-muted mr-1">
+                                                    Estado: {{$tarea->estado == 3 ? 'Leido' : 'Sin leer'}}
+                                                </span>
+                                                <div class="my-2 px-2 mx-auto"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Eliminar</button></div>
                                             </div>
                                         </div>
                                     </a>

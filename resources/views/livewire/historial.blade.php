@@ -232,23 +232,22 @@
                         'tipo_gestion': $('#select_recordatorio').val(),
                         'nombre_cliente': $('#nombre_cliente').text(),
                     }
-                    console.log(data);
                     if($('#tarea').val() != '' &&  $('#horario').val() != '' && $('#select_recordatorio').val() != '' ){
-                        // $.post({
-                        //     url: '{{ route('crearTarea') }}',
-                        //     data: data,
-                        //     beforeSend: function() {},
-                        //     success: function(response) {
-                        //         if (response.trim() == 'success') {
-                        //             Toast.fire({
-                        //                 icon: 'success',
-                        //                 title: 'Tarea Creada'
-                        //             })
-                        //             $('#horario').val('')
-                        //             $('#tarea').val('')
-                        //         }
-                        //     }
-                        // })
+                        $.post({
+                            url: '{{ route('crearTarea') }}',
+                            data: data,
+                            beforeSend: function() {},
+                            success: function(response) {
+                                if (response.trim() == 'success') {
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'Tarea Creada'
+                                    })
+                                    $('#horario').val('')
+                                    $('#tarea').val('')
+                                }
+                            }
+                        })
                     }else{
                         Toast.fire({
                             icon: 'error',
