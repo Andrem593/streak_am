@@ -33,5 +33,6 @@ Route::get('/autocompletar', [webController::class,'autocompletar'])->name('web.
 Route::post('/crear-tarea',[webController::class,'crearTarea'])->name('crearTarea');
 Route::get('notifications/get',[webController::class,'buscarNotificaciones'])->name('buscarNotificaciones');
 Route::get('notificationsAll',[webController::class,'notificaciones'])->name('allNotifications');
+Route::post('eliminar-recordatorio',[webController::class,'eliminarTarea'])->name('eliminarTarea');
 Route::get('leerNotificacion/{id_notificacion}',[webController::class,'marcarLeida'])->name('leerNotificacion');
 Route::post('/validacionClientes', [webController::class,'validacionClientesEtapa'])->name('etapa.validacionClientes');

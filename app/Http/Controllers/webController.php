@@ -246,4 +246,8 @@ class webController extends Controller
         $response = json_encode($comment);
         return $response;
     }
+    public function eliminarTarea(Request $request){
+        Tarea::where('id',$request->id_tarea)->delete();
+        return 'success';
+    }
 }
