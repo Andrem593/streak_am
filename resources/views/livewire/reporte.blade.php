@@ -137,35 +137,7 @@
                 },
             });
             var vendedor = $('#cmb_user option:selected').text().trim();    
-            $('#cmb_user').change(function(){
-                vendedor = $('#cmb_user option:selected').text().trim();
-                dataTable.button(0).collectionRebuild( [{
-                        extend: 'excelHtml5',
-                        text: '<i class="fas fa-file-excel"></i> ',
-                        titleAttr: 'Exportar a Excel',
-                        className: 'btn btn-success',
-                        filename: 'REPORTE STREAK',
-                        title:'VENDEDOR:'+vendedor.toUpperCase(),
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i> ',
-                        titleAttr: 'Exportar a PDF',
-                        className: 'btn btn-danger',
-                        pageSize: 'TABLOID',
-                        orientation: 'landscape'
-                    },
-                    {
-                        extend: 'print',
-                        text: '<i class="fa fa-print"></i> ',
-                        titleAttr: 'Imprimir',
-                        className: 'btn btn-info',
-                        exportOptions: {
-                            stripHtml: false
-                        }
-                    },
-                ] )
-            })       
+               
             let dataTable = $('#reports').DataTable({
 
                 "destroy": true,
@@ -240,7 +212,10 @@
                 dataTable.clear();
                 dataTable.draw();
             }
-
+            $('#cmb_user').change(function(){
+                vendedor = $('#cmb_user option:selected').text().trim();
+                console.log(dataTable.buttons(0).action());
+            })    
             $(document).ready(function() {
                 $('#txt_fecha').daterangepicker({
                     locale: {
