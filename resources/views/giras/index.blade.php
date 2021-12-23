@@ -95,18 +95,32 @@
                                         </td>
                                         <td class="project_progress">
                                             @php
-                                                $cant_clientes = App\Models\Etapa::where('id_gira',$gira->id)->join('etapa_has_clientes','etapa_has_clientes.id_etapa','=','etapas.id')
-                                                ->selectRow('count(etapa_has_clientes.id)')->get();
-                                                dd($cant_clientes);
+                                            $cant_clientes = App\Models\Etapa::where('id_gira',$gira->id)->join('etapa_has_clientes','etapa_has_clientes.id_etapa','=','etapas.id')
+                                            ->select(DB::raw('count(etapa_has_clientes.id) as total'))->first();
+                                            $cant_visitas = App\Models\Etapa::where('id_gira',$gira->id)->join('etapa_has_clientes','etapa_has_clientes.id_etapa','=','etapas.id')
+                                            ->where('etapas.nombre','=','VISITAS')
+                                            ->select(DB::raw('count(etapa_has_clientes.id) as total'))->first();
+                                            $progreso = 0;
+                                            if ($cant_clientes->total > 0) {
+                                                $progreso = ($cant_visitas->total / $cant_clientes->total) * 100;
+                                                $progreso = number_format($progreso);   
+                                            }
                                             @endphp
-                                            <div class="progress progress-sm">
-                                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57"
-                                                    aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                                            @if ($cant_clientes->total > 0)                                            
+                                                <div class="progress progress-sm">
+                                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57"
+                                                        aria-valuemin="0" aria-valuemax="100" style="width: {{$progreso}}%">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <small>
-                                                57% Completo
-                                            </small>
+                                                <small>
+                                                    {{$progreso}}% Completo
+                                                </small>
+                                            @else
+                                                <div class="text-muted">
+                                                    Sin clientes en Gira
+                                                </div>
+                                                
+                                            @endif
                                         </td>
                                         <td class="project-state">
                                             <span class="badge badge-success">{{ $gira->estado }}</span>
