@@ -8,10 +8,8 @@
                 <h2 class="fw-bold my-2">Bienvenido a STREAK {{ $user->nombre_usuario }}</h2>
             </div>
             <div class="col my-auto text-right">
-                @if ($user->tipo_usuario == 'administrador')
                     <a class="btn btn-warning btn-sm" href="{{ route('fase.reporte') }}"><i class="fas fa-file-alt"></i>
                         Reportes</a>
-                @endif
                 @if ($user->tipo_usuario == 'administrador')
                     <a class="btn btn-primary btn-sm" href="{{ route('giras.create') }}"><i
                             class="fas fa-plus mr-1"></i>Nueva
