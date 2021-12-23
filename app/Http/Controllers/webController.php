@@ -116,17 +116,31 @@ class webController extends Controller
         $data = $request->all();
 
         $term = $data['term'];
+        
 
         $clientes = DB::table('aw_clientes')
-            ->where('ruc', 'LIKE', '%' . $term . '%')
-            ->orwhere('nombre', 'LIKE', '%' . $term . '%')
-            ->limit(10)
-            ->get();
-
+            ->where('aw_clientes.ruc', 'LIKE', '%' . $term . '%')
+            ->orwhere('aw_clientes.nombre', 'LIKE', '%' . $term . '%')
+            ->limit(10);
+        
+        if(!empty($data['only'])){
+            $only = $data['only'];
+            if($only == 'etapaCliente'){
+                $clientes->join('etapa_has_clientes','etapa_has_clientes.id_cliente','=','aw_clientes.id_cliente')->join('etapas','etapas.id','=','etapa_has_clientes.id_etapa')->join('giras','giras.id','=','etapas.id_gira')->select('aw_clientes.*','etapas.id as id_etapa','giras.id as id_gira');
+            }
+        }
+        
+        $clientes = $clientes->get();
         $response = array();
 
-        foreach ($clientes as $cliente) {
-            $response[] = array("value" => $cliente->nombre, "ruc" => $cliente->ruc, "id" => $cliente->id_cliente);
+        if(!empty($data['only'])){
+            foreach ($clientes as $cliente) {
+                $response[] = array("value" => $cliente->nombre, "ruc" => $cliente->ruc, "id" => $cliente->id_cliente, "id_etapa" => $cliente->id_etapa, "id_gira" => $cliente->id_gira);
+            }
+        }else{
+            foreach ($clientes as $cliente) {
+                $response[] = array("value" => $cliente->nombre, "ruc" => $cliente->ruc, "id" => $cliente->id_cliente);
+            }
         }
 
         if (count($response) == 0) {
