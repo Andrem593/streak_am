@@ -112,21 +112,26 @@ class webController extends Controller
 
     public function autocompletar(Request $request)
     {
-
         $data = $request->all();
 
-        $term = $data['term'];
-        
+        $term = $data['term'];        
 
         $clientes = DB::table('aw_clientes')
             ->where('aw_clientes.ruc', 'LIKE', '%' . $term . '%')
             ->orwhere('aw_clientes.nombre', 'LIKE', '%' . $term . '%')
             ->limit(10);
+
+        $user = DB::table('aw_users')
+            ->where('id_usuario', session('id_usuario'))
+            ->first();
         
         if(!empty($data['only'])){
             $only = $data['only'];
             if($only == 'etapaCliente'){
                 $clientes->join('etapa_has_clientes','etapa_has_clientes.id_cliente','=','aw_clientes.id_cliente')->join('etapas','etapas.id','=','etapa_has_clientes.id_etapa')->join('giras','giras.id','=','etapas.id_gira')->select('aw_clientes.*','etapas.id as id_etapa','giras.id as id_gira');
+                if($user->tipo_usuario == 'vendedor'){
+                    $clientes->where('giras.id_usuario', $user->id_usuario);
+                }
             }
         }
         
