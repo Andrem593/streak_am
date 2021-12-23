@@ -27,7 +27,7 @@
             </div>
             <div class="card-body pb-3">
                 <div class="row">
-                    <div class="col-md-4"><img src="{{url('images/sin_notificaciones.svg')}}" alt="sin notificaciones"
+                    <div class="col-md-3"><img src="{{url('images/sin_notificaciones.svg')}}" alt="sin notificaciones"
                             width="100%"></div>
                     <div class="col">
                         <div class="list-group">
@@ -60,7 +60,7 @@
                                         </span>
                                         <div class="my-2 px-2 mx-auto"><button id="{{$tarea->id}}"
                                                 class="delete-tarea btn btn-danger btn-sm"><i class="fas fa-trash"></i>
-                                                Eliminar</button></div>
+                                                </button></div>
                                     </div>
                                 </div>
                             </a>
@@ -100,29 +100,39 @@
     @push('js')
     <script>
         $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                });
-                $('.delete-tarea').click(function() {
-                    Swal.fire({
-                        title: 'Seguro de Eliminar Recordatorio?',
-                        text: "You won't be able to revert this!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                        }).then((result) => {
-                        if (result.isConfirmed) {
-                        Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                        )
-                        }
-                    })                 
-                })
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        });
+        $('.delete-tarea').click(function() {
+            Swal.fire({
+                title: 'Seguro de Eliminar Recordatorio?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Estoy seguro',
+                cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let data = {'id_tarea':$(this).attr('id')}
+                        let element = $(this).parents().parents().parents().parents();
+                        element[0].remove();
+                        $.post({
+                            url: '{{ route('eliminarTarea') }}',
+                            data: data,
+                            success: function(response) {
+                                if (response.trim() == 'success') {                                    
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'Tarea Eliminada'
+                                    })
+                                }
+                            }
+                        })
+                }
+            })                 
+        })
 
     </script>
     @endpush
