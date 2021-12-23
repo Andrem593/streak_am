@@ -17,10 +17,16 @@
                         <div class="form-group">
                             <label for="cmb_user">Vendedor</label>
                             <select class="custom-select" id="cmb_user">
-                                <option value="">Seleccionar vendedor</option>
-                                @foreach ($usuarios as $item)
-                                    <option value="{{ $item->id_usuario }}">{{ $item->nombre_usuario }}</option>
-                                @endforeach
+
+                                @if (count($usuarios) == 1)
+                                    <option value="{{ $usuarios[0]->id_usuario }}">
+                                        {{ $usuarios[0]->nombre_usuario }}</option>
+                                @else
+                                    <option value="">Seleccionar vendedor</option>
+                                    @foreach ($usuarios as $item)
+                                        <option value="{{ $item->id_usuario }}">{{ $item->nombre_usuario }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                     </div>
@@ -68,22 +74,24 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-striped projects text-center" id="reports">
-                    <thead>
-                        <tr>
-                            <th>FECHA</th>
-                            <th>CLIENTE</th>
-                            <th>TIPO GESTION</th>
-                            <th>GIRA</th>
-                            <th>ETAPA</th>
-                            <th>VENDEDOR</th>
-                            <th>GESTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="table-responsive">
+                    <table class="table table-striped projects text-center" id="reports">
+                        <thead>
+                            <tr>
+                                <th>FECHA</th>
+                                <th>CLIENTE</th>
+                                <th>TIPO GESTION</th>
+                                <th>GIRA</th>
+                                <th>ETAPA</th>
+                                <th>VENDEDOR</th>
+                                <th>GESTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -245,7 +253,7 @@
                     let fecha_desde = '';
                     let fecha_hasta = '';
                     let arrFecha = [];
-                    if(txt_fecha.length > 1){
+                    if (txt_fecha.length > 1) {
                         arrFecha = txt_fecha.split(' - ');
                     }
                     if (arrFecha.length > 1) {
