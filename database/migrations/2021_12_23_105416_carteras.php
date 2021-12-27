@@ -25,9 +25,9 @@ class Carteras extends Migration
             $table->string('tipo_documento')->nullable();
             $table->string('f_comercial')->nullable();
             $table->string('fecha_emision')->nullable();
-            $table->string('total')->nullable();
-            $table->string('saldo_factura')->nullable();
-            $table->string('saldo')->nullable();
+            $table->float('total', 8, 2)->nullable();
+            $table->float('saldo_factura', 8, 2)->nullable();
+            $table->float('saldo', 8, 2)->nullable();
             $table->string('fecha')->nullable();
             
             $table->timestamps();

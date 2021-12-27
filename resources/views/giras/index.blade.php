@@ -1,21 +1,21 @@
 <x-plantilla>
     @section('content_header')
-    <div class="card redondeado m-1 p-4 shadow-sm bg-degrade">
-        <div class="row d-flex justify-content-around">
-            <div class="col">
-                <h2 class="fw-bold my-2" style="font-size: 20px">Bienvenido a STREAK {{ $user->nombre_usuario }}</h2>
-            </div>
-            <div class="col my-auto text-right">
-                <a class="btn btn-warning btn-sm" href="{{ route('fase.reporte') }}"><i class="fas fa-file-alt"></i>
-                    Reportes</a>
-                @if ($user->tipo_usuario == 'administrador')
-                    <a class="btn btn-primary btn-sm" href="{{ route('giras.create') }}"><i
-                            class="fas fa-plus mr-1"></i>Nueva
-                        Gira</a>
-                @endif
+        <div class="card redondeado m-1 p-4 shadow-sm bg-degrade">
+            <div class="row d-flex justify-content-around">
+                <div class="col">
+                    <h2 class="fw-bold my-2" style="font-size: 20px">Bienvenido a STREAK {{ $user->nombre_usuario }}</h2>
+                </div>
+                <div class="col my-auto text-right">
+                    <a class="btn btn-warning btn-sm" href="{{ route('fase.reporte') }}"><i class="fas fa-file-alt"></i>
+                        Reportes</a>
+                    @if ($user->tipo_usuario == 'administrador')
+                        <a class="btn btn-primary btn-sm" href="{{ route('giras.create') }}"><i
+                                class="fas fa-plus mr-1"></i>Nueva
+                            Gira</a>
+                    @endif
+                </div>
             </div>
         </div>
-    </div>
     @stop
     <div class="container">
         @if (!empty($_GET['message']))
@@ -26,13 +26,8 @@
             <div class="alert alert-info">
                 <p>GIRA EDITADA CORRECTAMENTE</p>
             </div>
-        @endif
-
         <div class="card shadow-lg redondeado">
             <div class="card-header bg-success redondeado-card">
-                <h3 class="card-title">Lista de Giras Actuales</h3>
-
-                <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="minimizar">
                         <i class="fas fa-minus"></i>
                     </button>
@@ -69,20 +64,20 @@
                             <div class="row p-0 m-0">
                                 <div class="col p-1">
                                     {{-- <form class="form-inline ml-3" method="GET" action="{{ route('giras') }}"> --}}
-                                        <div class="input-group input-group-sm p-1">
-                                            <input type="hidden" id="id_cliente" name="id_cliente">
-                                            <input class="form-control form-control-navbar" type="search"
-                                                placeholder="Buscar clientes" aria-label="Search" id="txt_cliente">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="submit">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
+                                    <div class="input-group input-group-sm p-1">
+                                        <input type="hidden" id="id_cliente" name="id_cliente">
+                                        <input class="form-control form-control-navbar" type="search"
+                                            placeholder="Buscar clientes" aria-label="Search" id="txt_cliente">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">
+                                                <i class="fas fa-search"></i>
+                                            </button>
                                         </div>
+                                    </div>
                                     {{-- </form> --}}
                                 </div>
                             </div>
-                            @if(count($giras) > 0)                                
+                            @if (count($giras) > 0)
                                 @foreach ($giras as $gira)
                                     <tr>
                                         <td>
@@ -128,8 +123,8 @@
                                             @endphp
                                             @if ($cant_clientes->total > 0)
                                                 <div class="progress progress-sm">
-                                                    <div class="progress-bar bg-degrade" role="progressbar" aria-valuenow="57"
-                                                        aria-valuemin="0" aria-valuemax="100"
+                                                    <div class="progress-bar bg-degrade" role="progressbar"
+                                                        aria-valuenow="57" aria-valuemin="0" aria-valuemax="100"
                                                         style="width: {{ $progreso }}%">
                                                     </div>
                                                 </div>
@@ -147,11 +142,13 @@
                                             <span class="badge bg-success">{{ $gira->estado }}</span>
                                         </td>
                                         <td class="project-actions text-right">
-                                            <a class="btn btn-primary btn-sm" href="{{ route('fase.gira', $gira->id) }}">
+                                            <a class="btn btn-primary btn-sm"
+                                                href="{{ route('fase.gira', $gira->id) }}">
                                                 <i class="fas fa-folder">
                                                 </i>
                                             </a>
-                                            <a class="btn btn-info btn-sm" href="{{ route('giras.edit', $gira->id) }}">
+                                            <a class="btn btn-info btn-sm"
+                                                href="{{ route('giras.edit', $gira->id) }}">
                                                 <i class="fas fa-pencil-alt">
                                                 </i>
                                             </a>
@@ -162,9 +159,11 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                            @else                                
+                            @else
                                 <tr>
-                                    <td colspan="6" class="text-center"><h6>No hay giras disponibles</h6></td>
+                                    <td colspan="6" class="text-center">
+                                        <h6>No hay giras disponibles</h6>
+                                    </td>
                                 </tr>
                             @endif
                         </tbody>
@@ -199,7 +198,8 @@
                 minLength: 1,
                 select: function(event, ui) {
                     $('#id_cliente').val(ui.item.id);
-                    $(location).attr('href', '{{ url("historial") }}/' + ui.item.id + '/' + ui.item.id_etapa + '/' + ui.item.id_gira);
+                    $(location).attr('href', '{{ url('historial') }}/' + ui.item.id + '/' + ui.item.id_etapa +
+                        '/' + ui.item.id_gira);
                 }
             }).autocomplete("instance")._renderItem = function(ul, item) {
                 if (item.value) {
