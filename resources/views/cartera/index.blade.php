@@ -6,7 +6,7 @@
                 <h2 class="fw-bold my-2" style="font-size: 20px">Cartera de Clientes</h2>
             </div>
             <div class="col my-auto text-right">
-                <a class="btn btn-warning btn-sm" href=""><i class="fas fa-file-alt"></i>
+                <a class="btn btn-warning btn-sm" href="{{ public_path('resources/cartera_clientes.xlsx') }}" target="_blank"><i class="fas fa-file-alt"></i>
                     Plantilla</a>
                 <a class="btn btn-primary btn-sm" href=""><i class="fas fa-file-alt"></i>
                     Regresar</a>
