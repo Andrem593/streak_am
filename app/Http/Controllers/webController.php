@@ -306,27 +306,27 @@ class webController extends Controller
 
         foreach ($data as $key => $row) {
             if ($key == 0) {
-                if($row[0] != 'CODIGO'){
+                if(strtoupper($row[0]) != 'CODIGO'){
                     $mensaje = 'Error: Columna 1 debe llamarse "CODIGO"';
                     break;
                 }                
-                if($row[1] != 'CLIENTE'){
+                if(strtoupper($row[1]) != 'CLIENTE'){
                     $mensaje = 'Error: Columna 2 debe llamarse "CLIENTE"';
                     break;
                 }                
-                if($row[2] != 'TIPO CLIENTE'){
+                if(strtoupper($row[2]) != 'TIPO CLIENTE'){
                     $mensaje = 'Error: Columna 3 debe llamarse "TIPO CLIENTE"';
                     break;
                 }                
-                if($row[3] != 'ZONA'){
+                if(strtoupper($row[3]) != 'ZONA'){
                     $mensaje = 'Error: Columna 4 debe llamarse "ZONA"';
                     break;
                 }                
-                if($row[4] != 'GIRA'){
+                if(strtoupper($row[4]) != 'GIRA'){
                     $mensaje = 'Error: Columna 5 debe llamarse "GIRA"';
                     break;
                 }                
-                if($row[5] != 'VENDEDOR'){
+                if(strtoupper($row[5]) != 'VENDEDOR'){
                     $mensaje = 'Error: Columna 6 debe llamarse "VENDEDOR"';
                     break;
                 }                
@@ -334,31 +334,31 @@ class webController extends Controller
                     $mensaje = 'Error: Columna 7 debe llamarse "N. DOCUMENTO"';
                     break;
                 }                
-                if($row[7] != 'TIPO DOCUMENTO'){
+                if(strtoupper($row[7]) != 'TIPO DOCUMENTO'){
                     $mensaje = 'Error: Columna 8 debe llamarse "TIPO DOCUMENTO"';
                     break;
                 }                
-                if($row[8] != 'F. COMERCIAL'){
+                if(strtoupper($row[8]) != 'F. COMERCIAL'){
                     $mensaje = 'Error: Columna 9 debe llamarse "F. COMERCIAL"';
                     break;
                 }                
-                if($row[9] != 'FECHA EMISION'){
+                if(strtoupper($row[9]) != 'FECHA EMISION'){
                     $mensaje = 'Error: Columna 10 debe llamarse "FECHA EMISION"';
                     break;
                 }                
-                if($row[10] != 'TOTAL'){
+                if(strtoupper($row[10]) != 'TOTAL'){
                     $mensaje = 'Error: Columna 11 debe llamarse "TOTAL"';
                     break;
                 }                
-                if($row[11] != 'SALDO FACTURADO'){
+                if(strtoupper($row[11]) != 'SALDO FACTURADO'){
                     $mensaje = 'Error: Columna 12 debe llamarse "SALDO FACTURADO"';
                     break;
                 }                
-                if($row[12] != 'SALDO'){
+                if(strtoupper($row[12]) != 'SALDO'){
                     $mensaje = 'Error: Columna 13 debe llamarse "SALDO"';
                     break;
                 }                
-                if($row[13] != 'FECHA'){
+                if(strtoupper($row[13]) != 'FECHA'){
                     $mensaje = 'Error: Columna 14 debe llamarse "FECHA"';
                     break;
                 }
