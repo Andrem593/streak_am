@@ -302,13 +302,70 @@ class webController extends Controller
 
         $data = $spreadsheet->getActiveSheet()->toArray();
 
-        dd($data);
+        $mensaje = 'Cartera de clientes cargada correctamente';
 
         foreach ($data as $key => $row) {
             if ($key == 0) {
-                
+                if($row[0] != 'CODIGO'){
+                    $mensaje = 'Error: Columna 1 debe llamarse "CODIGO"';
+                    break;
+                }                
+                if($row[1] != 'CLIENTE'){
+                    $mensaje = 'Error: Columna 2 debe llamarse "CLIENTE"';
+                    break;
+                }                
+                if($row[2] != 'TIPO CLIENTE'){
+                    $mensaje = 'Error: Columna 3 debe llamarse "TIPO CLIENTE"';
+                    break;
+                }                
+                if($row[3] != 'ZONA'){
+                    $mensaje = 'Error: Columna 4 debe llamarse "ZONA"';
+                    break;
+                }                
+                if($row[4] != 'GIRA'){
+                    $mensaje = 'Error: Columna 5 debe llamarse "GIRA"';
+                    break;
+                }                
+                if($row[5] != 'VENDEDOR'){
+                    $mensaje = 'Error: Columna 6 debe llamarse "VENDEDOR"';
+                    break;
+                }                
+                if($row[6] != 'N. DOCUMENTO'){
+                    $mensaje = 'Error: Columna 7 debe llamarse "N. DOCUMENTO"';
+                    break;
+                }                
+                if($row[7] != 'TIPO DOCUMENTO'){
+                    $mensaje = 'Error: Columna 8 debe llamarse "TIPO DOCUMENTO"';
+                    break;
+                }                
+                if($row[8] != 'F. COMERCIAL'){
+                    $mensaje = 'Error: Columna 9 debe llamarse "F. COMERCIAL"';
+                    break;
+                }                
+                if($row[9] != 'FECHA EMISION'){
+                    $mensaje = 'Error: Columna 10 debe llamarse "FECHA EMISION"';
+                    break;
+                }                
+                if($row[10] != 'TOTAL'){
+                    $mensaje = 'Error: Columna 11 debe llamarse "TOTAL"';
+                    break;
+                }                
+                if($row[11] != 'SALDO FACTURADO'){
+                    $mensaje = 'Error: Columna 12 debe llamarse "SALDO FACTURADO"';
+                    break;
+                }                
+                if($row[12] != 'SALDO'){
+                    $mensaje = 'Error: Columna 13 debe llamarse "SALDO"';
+                    break;
+                }                
+                if($row[13] != 'FECHA'){
+                    $mensaje = 'Error: Columna 14 debe llamarse "FECHA"';
+                    break;
+                }                
             }else{
 
+                $fecha_emision = date_create($row[9]);
+                $fecha_emision = date_format($fecha_emision, 'Y-m-d');
                 $insert_data = array(
                     'codigo'  => $row[0],
                     'cliente'  => $row[1],
@@ -319,18 +376,19 @@ class webController extends Controller
                     'n_documento'  => $row[6],
                     'tipo_documento'  => $row[7],
                     'f_comercial'  => $row[8],
-                    'fecha_emision'  => $row[9],
+                    'fecha_emision'  => $fecha_emision,
                     'total'  => $row[10],
                     'saldo_factura'  => $row[11],
                     'saldo'  => $row[12],
                     'fecha'  => $row[13],
                 );
 
-                //Producto::create($insert_data);
+                DB::table('carteras')->insert($insert_data);
             }
         }
 
-        return redirect()->route('giras')
-            ->with('success', 'Productos cargados correctamente');
+        //dd($mensaje);
+
+        return redirect()->route('giras')->with('mensaje', $mensaje);
     }
 }

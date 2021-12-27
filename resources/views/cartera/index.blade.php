@@ -23,11 +23,11 @@
                     </button>
                 </div>
             </div>
+            @section('plugins.BsCustomFileInput', true)
             <div class="card-body">
                 <form action="{{ route('fase.cargarExcel') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    @section('plugins.BsCustomFileInput', true)
 
                     <x-adminlte-input-file name="excel" class="" igroup-size="sm"
                         label="Carga archivo (.xls, .xlsx)" legend="Seleccionar"
