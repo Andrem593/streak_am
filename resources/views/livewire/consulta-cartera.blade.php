@@ -54,6 +54,7 @@
                         @empty (!$data_cartera)
                             @php
                                 $sum_saldo = 0 ;
+                                $cambio = 0;
                             @endphp
                             @foreach ($data_cartera as $key=>$val)
                                 @php
@@ -75,6 +76,7 @@
                                             <td>{{$val->tipo_documento}}</td>
                                             @php
                                                 $dataTipoDocumento = $val->tipo_documento;
+                                                $cambio = 1;
                                             @endphp
                                         @else
                                             <td></td>
@@ -99,7 +101,7 @@
                                     <td class="text-center">$ {{$val->total}}</td>
                                     <td class="text-center">$ {{$val->saldo_factura}}</td>   
                                 </tr>
-                                @if ($val->tipo_documento != $data_cartera[$key +1])
+                                @if ($cambio == 1)
                                     <tr>
                                         <td></td>
                                         <td>Total {{$val->tipo_documento}} </td>
@@ -110,6 +112,7 @@
                                     </tr>
                                     @php                                    
                                         $sum_saldo = 0;
+                                        $cambio = 0;
                                     @endphp
                                 @endif
                             @endforeach

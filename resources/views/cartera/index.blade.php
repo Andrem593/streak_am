@@ -1,16 +1,5 @@
 <x-plantilla>
     @section('content_header')
-<<<<<<< HEAD
-        <div class="card redondeado m-1 p-4 shadow bg-degrade">
-            <div class="row d-flex justify-content-around">
-                <div class="col">
-                    <h2 class="fw-bold my-2" style="font-size: 20px">Cartera de Clientes</h2>
-                </div>
-                <div class="col my-auto text-right">
-                    <a class="btn btn-warning btn-sm" href="{{ public_path('resources/cartera_clientes.xlsx') }}"
-                        target="_blank"><i class="fas fa-file-excel"></i>
-                        Plantilla</a>
-=======
     <div class="card redondeado m-1 p-4 shadow bg-degrade">
         <div class="row d-flex justify-content-around">
             <div class="col">
@@ -19,7 +8,6 @@
             <div class="col my-auto text-right">
                 <a class="btn btn-warning btn-sm" href="{{ url('http://localhost:8000/resources/cartera_clientes.xlsx') }}" target="_blank"><i class="fas fa-file-excel"></i>
                     Plantilla</a>
->>>>>>> a77144d75f36170715b4bec9d3e7d544ebfdd3db
                     <a class="btn btn-primary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
                             class="fas fa-arrow-left mr-1"></i>Regresar</a>
                 </div>
@@ -80,14 +68,10 @@
         </div>
         @livewire('consulta-cartera')
     </div>
-<<<<<<< HEAD
-    </div>
-=======
     @push('css')
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
     @endpush
 
->>>>>>> a77144d75f36170715b4bec9d3e7d544ebfdd3db
     @push('js')
         <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
         <script>
