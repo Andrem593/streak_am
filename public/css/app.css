@@ -1,14 +1,5 @@
-.offcavas {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 300px;
-    height: 100vh;
-    background: #fafafa;
-    z-index: 100;
-    padding-top: 57px;
-}
 
+<<<<<<< HEAD
 .closeCanvas {
     font-size: 2rem !important;
     height: 2.5rem;
@@ -252,3 +243,5 @@ a.text-secondary:hover, a.text-secondary:focus{
         padding: 8px 15px 8px 30px;
     }
 }
+=======
+>>>>>>> 84dae8ce45752381438fff6e322940c241617103

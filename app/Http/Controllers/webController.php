@@ -275,4 +275,62 @@ class webController extends Controller
         Tarea::where('id', $request->id_tarea)->delete();
         return 'success';
     }
+
+    public function cartera()
+    {
+        return view('cartera.index');
+    }
+
+    public function saveExcel(Request $request)
+    {
+
+        $request->validate([
+            'excel' => 'required|max:10000|mimes:xlsx,xls'
+        ]);
+
+        $file_array = explode(".", $_FILES["excel"]["name"]);
+        $file_extension = end($file_array);
+
+        $file_name = time() . '.' . $file_extension;
+        move_uploaded_file($_FILES["excel"]["tmp_name"], $file_name);
+        $file_type = \PhpOffice\PhpSpreadsheet\IOFactory::identify($file_name);
+        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($file_type);
+
+        $spreadsheet = $reader->load($file_name);
+
+        unlink($file_name);
+
+        $data = $spreadsheet->getActiveSheet()->toArray();
+
+        dd($data);
+
+        foreach ($data as $key => $row) {
+            if ($key == 0) {
+                
+            }else{
+
+                $insert_data = array(
+                    'codigo'  => $row[0],
+                    'cliente'  => $row[1],
+                    'tipo_cliente'  => $row[2],
+                    'zona'  => $row[3],
+                    'gira'  => $row[4],
+                    'vendedor' => $row[5],
+                    'n_documento'  => $row[6],
+                    'tipo_documento'  => $row[7],
+                    'f_comercial'  => $row[8],
+                    'fecha_emision'  => $row[9],
+                    'total'  => $row[10],
+                    'saldo_factura'  => $row[11],
+                    'saldo'  => $row[12],
+                    'fecha'  => $row[13],
+                );
+
+                //Producto::create($insert_data);
+            }
+        }
+
+        return redirect()->route('giras')
+            ->with('success', 'Productos cargados correctamente');
+    }
 }

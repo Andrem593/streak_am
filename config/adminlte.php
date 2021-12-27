@@ -225,6 +225,12 @@ return [
     */
 
     'menu' => [
+        'MAIN NAVIGATION',
+    [
+        'text' => 'Cartera Clientes',
+        'url'  => '/cartera',
+        'icon' => 'fas fa-users',
+    ],
         // Navbar items:
         [
             'type'         => 'navbar-notification',
