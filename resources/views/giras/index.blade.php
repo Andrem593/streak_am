@@ -27,14 +27,7 @@
                 <p>GIRA EDITADA CORRECTAMENTE</p>
             </div>
         @endif
-        @if (!empty(session($mensaje)))
-        {{dd(session($mensaje))}}
-            <div class="alert alert-danger">
-                <p>{{$mensaje}}</p>
-            </div>
-        @endif
-        <div class="card">
-            <div class="card-header">
+
         <div class="card shadow-lg redondeado">
             <div class="card-header bg-success redondeado-card">
                 <h3 class="card-title">Lista de Giras Actuales</h3>
