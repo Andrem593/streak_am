@@ -1,13 +1,18 @@
 <x-plantilla>
     @section('content_header')
+    <div class="card redondeado m-1 p-4 shadow bg-degrade">
         <div class="row d-flex justify-content-around">
-            <div class="col"></div>
-            <div class="col text-center">
-                <h2 class="fw-bold my-2">Cartera de Clientes</h2>
+            <div class="col">
+                <h2 class="fw-bold my-2" style="font-size: 20px">Cartera de Clientes</h2>
             </div>
             <div class="col my-auto text-right">
+                <a class="btn btn-warning btn-sm" href=""><i class="fas fa-file-alt"></i>
+                    Plantilla</a>
+                <a class="btn btn-primary btn-sm" href=""><i class="fas fa-file-alt"></i>
+                    Regresar</a>
             </div>
         </div>
+    </div>
     @stop
 
     <div class="container">

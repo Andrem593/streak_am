@@ -1,6 +1,6 @@
 <x-plantilla>
     @section('content_header')
-    <div class="card redondeado m-1 p-4 shadow-sm bg-degrade">
+    <div class="card redondeado m-1 p-4 shadow bg-degrade">
         <div class="row d-flex justify-content-around">
             <div class="col">
                 <h2 class="fw-bold my-2" style="font-size: 20px">Bienvenido a STREAK {{ $user->nombre_usuario }}</h2>
