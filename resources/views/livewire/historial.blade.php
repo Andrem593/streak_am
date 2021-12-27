@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="card {{$open ? '': 'collapsed-card'}} shadow redondeado">
-                        <div class="card-header redondeado-card">
+                        <div class="card-header text-secondary redondeado-card">
                             <h3 class="card-title fw-bold"><i class="fas fa-sticky-note"></i> AGREGAR
                                 COMENTARIOS</h3>
 

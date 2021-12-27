@@ -1,22 +1,22 @@
 <x-plantilla>
     @section('content_header')
-    <div class="row d-flex justify-content-around">
-        <div class="col"></div>
-        <div class="col text-center">
-            <h2 class="fw-bold my-2">Todas las Notificaciones</h2>
-        </div>
-        <div class="col my-auto text-right">
-            <a class="btn btn-primary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
-                    class="fas fa-chevron-left mr-1"></i>
-                Volver</a>
+    <div class="card redondeado m-1 p-4 shadow bg-degrade">
+        <div class="row d-flex justify-content-around">
+            <div class="col">
+                <h2 class="fw-bold my-2" style="font-size: 20px">Todas las Notificaciones</h2>
+            </div>
+            <div class="col my-auto text-right">
+                <a class="btn btn-primary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
+                        class="fas fa-chevron-left mr-1"></i>
+                    Volver</a>
+            </div>
         </div>
     </div>
     @stop
     <div>
-
-        <div class="card shadow p-2">
+        <div class="card card-primary redondeado shadow">
             @if ($tareas->count() > 0)
-            <div class="card-header">
+            <div class="card-header redondeado-card">
                 <h3 class="card-title">Tienes Actualmente {{$tareas->count()}} recordatorios</h3>
 
                 <div class="card-tools">
