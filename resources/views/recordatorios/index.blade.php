@@ -14,7 +14,7 @@
     </div>
     @stop
     <div>
-        <div class="card card-primary redondeado shadow">
+        <div class="card card-info card-outline redondeado shadow">
             @if ($tareas->count() > 0)
             <div class="card-header redondeado-card">
                 <h3 class="card-title">Tienes Actualmente {{$tareas->count()}} recordatorios</h3>
