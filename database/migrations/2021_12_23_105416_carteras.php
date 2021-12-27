@@ -15,20 +15,20 @@ class Carteras extends Migration
     {
         Schema::create('carteras', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('codigo');
-            $table->string('cliente');
-            $table->string('tipo_cliente');
-            $table->string('zona');
-            $table->string('gira');
-            $table->string('vendedor');
-            $table->string('n_documento');
-            $table->string('tipo_documento');
-            $table->string('f_comercial');
-            $table->string('fecha_emision');
-            $table->string('total');
-            $table->string('saldo_factura');
-            $table->string('saldo');
-            $table->string('fecha');
+            $table->string('codigo')->nullable();
+            $table->string('cliente')->nullable();
+            $table->string('tipo_cliente')->nullable();
+            $table->string('zona')->nullable();
+            $table->string('gira')->nullable();
+            $table->string('vendedor')->nullable();
+            $table->string('n_documento')->nullable();
+            $table->string('tipo_documento')->nullable();
+            $table->string('f_comercial')->nullable();
+            $table->string('fecha_emision')->nullable();
+            $table->string('total')->nullable();
+            $table->string('saldo_factura')->nullable();
+            $table->string('saldo')->nullable();
+            $table->string('fecha')->nullable();
             
             $table->timestamps();
         });
