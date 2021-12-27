@@ -11,6 +11,17 @@
     @stop
 
     <div class="container">
+        @if (!empty(session('mensaje')))
+            @if (str_contains(session('mensaje'), 'Error:'))
+                <div class="alert alert-danger">
+                    <p>{{ session('mensaje') }}</p>
+                </div>
+            @else
+                <div class="alert alert-success">
+                    <p>{{ session('mensaje') }}</p>
+                </div>
+            @endif
+        @endif
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Cargar cartera de Clientes</h3>
@@ -41,10 +52,29 @@
                         </x-slot>
                     </x-adminlte-input-file>
                     <div class="d-flex justify-content-start">
-                        <button type="submit" class="btn btn-primary">Cargar productos</button>
+                        <button type="submit" class="btn btn-primary">Cargar cartera</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    @push('js')
+        <script>
+            $(document).ready(function() {
+                $('form').submit(function(event) {
+                    if ($(this).hasClass('submitted')) {
+                        $(this).find(':submit').html('Guardar');
+                        $(this).find(':submit').attr("disabled", false);
+                        event.preventDefault();
+                    } else {
+                        $(this).find(':submit').attr("disabled", true);
+                        $(this).find(':submit').html(
+                            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Cargando base...'
+                            );
+                        $(this).addClass('submitted');
+                    }
+                });
+            });
+        </script>
+    @endpush
 </x-plantilla>

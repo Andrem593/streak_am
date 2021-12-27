@@ -361,11 +361,42 @@ class webController extends Controller
                 if($row[13] != 'FECHA'){
                     $mensaje = 'Error: Columna 14 debe llamarse "FECHA"';
                     break;
-                }                
+                }
+
             }else{
 
-                $fecha_emision = date_create($row[9]);
-                $fecha_emision = date_format($fecha_emision, 'Y-m-d');
+                if(!empty($row[9])){
+                    $fecha_emision = date_create($row[9]);
+                    $fecha_emision = date_format($fecha_emision, 'Y-m-d');
+                }
+                if(!empty($row[13])){
+                    $fecha = date_create($row[13]);
+                    $fecha = date_format($fecha, 'Y-m-d');
+                }
+                if(!empty($row[10])){
+                    $val = explode('$', $row[10]);
+                    if($val[0] != ' '){
+                        $total = floatval ($row[10]);
+                    }else{
+                        $total = floatval ($val[1]);
+                    }
+                }
+                if(!empty($row[11])){
+                    $val = explode('$', $row[11]);
+                    if($val[0] != ' '){
+                        $saldo_factura = floatval ($row[11]);
+                    }else{
+                        $saldo_factura = floatval ($val[1]);
+                    }
+                }
+                if(!empty($row[12])){
+                    $val = explode('$', $row[12]);
+                    if($val[0] != ' '){
+                        $saldo = floatval ($row[12]);
+                    }else{
+                        $saldo = floatval ($val[1]);
+                    }
+                }
                 $insert_data = array(
                     'codigo'  => $row[0],
                     'cliente'  => $row[1],
@@ -377,18 +408,16 @@ class webController extends Controller
                     'tipo_documento'  => $row[7],
                     'f_comercial'  => $row[8],
                     'fecha_emision'  => $fecha_emision,
-                    'total'  => $row[10],
-                    'saldo_factura'  => $row[11],
-                    'saldo'  => $row[12],
-                    'fecha'  => $row[13],
+                    'total'  => $total,
+                    'saldo_factura'  => $saldo_factura,
+                    'saldo'  => $saldo,
+                    'fecha'  => $fecha,
                 );
 
                 DB::table('carteras')->insert($insert_data);
             }
         }
 
-        //dd($mensaje);
-
-        return redirect()->route('giras')->with('mensaje', $mensaje);
+        return redirect()->route('fase.cartera')->with('mensaje', $mensaje);
     }
 }
