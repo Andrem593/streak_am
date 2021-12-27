@@ -415,6 +415,8 @@ class webController extends Controller
                     'saldo_factura'  => $saldo_factura,
                     'saldo'  => $saldo,
                     'fecha'  => $fecha,
+                    'created_at' =>  \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
                 );
 
                 DB::table('carteras')->insert($insert_data);
