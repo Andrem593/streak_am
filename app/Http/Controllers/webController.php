@@ -310,7 +310,9 @@ class webController extends Controller
 
     public function cartera()
     {
-        return view('cartera.index');
+        $cartera = DB::table('carteras')->first();
+
+        return view('cartera.index', compact('cartera'));
     }
 
     public function saveExcel(Request $request)
@@ -335,8 +337,6 @@ class webController extends Controller
         $data = $spreadsheet->getActiveSheet()->toArray(null, false, false, false);
 
         $mensaje = 'Cartera de clientes cargada correctamente';
-
-        //dd($data);
 
         foreach ($data as $key => $row) {
             if ($key == 0) {
@@ -450,6 +450,10 @@ class webController extends Controller
                     'created_at' =>  \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now()
                 );
+
+                if($key == 1){
+                    DB::table('carteras')->truncate();
+                }
 
                 DB::table('carteras')->insert($insert_data);
             }
