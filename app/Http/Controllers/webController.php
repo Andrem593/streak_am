@@ -159,6 +159,38 @@ class webController extends Controller
 
         return response()->json($response);
     }
+    public function autocompletar_cartera(Request $request)
+    {
+        $data = $request->all();
+
+        $term = $data['term'];
+        $response = array();
+
+        if (!empty($term)) {
+            $clientes = DB::table('carteras')
+                ->distinct()
+                ->where('cliente', 'LIKE', '%' . $term . '%')
+                ->select('codigo','cliente')            
+                ->limit(10);
+
+
+            $clientes = $clientes->get();
+            
+            
+            foreach ($clientes as $cliente) {
+                $response[] = array("value" => $cliente->cliente,"id" => $cliente->codigo);
+            }
+            
+
+            if (count($response) == 0) {
+                $response[] = array("value" => "");
+            }
+        }else{
+            $response[] = array("value" => "");
+        }
+
+        return response()->json($response);
+    }
     public function crearTarea(Request $request)
     {
         Tarea::create([
