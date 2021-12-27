@@ -1,18 +1,21 @@
 <div>
     @section('content_header')
+    <div class="card redondeado m-1 p-4 shadow-sm bg-degrade">
         <div class="row d-flex justify-content-around">
-            <div class="col"></div>
-            <div class="col text-center">
-                <h2 class="fw-bold my-2">{{ $gira->nombre }}</h2>
+            <div class="col">
+                <h2 class="fw-bold my-2" style="font-size: 20px">{{ $gira->nombre }}</h2>
             </div>
             <div class="col my-auto text-right">
+                <a class="btn btn-primary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
+                    class="fas fa-arrow-left mr-1"></i>Regresar</a>
             </div>
         </div>
+    </div>
     @stop
 
     <div class="container">
-        <div class="card">
-            <div class="card-header">
+        <div class="card redondeado  shadow-lg">
+            <div class="card-header bg-success redondeado-card">
                 <div class="float-left{{ $options ? ' d-inline-block ' : ' d-none ' }}bg-light rounded shadow-sm py-1 px-2 w-50">
                     <div class="card-tool">
                             <button type="button" class="btn btn-tool align-middle" wire:click="clearSelected"><i
@@ -39,7 +42,7 @@
 
                 </div>
                 <div class="float-right row">
-                    <a href="{{ route('giras.edit', $id_gira) }}" class="btn btn-info btn-sm mr-2">
+                    <a href="{{ route('giras.edit', $id_gira) }}" class="btn btn-warning btn-sm mr-2">
                         <i class="fas fa-edit"></i>
                     </a>
                     @livewire('off-canvas',['id_gira'=>$id_gira])

@@ -1,21 +1,22 @@
 <x-plantilla>
     @section('content_header')
+    <div class="card redondeado m-1 p-4 shadow bg-degrade">
         <div class="row d-flex justify-content-around">
-            <div class="col"></div>
-            <div class="col text-center">
-                <h2 class="fw-bold my-2">Modulo de Giras Streak</h2>
+            <div class="col">
+                <h2 class="fw-bold my-2" style="font-size: 20px">Modulo de Giras Streak</h2>
             </div>
             <div class="col my-auto text-right">
-                <a class="btn btn-secondary btn-sm" href="{{ route('giras') }}"><i
+                <a class="btn btn-primary btn-sm" href="{{ route('giras') }}"><i
                         class="fas fa-arrow-left mr-1"></i>Regresar</a>
             </div>
         </div>
+    </div>
     @stop
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="card card-primary">
-                    <div class="card-header">
+                <div class="card card-primary redondeado shadow">
+                    <div class="card-header redondeado-card">
                         <h3 class="card-title">Crear Gira</h3>
 
                         <div class="card-tools">
@@ -59,8 +60,8 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card card-info">
-                    <div class="card-header">
+                <div class="card card-info redondeado shadow">
+                    <div class="card-header redondeado-card">
                         <h3 class="card-title">Fases de Gira</h3>
 
                         <div class="card-tools">
@@ -87,24 +88,24 @@
                                         href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div>
                             </div>
                             <div class="external-event bg-danger">LLAMADAS <div class="float-right"><a class="delete"
-                                        href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div>
+                                        href="#" style="color: #163A5F"><i class="fas fa-trash"></i></a></div>
                             </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
-                <div class="card card-info">
-                    <div class="card-header">
+                <div class="card card-info redondeado shadow">
+                    <div class="card-header redondeado-card">
                         <h3 class="card-title">Crear Fase</h3>
                     </div>
                     <div class="card-body">
                         <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
                             <ul class="fc-color-picker" id="color-chooser">
-                                <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
-                                <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
-                                <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
-                                <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                                <li><a class="text-secondary" href="#"><i class="fas fa-square"></i></a></li>
+                                <li><a class="text-primary" ><i class="fas fa-square"></i></a></li>
+                                <li><a class="text-warning" ><i class="fas fa-square"></i></a></li>
+                                <li><a class="text-success" ><i class="fas fa-square"></i></a></li>
+                                <li><a class="text-danger" ><i class="fas fa-square"></i></a></li>
+                                <li><a class="text-secondary"><i class="fas fa-square"></i></a></li>
                             </ul>
                         </div>
                         <!-- /btn-group -->
@@ -199,4 +200,5 @@
 
         </script>
     @endpush
+
 </x-plantilla>
