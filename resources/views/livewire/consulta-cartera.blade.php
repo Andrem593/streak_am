@@ -52,47 +52,66 @@
                         </div>
                     </div>
                         @empty (!$data_cartera)
+                            @php
+                                $sum_saldo = 0 ;
+                            @endphp
                             @foreach ($data_cartera as $key=>$val)
-                            <tr>
-                                @if ($key == 0)                                    
-                                    <td>{{$val->cliente}}</td>
-                                @else
-                                    <td></td>
-                                @endif
-                                @if ($key == 0)                                    
-                                    <td>{{$val->tipo_documento}}</td>
-                                    @php
-                                        $dataTipoDocumento = $val->tipo_documento;
-                                    @endphp
-                                @else                                    
-                                    @if ($dataTipoDocumento != $val->tipo_documento)
+                                @php
+                                    $sum_saldo = $sum_saldo + floatval($val->saldo_factura);
+                                @endphp
+                                <tr>
+                                    @if ($key == 0)                                    
+                                        <td>{{$val->cliente}}</td>
+                                    @else
+                                        <td></td>
+                                    @endif
+                                    @if ($key == 0)                                    
                                         <td>{{$val->tipo_documento}}</td>
                                         @php
-                                            $dataTipoDocumento = $val->tipo_documento
+                                            $dataTipoDocumento = $val->tipo_documento;
                                         @endphp
-                                    @else
-                                        <td></td>
+                                    @else                                    
+                                        @if ($dataTipoDocumento != $val->tipo_documento)
+                                            <td>{{$val->tipo_documento}}</td>
+                                            @php
+                                                $dataTipoDocumento = $val->tipo_documento;
+                                            @endphp
+                                        @else
+                                            <td></td>
+                                        @endif
                                     @endif
-                                @endif
-                                @if ($key == 0)                                    
-                                    <td>{{$val->fecha_emision}}</td>
-                                    @php
-                                        $dataFechaEmision = $val->fecha_emision;
-                                    @endphp
-                                @else                                    
-                                    @if ($dataFechaEmision != $val->fecha_emision)
+                                    @if ($key == 0)                                    
                                         <td>{{$val->fecha_emision}}</td>
                                         @php
-                                            $dataFechaEmision = $val->fecha_emision
+                                            $dataFechaEmision = $val->fecha_emision;
                                         @endphp
-                                    @else
+                                    @else                                    
+                                        @if ($dataFechaEmision != $val->fecha_emision)
+                                            <td>{{$val->fecha_emision}}</td>
+                                            @php
+                                                $dataFechaEmision = $val->fecha_emision
+                                            @endphp
+                                        @else
+                                            <td></td>
+                                        @endif
+                                    @endif 
+                                    <td>{{$val->f_comercial}}</td>
+                                    <td class="text-center">$ {{$val->total}}</td>
+                                    <td class="text-center">$ {{$val->saldo_factura}}</td>   
+                                </tr>
+                                @if ($val->tipo_documento != $data_cartera[$key +1])
+                                    <tr>
                                         <td></td>
-                                    @endif
-                                @endif 
-                                <td>{{$val->f_comercial}}</td>
-                                <td class="text-center">$ {{$val->total}}</td>
-                                <td class="text-center">$ {{$val->saldo_factura}}</td>   
-                            </tr>
+                                        <td>Total {{$val->tipo_documento}} </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-center">$ {{$sum_saldo}}</td>
+                                    </tr>
+                                    @php                                    
+                                        $sum_saldo = 0;
+                                    @endphp
+                                @endif
                             @endforeach
                         @endempty
                 </tbody>
