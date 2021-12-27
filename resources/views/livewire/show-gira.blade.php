@@ -80,7 +80,7 @@
                                             {{ $etapa->nombre }}
                                             @empty(!$etapa->total)
                                                 <span
-                                                    class="badge badge-{{ $color }} right">{{ $etapa->total }}</span>
+                                                    class="badge bg-{{ $color }} right">{{ $etapa->total }}</span>
                                             @endempty
                                         </h4>
                                     </div>
