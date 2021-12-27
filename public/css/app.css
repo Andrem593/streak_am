@@ -80,7 +80,7 @@
 }
 
 .breadcrumb li.bg-primary:after {
-    border-left: 20px solid #007BFF;
+    border-left: 20px solid var(--color4);
 }
 
 .breadcrumb li.bg-secondary:after {
@@ -88,19 +88,27 @@
 }
 
 .breadcrumb li.bg-info:after {
-    border-left: 20px solid #17A2B8;
+    border-left: 20px solid var(--color3);
 }
 
 .breadcrumb li.bg-warning:after {
-    border-left: 20px solid #FFC107;
+    border-left: 20px solid var(--color2);
+}
+.bg-warning>a{
+    color: var(--color5)!important;
 }
 
 .breadcrumb li.bg-danger:after {
-    border-left: 20px solid #DC3545;
+    border-left: 20px solid var(--color6);
 }
-
+.bg-danger>a{
+    color: var(--color1) !important;
+}
+.bg-danger:hover{
+    background-color: var(--color6) !important;
+}
 .breadcrumb li.bg-success:after {
-    border-left: 20px solid #28A745;
+    border-left: 20px solid var(--color1);
 }
 
 .breadcrumb li a {
@@ -116,6 +124,129 @@
     text-overflow: ellipsis;
 }
 
+
+/* clases personalizadas AM */
+:root{
+    --color1 : #163A5F;
+    --color2: #1D566E;
+    --color3: #21ABA5;
+    --color4: #45EBA5;
+    --color5: #FFFFFF;
+    --color6: #e9edf6;
+}
+.redondeado{
+    border-radius: 0.95rem !important;
+}
+.redondeado-card{
+    border-top-left-radius:0.95rem !important ;
+    border-top-right-radius: 0.95rem !important;
+}
+.btn-primary {
+    color: var(--color5);
+    background-color: var(--color3) !important;
+    border-color: var(--color3) !important;
+    box-shadow: none;
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: var(--color1) !important;
+    border-color: var(--color1)  !important;
+    box-shadow: none;
+}
+.btn-info {
+    color: #fff;
+    background-color: var(--color2) !important;
+    border-color: var(--color2)  !important;
+    box-shadow: none;
+}
+.btn-warning {
+    color: #163A5F !important;
+    background-color: var(--color5) !important;
+    border-color: var(--color5) !important;
+    box-shadow: none;
+  }
+.bg-degrade{
+    color: #fff;
+    background: #2C3E50 !important;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #4CA1AF, #2C3E50) !important;  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #4CA1AF, #2C3E50) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.bg-card{
+    background-color: var(--color6);
+}
+.bg-primary{
+    background-color: var(--color4) !important;
+}
+.bg-secondary{
+    background-color: var(--color2) !important;
+}
+.bg-info{
+    background-color: var(--color3) !important;
+}
+.bg-success{
+    background-color: var(--color1) !important;
+}
+.bg-danger{
+    color: var(--color1) !important;
+    background-color: var(--color6) !important;
+}
+.bg-warning{
+    color: var(--color5) !important;
+    background-color: var(--color2) !important;
+}
+.card-success.card-outline{
+    border-top: 3px solid var(--color1) !important;
+}
+.card-warning.card-outline{
+    border-top: 3px solid var(--color2) !important;
+}
+.card-info.card-outline{
+    border-top: 3px solid var(--color3) !important;
+}
+.card-danger.card-outline{
+    border-top: 3px solid var(--color6) !important;
+}
+.card-primary.card-outline{
+    border-top: 3px solid var(--color4) !important;
+}
+.card-primary .redondeado-card{
+    background-color: var(--color2) !important;
+}
+.text-primary{
+    color: var(--color4) !important;
+}
+a.text-primary:hover, a.text-primary:focus{
+    color: var(--color4) !important;
+}
+.text-warning{
+    color: var(--color2) !important;
+}
+a.text-warning:hover, a.text-warning:focus{
+    color: var(--color2) !important;
+}
+.text-success{
+    color: var(--color1) !important;
+}
+a.text-success:hover, a.text-success:focus{
+    color: var(--color1) !important;
+}
+.text-danger i{
+    color: var(--color6) !important;
+}
+.card-header .text-danger {
+    color: var(--color1) !important;
+}
+a.text-danger:hover, a.text-danger:focus{
+    color: var(--color6) !important;
+}
+.text-secondary{
+    color: var(--color2) !important;
+}
+a.text-secondary:hover, a.text-secondary:focus{
+    color: var(--color2) !important;
+}
+  
 @media only screen and (max-width: 479px) {
     .breadcrumb li {
         padding: 8px 15px 8px 30px;

@@ -1,11 +1,9 @@
 <x-plantilla>
     @section('content_header')
+    <div class="card redondeado m-1 p-4 shadow-sm bg-degrade">
         <div class="row d-flex justify-content-around">
-            <div class="col my-auto text-left">
-
-            </div>
-            <div class="col text-center">
-                <h2 class="fw-bold my-2">Bienvenido a STREAK {{ $user->nombre_usuario }}</h2>
+            <div class="col">
+                <h2 class="fw-bold my-2" style="font-size: 20px">Bienvenido a STREAK {{ $user->nombre_usuario }}</h2>
             </div>
             <div class="col my-auto text-right">
                 <a class="btn btn-warning btn-sm" href="{{ route('fase.reporte') }}"><i class="fas fa-file-alt"></i>
@@ -17,6 +15,7 @@
                 @endif
             </div>
         </div>
+    </div>
     @stop
     <div class="container">
         @if (!empty($_GET['message']))
@@ -28,8 +27,8 @@
                 <p>GIRA EDITADA CORRECTAMENTE</p>
             </div>
         @endif
-        <div class="card">
-            <div class="card-header">
+        <div class="card shadow-lg redondeado">
+            <div class="card-header bg-success redondeado-card">
                 <h3 class="card-title">Lista de Giras Actuales</h3>
 
                 <div class="card-tools">
@@ -69,7 +68,7 @@
                             <div class="row p-0 m-0">
                                 <div class="col p-1">
                                     {{-- <form class="form-inline ml-3" method="GET" action="{{ route('giras') }}"> --}}
-                                        <div class="input-group input-group-sm">
+                                        <div class="input-group input-group-sm p-1">
                                             <input type="hidden" id="id_cliente" name="id_cliente">
                                             <input class="form-control form-control-navbar" type="search"
                                                 placeholder="Buscar clientes" aria-label="Search" id="txt_cliente">
@@ -105,7 +104,7 @@
                                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfPgS1h_HJXlk30XL589iPYN7jbjLdXRYKxA&usqp=CAU">
                                                 </li>
                                                 <li class="list-inline-item">
-                                                    <span class="badge bg-dark">{{ $gira->nombre_usuario }}</span>
+                                                    <span class="badge bg-info">{{ $gira->nombre_usuario }}</span>
                                                 </li>
                                             </ul>
                                         </td>
@@ -128,7 +127,7 @@
                                             @endphp
                                             @if ($cant_clientes->total > 0)
                                                 <div class="progress progress-sm">
-                                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57"
+                                                    <div class="progress-bar bg-degrade" role="progressbar" aria-valuenow="57"
                                                         aria-valuemin="0" aria-valuemax="100"
                                                         style="width: {{ $progreso }}%">
                                                     </div>
@@ -144,7 +143,7 @@
                                             @endif
                                         </td>
                                         <td class="project-state">
-                                            <span class="badge badge-success">{{ $gira->estado }}</span>
+                                            <span class="badge bg-success">{{ $gira->estado }}</span>
                                         </td>
                                         <td class="project-actions text-right">
                                             <a class="btn btn-primary btn-sm" href="{{ route('fase.gira', $gira->id) }}">

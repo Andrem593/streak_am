@@ -1,21 +1,22 @@
 <x-plantilla>
     @section('content_header')
-        <div class="row d-flex justify-content-around">
-            <div class="col"></div>
-            <div class="col text-center">
-                <h2 class="fw-bold my-2">EDITAR {{$gira->nombre}} </h2>
+    <div class="card redondeado m-1 p-4 shadow bg-degrade">
+        <div class="row d-flex justify-content-around">            
+            <div class="col">
+                <h2 class="fw-bold my-2" style="font-size: 20px">EDITAR {{$gira->nombre}} </h2>
             </div>
             <div class="col my-auto text-right">
-                <a class="btn btn-secondary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
+                <a class="btn btn-primary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
                         class="fas fa-arrow-left mr-1"></i>Regresar</a>
             </div>
         </div>
+    </div>
     @stop
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="card card-primary">
-                    <div class="card-header">
+                <div class="card card-primary redondeado shadow">
+                    <div class="card-header redondeado-card">
                         <h3 class="card-title">Datos de Gira</h3>
 
                         <div class="card-tools">
@@ -52,8 +53,8 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card card-info">
-                    <div class="card-header">
+                <div class="card card-info redondeado shadow">
+                    <div class="card-header redondeado-card">
                         <h3 class="card-title">Fases de Gira</h3>
 
                         <div class="card-tools">
@@ -74,8 +75,8 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
-                <div class="card card-info">
-                    <div class="card-header">
+                <div class="card card-info redondeado shadow">
+                    <div class="card-header redondeado-card">
                         <h3 class="card-title">Crear Fase</h3>
                     </div>
                     <div class="card-body">

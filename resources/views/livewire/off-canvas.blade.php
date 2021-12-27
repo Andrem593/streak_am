@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-8">
                     <span class="text-muted" style="font-size: 12px">STREAK</span>
-                    <h5 class="fw-bolder">Agregar Clientes</h5>
+                    <h5 class="fw-bolder text-secondary">Agregar Clientes</h5>
                 </div>
                 <div class="col my-auto">
                     <div class="float-right">
