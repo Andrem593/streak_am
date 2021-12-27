@@ -332,9 +332,11 @@ class webController extends Controller
 
         unlink($file_name);
 
-        $data = $spreadsheet->getActiveSheet()->toArray();
+        $data = $spreadsheet->getActiveSheet()->toArray(null, false, false, false);
 
         $mensaje = 'Cartera de clientes cargada correctamente';
+
+        //dd($data);
 
         foreach ($data as $key => $row) {
             if ($key == 0) {
@@ -362,7 +364,7 @@ class webController extends Controller
                     $mensaje = 'Error: Columna 6 debe llamarse "VENDEDOR"';
                     break;
                 }                
-                if($row[6] != 'N. DOCUMENTO'){
+                if(strtoupper($row[6]) != 'N. DOCUMENTO'){
                     $mensaje = 'Error: Columna 7 debe llamarse "N. DOCUMENTO"';
                     break;
                 }                
@@ -398,19 +400,20 @@ class webController extends Controller
             }else{
 
                 if(!empty($row[9])){
-                    $fecha_emision = date_create($row[9]);
+                    
+                    $fecha_emision = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intval($row[9]));
                     $fecha_emision = date_format($fecha_emision, 'Y-m-d');
                 }
                 if(!empty($row[13])){
-                    $fecha = date_create($row[13]);
+                    $fecha = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intval($row[13]));
                     $fecha = date_format($fecha, 'Y-m-d');
                 }
                 if(!empty($row[10])){
                     $val = explode('$', $row[10]);
                     if($val[0] != ' '){
-                        $total = floatval ($row[10]);
+                        $total = $row[10];
                     }else{
-                        $total = floatval ($val[1]);
+                        $total = $val[1];
                     }
                 }
                 if(!empty($row[11])){
@@ -444,6 +447,8 @@ class webController extends Controller
                     'saldo_factura'  => $saldo_factura,
                     'saldo'  => $saldo,
                     'fecha'  => $fecha,
+                    'created_at' =>  \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
                 );
 
                 DB::table('carteras')->insert($insert_data);
