@@ -271,7 +271,10 @@ class webController extends Controller
     }
     public function notificaciones()
     {
-        $tareas = Tarea::where('estado', 3)->OrWhere('estado', 2)->where('id_usuario', session('id_usuario'))->get();
+        $tareas = Tarea::where('id_usuario', session('id_usuario'))->where('estado',3)->orWhere(function($query) {
+            $query->where('id_usuario', session('id_usuario'))
+                  ->where('estado',2);
+        })->get();
         return view('recordatorios.index', compact('tareas'));
     }
     public function marcarLeida($id_notificacion)
