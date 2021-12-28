@@ -76,6 +76,14 @@
                                 <div bgcolor="#f7f9ff" style="background-color:#f7f9ff; text-align: center;margin-bottom: 30px ">
                                     <p class="m_3601367485721195158font-size-mobile"
                                         style="padding-left:0px;padding-right:0px;padding-bottom:0;padding-top:0px;margin-bottom:0px;margin-top:0px;margin-right:0px;margin-left:0px;font-family:Verdana,Sans-Serif;line-height:1.5;font-weight:700;font-size:14px;color:#817c8f">
+                                        Cliente:
+                                    </p>
+                                    <p class="m_3601367485721195158font-size-mobile"
+                                        style="padding-left:0px;padding-right:0px;padding-bottom:10px;padding-top:0px;margin-bottom:0px;margin-top:0px;margin-right:0px;margin-left:0px;font-family:Verdana,Sans-Serif;line-height:1.5;font-weight:700;font-size:14px;color:#817c8f">
+                                        {{$datos['nombre_cliente']}}
+                                    </p>
+                                    <p class="m_3601367485721195158font-size-mobile"
+                                        style="padding-left:0px;padding-right:0px;padding-bottom:0;padding-top:0px;margin-bottom:0px;margin-top:0px;margin-right:0px;margin-left:0px;font-family:Verdana,Sans-Serif;line-height:1.5;font-weight:700;font-size:14px;color:#817c8f">
                                         Tipo Gestion:
                                     </p>
                                     <p class="m_3601367485721195158font-size-mobile"
