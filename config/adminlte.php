@@ -231,10 +231,6 @@ return [
         'url'  => '/cartera',
         'icon' => 'fas fa-users',
     ],
-    [
-        'type'         => 'fullscreen-widget',
-        'topnav_right' => true, // Or "topnav => true" to place on the left.
-    ],
         // Navbar items:
         [
             'type'         => 'navbar-notification',
