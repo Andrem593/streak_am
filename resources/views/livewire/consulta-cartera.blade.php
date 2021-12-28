@@ -66,26 +66,14 @@
                                 @endphp
 
                                 <tr>
-                                    @if ($loop->first)
-                                        <td>{{ $val->cliente }}</td>
-                                    @else
-                                        <td></td>
-                                    @endif
-                                    @if ($loop->first)
-                                        <td>{{ $val->tipo_documento }}</td>
-                                    @else
-                                        <td></td>
-                                    @endif
-                                    @if ($loop->first)
-                                        <td>{{ $val->fecha_emision }}</td>
-                                    @else
-                                        <td></td>
-                                    @endif
+                                    <td>{{ $loop->first ? $val->cliente : '' }}</td>
+                                    <td>{{ $loop->first ? $val->tipo_documento : '' }}</td>
+                                    <td>{{ $loop->first ? $val->fecha_emision : '' }}</td>
                                     <td>{{ $val->f_comercial }}</td>
                                     <td class="text-center">$ {{ $val->total }}</td>
                                     <td class="text-center">$ {{ $val->saldo_factura }}</td>
                                 </tr>
-                                @if($loop->last)
+                                @if ($loop->last)
                                     <tr>
                                         <td></td>
                                         <td>Total {{ $val->tipo_documento }} </td>
@@ -99,16 +87,16 @@
                                     @endphp
                                 @endif
                             @endforeach
-                            @if($loop->last)
-                                    <tr>
-                                        <td></td>
-                                        <td>Total </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-center">$ {{ $sum_total }}</td>
-                                    </tr>
-                                @endif
+                            @if ($loop->last)
+                                <tr>
+                                    <td></td>
+                                    <td>Total </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-center">$ {{ $sum_total }}</td>
+                                </tr>
+                            @endif
                         @endforeach
 
                     @endempty
