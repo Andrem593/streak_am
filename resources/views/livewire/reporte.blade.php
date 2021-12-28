@@ -88,6 +88,7 @@
                                 <th>ETAPA</th>
                                 <th>VENDEDOR</th>
                                 <th>GESTION</th>
+                                <th>VALOR RECAUDADO</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -169,6 +170,9 @@
                     },
                     {
                         "data": 'comentario',
+                    },
+                    {
+                        "data": 'valor_recaudado',
                     }
 
                 ],
