@@ -29,7 +29,89 @@
         <p>GIRA EDITADA CORRECTAMENTE</p>
     </div>
     @endif
-    <div class="card shadow-lg redondeado">
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-info redondeado shadow ">
+                <span class="info-box-icon"><i class="fas fa-dollar-sign"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Presupuesto</span>
+                    <span class="info-box-number">{{$user->presupuesto_semanal != '' ? '$ '.number_format ($user->presupuesto_semanal,2) : 'SIN PRESUPUESTO'}} </span>
+
+                    <div class="progress">    
+                        <div class="progress-bar" style="{{$user->presupuesto_semanal != '' ? 'width:100%' : 'width:0%' }}"></div>                        
+                    </div>
+                    <span class="progress-description">
+                        Presupuesto de usuario
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-success redondeado shadow ">
+                <span class="info-box-icon"><i class="fas fa-hand-holding-usd"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Recaudado</span>
+                    <span class="info-box-number">$ {{number_format ($total_recaudado->total_recaudado,2)}}</span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="progress-description">
+                        Recaudado por usuario
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-warning redondeado shadow ">
+                <span class="info-box-icon"><i class="far fa-chart-bar"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Progreso</span>
+                    <span class="info-box-number">{{$progreso}}</span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: {{$progreso}}"></div>
+                    </div>
+                    <span class="progress-description">
+                        Progreso de recaudación
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-danger redondeado shadow ">
+                <span class="info-box-icon"><i class="fas fa-comments"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Comentarios</span>
+                    <span class="info-box-number"># {{number_format ($total_comentarios->total_comentarios)}}</span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="progress-description">
+                        Comentarios en Giras
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <div class="card shadow redondeado">
         <div class="card-header bg-success redondeado-card">
             <h3 class="card-title">Lista de Giras Actuales</h3>
 

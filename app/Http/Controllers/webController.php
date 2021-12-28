@@ -37,7 +37,10 @@ class webController extends Controller
         }
         $giras = $giras->get();
         $i = 1;
-        return view('giras.index', compact('giras', 'i', 'user'));
+        $total_recaudado = Comentario::where('id_usuario',$user->id_usuario)->selectRaw('SUM(valor_recaudado) as total_recaudado')->first();
+        $total_comentarios = Comentario::where('id_usuario',$user->id_usuario)->selectRaw('COUNT(id) as total_comentarios')->first();
+        $progreso = $user->presupuesto_semanal != '' ? number_format ((($total_recaudado->total_recaudado/$user->presupuesto_semanal)*100),2)."%" : 'SIN PRESUPUESTO';
+        return view('giras.index', compact('giras', 'i', 'user','total_recaudado','progreso','total_comentarios'));
     }
     public function show($id_gira)
     {
