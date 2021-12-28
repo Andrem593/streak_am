@@ -125,8 +125,8 @@ return [
     'classes_brand' => '',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
-    'classes_content_header' => '',
-    'classes_content' => '',
+    'classes_content_header' => 'container-lg',
+    'classes_content' => 'container-lg',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
@@ -230,6 +230,10 @@ return [
         'text' => 'Cartera Clientes',
         'url'  => '/cartera',
         'icon' => 'fas fa-users',
+    ],
+    [
+        'type'          => 'darkmode-widget' ,
+        'topnav_right' => true , // O "topnav => true" para colocarlo a la izquierda. 
     ],
         // Navbar items:
         [
