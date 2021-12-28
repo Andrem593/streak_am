@@ -59,20 +59,27 @@
                         @endphp
 
                         @foreach ($prueba as $item)
+                        @php
+                            $fecha_temp = '0';
+                        @endphp
                             @foreach ($item as $key => $val)
                                 @php
                                     $sum_saldo = $sum_saldo + floatval($val->saldo_factura);
                                     $sum_total = $sum_total + floatval($val->saldo_factura);
+                                    
                                 @endphp
 
                                 <tr>
                                     <td>{{ $loop->first ? $val->cliente : '' }}</td>
                                     <td>{{ $loop->first ? $val->tipo_documento : '' }}</td>
-                                    <td>{{ $loop->first ? $val->fecha_emision : '' }}</td>
+                                    <td>{{ $fecha_temp != $val->fecha_emision ? $val->fecha_emision : '' }}</td>
                                     <td>{{ $val->f_comercial }}</td>
                                     <td class="text-center">$ {{ $val->total }}</td>
                                     <td class="text-center">$ {{ $val->saldo_factura }}</td>
                                 </tr>
+                                @if ($fecha_temp != $val->fecha_emision)
+                                    {{$fecha_temp = $val->fecha_emision}}
+                                @endif
                                 @if ($loop->last)
                                     <tr>
                                         <td></td>
