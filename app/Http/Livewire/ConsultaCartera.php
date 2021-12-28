@@ -15,7 +15,7 @@ class ConsultaCartera extends Component
     public function carteraCliente()
     {
         $cliente = $this->nombre_cliente;
-        $this->data_cartera = DB::table('carteras')->where('cliente',$cliente)->orderBy('tipo_documento')->get();
+        $this->data_cartera = DB::table('carteras')->where('cliente',$cliente)->orderBy('tipo_documento', 'asc')->get();
         $this->tipo_documento = DB::table('carteras')->distinct()->where('cliente',$cliente)->orderBy('fecha_emision')->get(['tipo_documento']);
         $this->fecha_emision = DB::table('carteras')->distinct()->where('cliente',$cliente)->orderBy('fecha_emision')->get(['fecha_emision']);
     }

@@ -39,92 +39,87 @@
                     <div class="row p-0 m-0">
                         <div class="col p-1">
                             {{-- <form class="form-inline ml-3" method="GET" action="{{ route('giras') }}"> --}}
-                                <div class="input-group input-group-sm p-1">
-                                    <input class="form-control form-control-navbar" type="search"
-                                        placeholder="Buscar clientes"  aria-label="Search" id="txt_cliente">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" id="guardar" wire:click="carteraCliente">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
+                            <div class="input-group input-group-sm p-1">
+                                <input class="form-control form-control-navbar" type="search"
+                                    placeholder="Buscar clientes" aria-label="Search" id="txt_cliente">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" id="guardar" wire:click="carteraCliente">
+                                        <i class="fas fa-search"></i>
+                                    </button>
                                 </div>
+                            </div>
                             {{-- </form> --}}
                         </div>
                     </div>
-                        @empty (!$data_cartera)
-                            @php
-                                $sum_saldo = 0 ;
-                                $cambio = 0;
-                            @endphp
-                            @foreach ($data_cartera as $key=>$val)
+                    @empty(!$data_cartera)
+                        @php
+                            $sum_saldo = 0;
+                            $sum_total = 0;
+                            $prueba = collect($data_cartera)->groupBy('tipo_documento');
+                        @endphp
+
+                        @foreach ($prueba as $item)
+                            @foreach ($item as $key => $val)
                                 @php
                                     $sum_saldo = $sum_saldo + floatval($val->saldo_factura);
+                                    $sum_total = $sum_total + floatval($val->saldo_factura);
                                 @endphp
+
                                 <tr>
-                                    @if ($key == 0)                                    
-                                        <td>{{$val->cliente}}</td>
+                                    @if ($loop->first)
+                                        <td>{{ $val->cliente }}</td>
                                     @else
                                         <td></td>
                                     @endif
-                                    @if ($key == 0)                                    
-                                        <td>{{$val->tipo_documento}}</td>
-                                        @php
-                                            $dataTipoDocumento = $val->tipo_documento;
-                                        @endphp
-                                    @else                                    
-                                        @if ($dataTipoDocumento != $val->tipo_documento)
-                                            <td>{{$val->tipo_documento}}</td>
-                                            @php
-                                                $dataTipoDocumento = $val->tipo_documento;
-                                                $cambio = 1;
-                                            @endphp
-                                        @else
-                                            <td></td>
-                                        @endif
+                                    @if ($loop->first)
+                                        <td>{{ $val->tipo_documento }}</td>
+                                    @else
+                                        <td></td>
                                     @endif
-                                    @if ($key == 0)                                    
-                                        <td>{{$val->fecha_emision}}</td>
-                                        @php
-                                            $dataFechaEmision = $val->fecha_emision;
-                                        @endphp
-                                    @else                                    
-                                        @if ($dataFechaEmision != $val->fecha_emision)
-                                            <td>{{$val->fecha_emision}}</td>
-                                            @php
-                                                $dataFechaEmision = $val->fecha_emision
-                                            @endphp
-                                        @else
-                                            <td></td>
-                                        @endif
-                                    @endif 
-                                    <td>{{$val->f_comercial}}</td>
-                                    <td class="text-center">$ {{$val->total}}</td>
-                                    <td class="text-center">$ {{$val->saldo_factura}}</td>   
+                                    @if ($loop->first)
+                                        <td>{{ $val->fecha_emision }}</td>
+                                    @else
+                                        <td></td>
+                                    @endif
+                                    <td>{{ $val->f_comercial }}</td>
+                                    <td class="text-center">$ {{ $val->total }}</td>
+                                    <td class="text-center">$ {{ $val->saldo_factura }}</td>
                                 </tr>
-                                @if ($cambio == 1)
+                                @if($loop->last)
                                     <tr>
                                         <td></td>
-                                        <td>Total {{$val->tipo_documento}} </td>
+                                        <td>Total {{ $val->tipo_documento }} </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-center">$ {{$sum_saldo}}</td>
+                                        <td class="text-center">$ {{ $sum_saldo }}</td>
                                     </tr>
-                                    @php                                    
+                                    @php
                                         $sum_saldo = 0;
-                                        $cambio = 0;
                                     @endphp
                                 @endif
                             @endforeach
-                        @endempty
+                            @if($loop->last)
+                                    <tr>
+                                        <td></td>
+                                        <td>Total </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-center">$ {{ $sum_total }}</td>
+                                    </tr>
+                                @endif
+                        @endforeach
+
+                    @endempty
                 </tbody>
             </table>
         </div>
     </div>
     @push('js')
         <script>
-            $('#guardar').click(function(){
-                @this.set('nombre_cliente', $('#txt_cliente').val());                
+            $('#guardar').click(function() {
+                @this.set('nombre_cliente', $('#txt_cliente').val());
             })
         </script>
     @endpush
