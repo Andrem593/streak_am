@@ -461,4 +461,17 @@ class webController extends Controller
 
         return redirect()->route('fase.cartera')->with('mensaje', $mensaje);
     }
+
+    public function update_presupuesto(Request $request)
+    {
+        $data = $request->all();
+
+        $presupuesto = $data['presupuesto'];
+
+        $user = DB::table('aw_users')
+                ->where('id_usuario', session('id_usuario'))
+                ->update(['presupuesto_semanal' => floatval($presupuesto)]);
+
+        return $user;
+    }
 }
