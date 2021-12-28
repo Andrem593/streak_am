@@ -231,6 +231,10 @@ return [
         'url'  => '/cartera',
         'icon' => 'fas fa-users',
     ],
+    [
+        'type'         => 'fullscreen-widget',
+        'topnav_right' => true, // Or "topnav => true" to place on the left.
+    ],
         // Navbar items:
         [
             'type'         => 'navbar-notification',
@@ -247,8 +251,8 @@ return [
                 'url' => 'notifications/get',         // The url to periodically fetch new data (optional).
                 'period' => 30,                       // The update period for get new data (in seconds, optional).
             ],
-        ],
-
+        ],        
+        
 
         // Sidebar items:
 
@@ -256,8 +260,9 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
-
     ],
+    
+
 
     /*
     |--------------------------------------------------------------------------
