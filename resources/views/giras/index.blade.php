@@ -7,7 +7,7 @@
             </div>
             <div class="col my-auto text-right">
                 <x-adminlte-button label="Presupuesto" data-toggle="modal" data-target="#modalPurple"
-                    class="btn btn-success btn-sm" icon="fas fa-dollar-sign" />
+                    class="btn btn-warning btn-sm" icon="fas fa-dollar-sign" />
                 <a class="btn btn-warning btn-sm" href="{{ route('fase.reporte') }}"><i class="fas fa-file-alt"></i>
                     Reportes</a>
                 @if ($user->tipo_usuario == 'administrador')

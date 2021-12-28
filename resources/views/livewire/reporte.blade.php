@@ -12,93 +12,93 @@
         </div>
     </div>
     @stop
-    <div class="container">
-        <div class="card shadow redondeado">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="cmb_user">Vendedor</label>
-                            <select class="custom-select" id="cmb_user">
 
-                                @if (count($usuarios) == 1)
-                                    <option value="{{ $usuarios[0]->id_usuario }}">
-                                        {{ $usuarios[0]->nombre_usuario }}</option>
-                                @else
-                                    <option value="">Seleccionar vendedor</option>
-                                    @foreach ($usuarios as $item)
-                                        <option value="{{ $item->id_usuario }}">{{ $item->nombre_usuario }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="cmb_gira">Gira</label>
-                            <select class="custom-select" id="cmb_gira">
-                                <option value="">Seleccionar gira</option>
-                                @foreach ($gira as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+    <div class="card shadow redondeado">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="cmb_user">Vendedor</label>
+                        <select class="custom-select" id="cmb_user">
+
+                            @if (count($usuarios) == 1)
+                                <option value="{{ $usuarios[0]->id_usuario }}">
+                                    {{ $usuarios[0]->nombre_usuario }}</option>
+                            @else
+                                <option value="">Seleccionar vendedor</option>
+                                @foreach ($usuarios as $item)
+                                    <option value="{{ $item->id_usuario }}">{{ $item->nombre_usuario }}</option>
                                 @endforeach
-                            </select>
-                        </div>
+                            @endif
+                        </select>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="txt_cliente">Cliente</label>
-                            <input id="txt_cliente" class="form-control" type="text"
-                                placeholder="Escriba el nombre o RUC del cliente">
-                            <input type="hidden" id="id_cliente">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="txt_fecha">Fecha de gira:</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="far fa-calendar-alt"></i>
-                                    </span>
-                                </div>
-                                <input type="text" class="form-control float-right" id="txt_fecha">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button class="btn btn-primary" id="btn_buscar"><i class="fas fa-search"></i> Buscar</button>
-                        <button class="btn btn-secondary" onclick="limpiar()"><i class="fas fa-broom"></i>
-                            Limpiar</button>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="cmb_gira">Gira</label>
+                        <select class="custom-select" id="cmb_gira">
+                            <option value="">Seleccionar gira</option>
+                            @foreach ($gira as $item)
+                                <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped projects text-center" id="reports">
-                        <thead>
-                            <tr>
-                                <th>FECHA</th>
-                                <th>CLIENTE</th>
-                                <th>TIPO GESTION</th>
-                                <th>GIRA</th>
-                                <th>ETAPA</th>
-                                <th>VENDEDOR</th>
-                                <th>GESTION</th>
-                                <th>VALOR RECAUDADO</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="txt_cliente">Cliente</label>
+                        <input id="txt_cliente" class="form-control" type="text"
+                            placeholder="Escriba el nombre o RUC del cliente">
+                        <input type="hidden" id="id_cliente">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="txt_fecha">Fecha de gira:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control float-right" id="txt_fecha">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary" id="btn_buscar"><i class="fas fa-search"></i> Buscar</button>
+                    <button class="btn btn-secondary" onclick="limpiar()"><i class="fas fa-broom"></i>
+                        Limpiar</button>
                 </div>
             </div>
         </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped projects text-center" id="reports">
+                    <thead>
+                        <tr>
+                            <th>FECHA</th>
+                            <th>CLIENTE</th>
+                            <th>TIPO GESTION</th>
+                            <th>GIRA</th>
+                            <th>ETAPA</th>
+                            <th>VENDEDOR</th>
+                            <th>GESTION</th>
+                            <th>VALOR RECAUDADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+
     @push('css')
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
     @endpush
