@@ -6,7 +6,7 @@
                 <h2 class="fw-bold my-2" style="font-size: 20px">Bienvenido a STREAK {{ $user->nombre_usuario }}</h2>
             </div>
             <div class="col my-auto text-right">
-                <x-adminlte-button label="Presupuesto semanal" data-toggle="modal" data-target="#modalPurple"
+                <x-adminlte-button label="Presupuesto" data-toggle="modal" data-target="#modalPurple"
                     class="btn btn-success btn-sm" icon="fas fa-dollar-sign" />
                 <a class="btn btn-warning btn-sm" href="{{ route('fase.reporte') }}"><i class="fas fa-file-alt"></i>
                     Reportes</a>
