@@ -225,6 +225,12 @@ return [
     */
 
     'menu' => [
+        'MAIN NAVIGATION',
+    [
+        'text' => 'Cartera Clientes',
+        'url'  => '/cartera',
+        'icon' => 'fas fa-users',
+    ],
         // Navbar items:
         [
             'type'         => 'navbar-notification',
@@ -440,6 +446,16 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
+                ],
+            ],
+        ],
+        'BsCustomFileInput' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bs-custom-file-input/bs-custom-file-input.min.js',
                 ],
             ],
         ],

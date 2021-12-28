@@ -28,15 +28,15 @@
                         toast.addEventListener('mouseleave', Swal.resumeTimer)
                     }
                 })
-        window.Echo.channel('events').listen('RealTimeMessage', (e) => {
-            Push.create("Tienes un Recordatorio:", {
-                body: e.message,
-                // icon: '/icon.png',
-                onClick: function () {
-                    window.focus();
-                }
-            });
-        });
+        // window.Echo.channel('events').listen('RealTimeMessage', (e) => {
+        //     Push.create("Tienes un Recordatorio:", {
+        //         body: e.message,
+        //         // icon: '/icon.png',
+        //         onClick: function () {
+        //             window.focus();
+        //         }
+        //     });
+        // });
         $(document).on('click','.notify',function(e){
             let id = $(this).attr('id');
             $.ajaxSetup({

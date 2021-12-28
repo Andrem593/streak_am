@@ -1,26 +1,35 @@
 <div>
     @section('content_header')
+    <div class="card redondeado m-1 p-4 shadow-sm bg-degrade">
         <div class="row d-flex justify-content-around">
-            <div class="col"></div>
-            <div class="col text-center">
-                <h2 class="fw-bold my-2">Reportes</h2>
+            <div class="col">
+                <h2 class="fw-bold my-2" style="font-size: 20px">Reportes</h2>
             </div>
             <div class="col my-auto text-right">
+                <a class="btn btn-primary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
+                    class="fas fa-arrow-left mr-1"></i>Regresar</a>
             </div>
         </div>
+    </div>
     @stop
     <div class="container">
-        <div class="card">
+        <div class="card shadow redondeado">
             <div class="card-header">
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="cmb_user">Usuario</label>
+                            <label for="cmb_user">Vendedor</label>
                             <select class="custom-select" id="cmb_user">
-                                <option value="">Seleccionar usuario</option>
-                                @foreach ($usuarios as $item)
-                                    <option value="{{ $item->id_usuario }}">{{ $item->nombre_usuario }}</option>
-                                @endforeach
+
+                                @if (count($usuarios) == 1)
+                                    <option value="{{ $usuarios[0]->id_usuario }}">
+                                        {{ $usuarios[0]->nombre_usuario }}</option>
+                                @else
+                                    <option value="">Seleccionar vendedor</option>
+                                    @foreach ($usuarios as $item)
+                                        <option value="{{ $item->id_usuario }}">{{ $item->nombre_usuario }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                     </div>
@@ -68,19 +77,24 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-striped projects text-center" id="reports">
-                    <thead>
-                        <tr>
-                            <th>FECHA</th>
-                            <th>CLIENTE</th>
-                            <th>TIPO</th>
-                            <th>GESTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="table-responsive">
+                    <table class="table table-striped projects text-center" id="reports">
+                        <thead>
+                            <tr>
+                                <th>FECHA</th>
+                                <th>CLIENTE</th>
+                                <th>TIPO GESTION</th>
+                                <th>GIRA</th>
+                                <th>ETAPA</th>
+                                <th>VENDEDOR</th>
+                                <th>GESTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -125,22 +139,12 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
             });
-
+            var vendedor = $('#cmb_user option:selected').text().trim();    
+               
             let dataTable = $('#reports').DataTable({
 
                 "destroy": true,
                 "processing": true,
-                // "ajax": {
-                //     "url": "{{ route('fase.dataTable') }}",
-                //     "method": "POST",
-                //     "dataSrc": function(json) {
-                //         if (json == 'no data') {
-                //             return [];
-                //         } else {
-                //             return json;
-                //         }
-                //     },
-                // },
                 "columns": [{
                         "data": "created_at",
                         "render": function(data, type, row) {
@@ -152,7 +156,16 @@
                         "data": "nombre"
                     },
                     {
-                        "data": "tipo",
+                        "data": "tipo_gestion",
+                    },
+                    {
+                        "data": "nombre_gira",
+                    },
+                    {
+                        "data": "nombre_etapa",
+                    },
+                    {
+                        "data": "nombre_usuario",
                     },
                     {
                         "data": 'comentario',
@@ -163,13 +176,6 @@
                     [-1, 10, 25, 50],
                     ["Todos", 10, 25, 50]
                 ],
-                // "columnDefs": [{
-                //         "targets": [3],
-                //         "orderable": false,
-                //         "searchable": false
-                //     },
-                //     //{ "width": "1%", "targets": 0 }
-                // ],
                 "order": [
                     [0, 'desc']
                 ],
@@ -183,6 +189,8 @@
                         text: '<i class="fas fa-file-excel"></i> ',
                         titleAttr: 'Exportar a Excel',
                         className: 'btn btn-success',
+                        filename: 'REPORTE STREAK',
+                        title:'VENDEDOR:'+vendedor.toUpperCase(),
                     },
                     {
                         extend: 'pdfHtml5',
@@ -207,7 +215,19 @@
                 dataTable.clear();
                 dataTable.draw();
             }
-
+            $('#cmb_user').change(function(){
+                vendedor = $('#cmb_user option:selected').text().trim();                
+                let boton = dataTable.buttons(0);
+                boton.remove();
+                dataTable.button().add(0,{
+                    extend: 'excelHtml5',
+                    text: '<i class="fas fa-file-excel"></i> ',
+                    titleAttr: 'Exportar a Excel',
+                    className: 'btn btn-success',
+                    filename: 'REPORTE STREAK',
+                    title:'VENDEDOR:'+vendedor.toUpperCase(),
+                })
+            })    
             $(document).ready(function() {
                 $('#txt_fecha').daterangepicker({
                     locale: {
@@ -232,10 +252,6 @@
                     },
                     minLength: 1,
                     select: function(event, ui) {
-                        //  url = url.replace(':id', ui.item.estilo);
-                        //  document.location.href = url;
-                        //get_datos_afiliado(ui.item.data);
-                        //console.log('You selected: ' + ui.item.value + ', ' + ui.item.data);
                         $('#id_cliente').val(ui.item.id);
                     }
                 }).autocomplete("instance")._renderItem = function(ul, item) {
@@ -255,7 +271,7 @@
                     let fecha_desde = '';
                     let fecha_hasta = '';
                     let arrFecha = [];
-                    if(txt_fecha.length > 1){
+                    if (txt_fecha.length > 1) {
                         arrFecha = txt_fecha.split(' - ');
                     }
                     if (arrFecha.length > 1) {
@@ -273,8 +289,7 @@
                         url: '{{ route('fase.dataTable') }}',
                         data: data,
                         beforeSend: function() {},
-                        success: function(response) {
-                            console.log(JSON.parse(response));
+                        success: function(response) {                            
                             dataTable.clear().draw();
                             dataTable.rows.add(JSON.parse(response)).draw();
                         }

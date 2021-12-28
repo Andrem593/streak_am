@@ -1,23 +1,24 @@
 <div>
     @section('content_header')
+    <div class="card redondeado m-1 p-4 shadow bg-degrade">
         <div class="row d-flex justify-content-around">
-            <div class="col"></div>
-            <div class="col text-center">
-                <h5 class="fw-bold my-2">{{$gira->nombre}} <i class="fas fa-chevron-right"></i> {{$cliente->nombre}}</h5>
+            <div class="col">
+                <h5 class="fw-bold my-2">{{$gira->nombre}} <i class="fas fa-chevron-right"></i> <span id="nombre_cliente">{{$cliente->nombre}}</span></h5>
             </div>
             <div class="col my-auto text-right">
-                <a class="btn btn-secondary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
+                <a class="btn btn-primary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
                         class="fas fa-arrow-left mr-1"></i>Regresar</a>
             </div>
         </div>
+    </div>
     @stop
     <div class="container">
         <section class="content">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="card {{$open ? '': 'collapsed-card'}}">
-                        <div class="card-header">
-                            <h3 class="card-title text-success fw-bold"><i class="fas fa-sticky-note"></i> AGREGAR
+                    <div class="card {{$open ? '': 'collapsed-card'}} shadow redondeado">
+                        <div class="card-header text-secondary redondeado-card">
+                            <h3 class="card-title fw-bold"><i class="fas fa-sticky-note"></i> AGREGAR
                                 COMENTARIOS</h3>
 
                             <div class="card-tools">
@@ -57,8 +58,8 @@
                                 class="btn btn-primary float-right">AGREGAR</button>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header">
+                    <div class="card shadow redondeado">
+                        <div class="card-header redondeado-card">
                             <h3 class="card-title text-info"> <i class="fas fa-clipboard"></i> HISTORIAL</h3>
 
                             <div class="card-tools">
@@ -138,8 +139,8 @@
                             <p>Verifica que el campo de comentario y tipo de gestion no esten vacios.</p>
                         </div>
                     @endempty
-                    <div class="card">
-                        <div class="card-header">
+                    <div class="card redondeado shadow">
+                        <div class="card-header redondeado-card">
                             <h3 class="card-title text-info"><i class="fas fa-caret-right"></i> ETAPAS</h3>
 
                             <div class="card-tools">
@@ -159,8 +160,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header">
+                    <div class="card redondeado shadow">
+                        <div class="card-header redondeado-card">
                             <h3 class="card-title text-primary"><i class="fas fa-clock"></i> RECORDATORIOS</h3>
 
                             <div class="card-tools">
@@ -230,6 +231,7 @@
                         'tarea': $('#tarea').val(),
                         'horario': fecha,
                         'tipo_gestion': $('#select_recordatorio').val(),
+                        'nombre_cliente': $('#nombre_cliente').text(),
                     }
                     if($('#tarea').val() != '' &&  $('#horario').val() != '' && $('#select_recordatorio').val() != '' ){
                         $.post({
