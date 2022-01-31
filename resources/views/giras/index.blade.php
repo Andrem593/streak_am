@@ -6,8 +6,10 @@
                 <h2 class="fw-bold my-2" style="font-size: 20px">Bienvenido a STREAK {{ $user->nombre_usuario }}</h2>
             </div>
             <div class="col my-auto text-right">
-                <x-adminlte-button label="Presupuesto" data-toggle="modal" data-target="#modalPurple"
-                    class="btn btn-warning btn-sm" icon="fas fa-dollar-sign" />
+                @if ($user->tipo_usuario == 'administrador')
+                <x-adminlte-button label="Presupuesto" data-toggle="modal" data-target="#modalPurple" class="btn btn-warning btn-sm"
+                    icon="fas fa-dollar-sign" />
+                @endif
                 <a class="btn btn-warning btn-sm" href="{{ route('fase.reporte') }}"><i class="fas fa-file-alt"></i>
                     Reportes</a>
                 @if ($user->tipo_usuario == 'administrador')
@@ -237,10 +239,12 @@
                                     <i class="fas fa-pencil-alt">
                                     </i>
                                 </a>
-                                <a class="btn btn-danger btn-sm" href="#">
-                                    <i class="fas fa-trash">
-                                    </i>
-                                </a>
+                                @if ($user->tipo_usuario == 'administrador')
+                                    <a class="btn btn-danger btn-sm" href="#">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
