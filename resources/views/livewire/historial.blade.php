@@ -3,8 +3,7 @@
     <div class="card redondeado m-1 p-4 shadow bg-degrade">
         <div class="row d-flex justify-content-around">
             <div class="col">
-                <h5 class="fw-bold my-2">{{$gira->nombre}} <i class="fas fa-chevron-right"></i> <span
-                        id="nombre_cliente">{{$cliente->nombre}}</span></h5>
+                <h5 class="fw-bold my-2">{{$gira->nombre}} <i class="fas fa-chevron-right"></i> <span id="nombre_cliente">{{$cliente->nombre}}</span></h5>
             </div>
             <div class="col my-auto text-right">
                 <a class="btn btn-primary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
@@ -13,6 +12,7 @@
         </div>
     </div>
     @stop
+    <div class="container">
         <section class="content">
             <div class="row">
                 <div class="col-md-8">
@@ -43,7 +43,7 @@
                                     <option value="COBRANZAS">COBRANZAS</option>
                                     <option value="LLAMADAS">LLAMADAS</option>
                                     <option value="VISITAS">VISITAS</option>
-                                </select>
+                                </select>                                
                             </div>
                             @if ($select == 'COBRANZAS')
                                 <div class="row">
@@ -68,7 +68,6 @@
                                     <label for="">Valor Recaudado</label>
                                     <input type="number" wire:model.defer='valor_recudado' class="form-control" >
                                 </div>
-
                             @endif
                         </div>
                         <!-- /.card-body -->
@@ -98,26 +97,9 @@
                                         <!-- The time line -->
                                         <div class="timeline">
                                             @if ($comentarios->count() > 0)
-                                            @foreach ($comentDay as $key => $item )
-                                            <div class="time-label">
-                                                <span class="bg-info">{{$key}}</span>
-                                            </div>
-                                            @foreach ($item as $val)
-                                            @if ($val->tipo == 'comentario')
-                                            <div>
-                                                <i class="fas fa-comments bg-warning"></i>
-                                                <div class="timeline-item">
-                                                    <span class="time"><i class="fas fa-clock"></i>
-                                                        {{$val->created_at->diffForHumans()}}</span>
-                                                    <h3 class="timeline-header"><a href="#">{{$val->nombre_usuario}}
-                                                        </a> comento en {{$val->nombre_etapa}} </h3>
-                                                    <div class="timeline-body">
-                                                        <p class="my-2">{{$val->comentario}}</p>
-                                                        <span><b>Tipo de Gestion:</b> {{$val->tipo_gestion}}</span>
-                                                        @empty(!$val->valor_recaudado)
-                                                        <span class="ml-4"><b>Valores recaudado:</b>
-                                                            {{number_format($val->valor_recaudado,2)}}</span>
-                                                        @endempty
+                                                @foreach ($comentDay as $key => $item )
+                                                    <div class="time-label">
+                                                        <span class="bg-info">{{$key}}</span>
                                                     </div>
                                                     @foreach ($item as $val)
                                                         @if ($val->tipo == 'comentario')
@@ -130,10 +112,7 @@
                                                                         <p class="my-2">{{$val->comentario}}</p>
                                                                         <span><b>Tipo de Gestion:</b> {{$val->tipo_gestion}}</span>   
                                                                         @empty(!$val->valor_recaudado)                                                                            
-                                                                            <span class="ml-4"><b>Valores recaudado:</b> {{number_format($val->valor_recaudado,2)}}</span> 
-                                                                            <br>
-                                                                            <span><b>Tipo Documento:</b> {{$val->tipo_documento}}</span>
-                                                                            <span class="ml-4"><b>Número recibo:</b> {{$val->num_recibo}}</span> 
+                                                                            <span class="ml-4"><b>Valores recaudado:</b> {{number_format($val->valor_recaudado,2)}}</span>                                                                 
                                                                         @endempty
                                                                     </div>
                                                                 </div>
@@ -148,38 +127,19 @@
                                                                 </div>
                                                             </div>
                                                         @endif
-                                                    @endforeach                                                
+                                                    @endforeach
+                                                @endforeach
                                                 <div>
                                                     <i class="fas fa-clock bg-gray"></i>
                                                 </div>
-                                            </div>
                                             @else
-                                            <div>
-                                                <i class="fas fa-user bg-green"></i>
-                                                <div class="timeline-item">
-                                                    <span class="time"><i class="fas fa-clock"></i>
-                                                        {{$val->created_at->diffForHumans()}}</span>
-                                                    <h3 class="timeline-header no-border"><a
-                                                            href="#">{{$val->nombre_usuario}}</a>
-                                                        {{$val->comentario}} <span
-                                                            class="badge {{$val->color}}">{{$val->nombre_etapa}}</span>
-                                                    </h3>
+                                                <div>
+                                                    <i class="fas fa-clock bg-gray"></i>
+                                                    <div class="timeline-item">
+                                                        <h3 class="timeline-header no-border">
+                                                            Sin comentarios Hasta el momento</h3>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            @endif
-                                            @endforeach
-                                            @endforeach
-                                            <div>
-                                                <i class="fas fa-clock bg-gray"></i>
-                                            </div>
-                                            @else
-                                            <div>
-                                                <i class="fas fa-clock bg-gray"></i>
-                                                <div class="timeline-item">
-                                                    <h3 class="timeline-header no-border">
-                                                        Sin comentarios Hasta el momento</h3>
-                                                </div>
-                                            </div>
                                             @endif
                                         </div>
                                     </div>
@@ -191,11 +151,11 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    @empty (!$errorComentario)
-                    <div class="callout callout-danger">
-                        <h5>{{$usuario->nombre_usuario}} tu comentario no pudo ser agregado!</h5>
-                        <p>Verifica que el campo de comentario y tipo de gestion no esten vacios.</p>
-                    </div>
+                    @empty (!$errorComentario)                        
+                        <div class="callout callout-danger">
+                            <h5>{{$usuario->nombre_usuario}} tu comentario no pudo ser agregado!</h5>
+                            <p>Verifica que el campo de comentario y tipo de gestion no esten vacios.</p>
+                        </div>
                     @endempty
                     <div class="card redondeado shadow">
                         <div class="card-header redondeado-card">
@@ -210,10 +170,9 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Modificar la Etapa Actual</label>
-                                <select wire:change="cambiarEtapa" wire:model='etapa_actual'
-                                    class="custom-select form-control-border border-width-2 border-info">
+                                <select wire:change="cambiarEtapa" wire:model='etapa_actual' class="custom-select form-control-border border-width-2 border-info">
                                     @foreach ($etapas_gira as $etapa )
-                                    <option value="{{$etapa->id}}">{{$etapa->nombre}}</option>
+                                        <option value="{{$etapa->id}}">{{$etapa->nombre}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -242,38 +201,38 @@
                                     <option value="COBRANZAS">COBRANZAS</option>
                                     <option value="LLAMADAS">LLAMADAS</option>
                                     <option value="VISITAS">VISITAS</option>
-                                </select>
+                                </select>                                
                             </div>
                             <div class="form-group">
                                 @section('plugins.TempusDominusBs4', true)
-                                @php
-                                $config = ['format' => 'DD/MM/YYYY HH:mm', 'minDate' => 'js:moment()', 'showClear' =>
-                                true];
+                                    @php
+                                        $config = ['format' => 'DD/MM/YYYY HH:mm', 'minDate' => 'js:moment()', 'showClear' => true];
 
-                                @endphp
-                                <x-adminlte-input-date id="horario" name="idLabel" :config="$config"
-                                    placeholder="Escige una fecha..." label="Fecha y Hora">
-                                    <x-slot name="appendSlot">
-                                        <x-adminlte-button theme="outline-primary" icon="fas fa-lg fa-clock"
-                                            title="escoge el horario" />
-                                    </x-slot>
-                                </x-adminlte-input-date>
+                                    @endphp
+                                    <x-adminlte-input-date id="horario" name="idLabel" :config="$config"
+                                        placeholder="Escige una fecha..." label="Fecha y Hora">
+                                        <x-slot name="appendSlot">
+                                            <x-adminlte-button theme="outline-primary" icon="fas fa-lg fa-clock"
+                                                title="escoge el horario" />
+                                        </x-slot>
+                                    </x-adminlte-input-date>
 
+                                </div>
+                                <button id="guardar_recordatorio" class="btn btn-primary float-right"><i
+                                        class="fas fa-save"></i>
+                                    GUARDAR</button>
                             </div>
-                            <button id="guardar_recordatorio" class="btn btn-primary float-right"><i
-                                    class="fas fa-save"></i>
-                                GUARDAR</button>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
-        </section>
+            </section>
+        </div>
 
-    @push('js')
-    <script>
-        $.ajaxSetup({
+        @push('js')
+            <script>
+                $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -316,7 +275,7 @@
                     }
                 })
 
-    </script>
-    @endpush
+            </script>
+        @endpush
 
-</div>
+    </div>
