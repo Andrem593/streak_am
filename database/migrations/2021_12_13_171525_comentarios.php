@@ -21,6 +21,8 @@ class Comentarios extends Migration
             $table->string('tipo')->nullable();
             $table->longText('comentario')->nullable();
             $table->string('tipo_gestion')->nullable();
+            $table->string('tipo_documento')->nullable();
+            $table->string('num_recibo')->nullable();
             $table->integer('estado')->default(1);
             $table->timestamps();
         });

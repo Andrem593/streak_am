@@ -46,6 +46,24 @@
                                 </select>                                
                             </div>
                             @if ($select == 'COBRANZAS')
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="">Tipo</label>
+                                            <select class="custom-select" wire:model='tipo_documento'>
+                                                <option value="">SELECCIONE</option>
+                                                <option value="CHEQUE">CHEQUE</option>
+                                                <option value="DEPOSITO">DESPOSITO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="">N° Recibo</label>
+                                            <input type="number" class="form-control" wire:model.defer='num_recibo' >
+                                        </div>
+                                    </div>    
+                                </div>                            
                                 <div class="form-group">
                                     <label for="">Valor Recaudado</label>
                                     <input type="number" wire:model.defer='valor_recudado' class="form-control" >
@@ -94,7 +112,10 @@
                                                                         <p class="my-2">{{$val->comentario}}</p>
                                                                         <span><b>Tipo de Gestion:</b> {{$val->tipo_gestion}}</span>   
                                                                         @empty(!$val->valor_recaudado)                                                                            
-                                                                            <span class="ml-4"><b>Valores recaudado:</b> {{number_format($val->valor_recaudado,2)}}</span>                                                                 
+                                                                            <span class="ml-4"><b>Valores recaudado:</b> {{number_format($val->valor_recaudado,2)}}</span> 
+                                                                            <br>
+                                                                            <span><b>Tipo Documento:</b> {{$val->tipo_documento}}</span>
+                                                                            <span class="ml-4"><b>Número recibo:</b> {{$val->num_recibo}}</span> 
                                                                         @endempty
                                                                     </div>
                                                                 </div>
