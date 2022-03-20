@@ -37,7 +37,10 @@ class webController extends Controller
         }
         $giras = $giras->get();
         $i = 1;
-        return view('giras.index', compact('giras', 'i', 'user'));
+        $total_recaudado = Comentario::where('id_usuario',$user->id_usuario)->selectRaw('SUM(valor_recaudado) as total_recaudado')->first();
+        $total_comentarios = Comentario::where('id_usuario',$user->id_usuario)->selectRaw('COUNT(id) as total_comentarios')->first();
+        $progreso = $user->presupuesto_semanal != '' ? number_format ((($total_recaudado->total_recaudado/$user->presupuesto_semanal)*100),2)."%" : 'SIN PRESUPUESTO';
+        return view('giras.index', compact('giras', 'i', 'user','total_recaudado','progreso','total_comentarios'));
     }
     public function show($id_gira)
     {
@@ -271,7 +274,10 @@ class webController extends Controller
     }
     public function notificaciones()
     {
-        $tareas = Tarea::where('estado', 3)->OrWhere('estado', 2)->where('id_usuario', session('id_usuario'))->get();
+        $tareas = Tarea::where('id_usuario', session('id_usuario'))->where('estado',3)->orWhere(function($query) {
+            $query->where('id_usuario', session('id_usuario'))
+                  ->where('estado',2);
+        })->get();
         return view('recordatorios.index', compact('tareas'));
     }
     public function marcarLeida($id_notificacion)
@@ -460,5 +466,18 @@ class webController extends Controller
         }
 
         return redirect()->route('fase.cartera')->with('mensaje', $mensaje);
+    }
+
+    public function update_presupuesto(Request $request)
+    {
+        $data = $request->all();
+
+        $presupuesto = $data['presupuesto'];
+
+        $user = DB::table('aw_users')
+                ->where('id_usuario', session('id_usuario'))
+                ->update(['presupuesto_semanal' => floatval($presupuesto)]);
+
+        return $user;
     }
 }

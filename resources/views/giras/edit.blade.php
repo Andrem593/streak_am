@@ -12,98 +12,98 @@
         </div>
     </div>
     @stop
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card card-primary redondeado shadow">
-                    <div class="card-header redondeado-card">
-                        <h3 class="card-title">Datos de Gira</h3>
 
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body" style="display: block;">
-                        <div class="form-group">
-                            <label for="nombre">Nombre de Gira</label>
-                            <input type="text" id="nombre" value="{{$gira->nombre}}" class="form-control" required>
-                            <input type="hidden" id="id_gira" value="{{$gira->id}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="descripcion">Descripcion</label>
-                            <textarea id="descripcion" class="form-control" rows="4">{{$gira->descripcion}}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputStatus">Estado</label>
-                            <select id="estado" class="form-control custom-select" required>
-                                <option value="{{strtoupper($gira->estado)}}">{{ucfirst(strtolower($gira->estado))}}</option>
-                                @foreach ($estados as $estado )
-                                    @if (strtoupper($gira->estado) != strtoupper($estado))
-                                        <option value="{{strtoupper($estado)}}">{{$estado}}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <button class="btn btn-primary w-100" id="btn-editar">EDITAR</button>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-primary redondeado shadow">
+                <div class="card-header redondeado-card">
+                    <h3 class="card-title">Datos de Gira</h3>
 
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card card-info redondeado shadow">
-                    <div class="card-header redondeado-card">
-                        <h3 class="card-title">Fases de Gira</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
+                <div class="card-body" style="display: block;">
+                    <div class="form-group">
+                        <label for="nombre">Nombre de Gira</label>
+                        <input type="text" id="nombre" value="{{$gira->nombre}}" class="form-control" required>
+                        <input type="hidden" id="id_gira" value="{{$gira->id}}">
                     </div>
-                    <div class="card-body">
-                        <!-- the events -->
-                        <div id="sortable">
-                            @foreach ($etapas as $etapa)
-                                <div id="{{$etapa->id}}" class="external-event {{$etapa->color}}">{{$etapa->nombre}} <div class="float-right">
-                                    <a class="delete" href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div>
-                                </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripcion</label>
+                        <textarea id="descripcion" class="form-control" rows="4">{{$gira->descripcion}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputStatus">Estado</label>
+                        <select id="estado" class="form-control custom-select" required>
+                            <option value="{{strtoupper($gira->estado)}}">{{ucfirst(strtolower($gira->estado))}}</option>
+                            @foreach ($estados as $estado )
+                                @if (strtoupper($gira->estado) != strtoupper($estado))
+                                    <option value="{{strtoupper($estado)}}">{{$estado}}</option>
+                                @endif
                             @endforeach
-                        </div>
+                        </select>
                     </div>
-                    <!-- /.card-body -->
+                    <button class="btn btn-primary w-100" id="btn-editar">EDITAR</button>
+
                 </div>
-                <div class="card card-info redondeado shadow">
-                    <div class="card-header redondeado-card">
-                        <h3 class="card-title">Crear Fase</h3>
+                <!-- /.card-body -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-info redondeado shadow">
+                <div class="card-header redondeado-card">
+                    <h3 class="card-title">Fases de Gira</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
                     </div>
-                    <div class="card-body">
-                        <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                            <ul class="fc-color-picker" id="color-chooser">
-                                <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
-                                <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
-                                <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
-                                <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                                <li><a class="text-secondary" href="#"><i class="fas fa-square"></i></a></li>
-                            </ul>
+                </div>
+                <div class="card-body">
+                    <!-- the events -->
+                    <div id="sortable">
+                        @foreach ($etapas as $etapa)
+                            <div id="{{$etapa->id}}" class="external-event {{$etapa->color}}">{{$etapa->nombre}} <div class="float-right">
+                                <a class="delete" href="#" style="color: #fff"><i class="fas fa-trash"></i></a></div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <div class="card card-info redondeado shadow">
+                <div class="card-header redondeado-card">
+                    <h3 class="card-title">Crear Fase</h3>
+                </div>
+                <div class="card-body">
+                    <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                        <ul class="fc-color-picker" id="color-chooser">
+                            <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
+                            <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
+                            <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
+                            <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
+                            <li><a class="text-secondary" href="#"><i class="fas fa-square"></i></a></li>
+                        </ul>
+                    </div>
+                    <!-- /btn-group -->
+                    <div class="input-group">
+                        <input id="nombre_fase" type="text" class="form-control" placeholder="Nombre de nueva fase">
+
+                        <div class="input-group-append">
+                            <button id="btn-crear-fase" type="button" class="btn btn-primary">ADD</button>
                         </div>
                         <!-- /btn-group -->
-                        <div class="input-group">
-                            <input id="nombre_fase" type="text" class="form-control" placeholder="Nombre de nueva fase">
-
-                            <div class="input-group-append">
-                                <button id="btn-crear-fase" type="button" class="btn btn-primary">ADD</button>
-                            </div>
-                            <!-- /btn-group -->
-                        </div>
-                        <!-- /input-group -->
                     </div>
+                    <!-- /input-group -->
                 </div>
             </div>
         </div>
     </div>
+
     @push('css')
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
             integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ=="

@@ -34,6 +34,7 @@ Route::post('/crear-gira',[webController::class,'createGira'])->name('new.gira')
 Route::post('/editar-gira',[webController::class,'editarGira'])->name('edit.gira');
 Route::get('/autocompletar', [webController::class,'autocompletar'])->name('web.autocompletar');
 Route::get('/autocompletar-cartera', [webController::class,'autocompletar_cartera'])->name('web.autocompletar-cartera');
+Route::post('/update-presupuesto', [webController::class,'update_presupuesto'])->name('web.update-presupuesto');
 Route::post('/crear-tarea',[webController::class,'crearTarea'])->name('crearTarea');
 Route::get('notifications/get',[webController::class,'buscarNotificaciones'])->name('buscarNotificaciones');
 Route::get('notificationsAll',[webController::class,'notificaciones'])->name('allNotifications');
