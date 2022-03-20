@@ -148,8 +148,7 @@
                                                                 </div>
                                                             </div>
                                                         @endif
-                                                    @endforeach
-                                                @endforeach
+                                                    @endforeach                                                
                                                 <div>
                                                     <i class="fas fa-clock bg-gray"></i>
                                                 </div>
