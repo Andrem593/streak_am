@@ -16,5 +16,7 @@ class Comentario extends Model
         'valor_recaudado',
         'comentario',
         'tipo_gestion',
+        'tipo_documento',
+        'num_recibo'
     ];
 }

@@ -12,7 +12,7 @@ use Livewire\Component;
 
 class Historial extends Component
 {
-    public $comentarios, $comentario,$id_etapa,$id_cliente,$id_gira, $etapa_actual , $etapa_has_cliente;
+    public $comentarios, $comentario,$id_etapa,$id_cliente,$id_gira, $etapa_actual , $etapa_has_cliente, $tipo_documento, $num_recibo;
     public $select, $errorComentario, $open = false, $valor_recudado;
 
     public function mount($id_cliente,$id_etapa,$id_gira)
@@ -55,6 +55,8 @@ class Historial extends Component
                 'id_etapa'=>$this->id_etapa,
                 'tipo'=>'comentario',
                 'tipo_gestion'=>$this->select,
+                'tipo_documento'=>$this->tipo_documento,
+                'num_recibo'=>$this->num_recibo,
                 'comentario'=>$comentario,
                 'valor_recaudado'=>$this->valor_recudado,
             ]);
@@ -62,6 +64,7 @@ class Historial extends Component
             $this->select = '';
             $this->errorComentario = '';
             $this->valor_recudado = '';
+            $this->num_recibo = '';
             $this->open = false;
         }else{
             $this->errorComentario = 'Debe llenar todos los campos para continuar';

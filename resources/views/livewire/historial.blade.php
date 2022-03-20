@@ -46,10 +46,29 @@
                                 </select>
                             </div>
                             @if ($select == 'COBRANZAS')
-                            <div class="form-group">
-                                <label for="">Valor Recaudado</label>
-                                <input type="number" wire:model.defer='valor_recudado' class="form-control">
-                            </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="">Tipo</label>
+                                            <select class="custom-select" wire:model='tipo_documento'>
+                                                <option value="">SELECCIONE</option>
+                                                <option value="CHEQUE">CHEQUE</option>
+                                                <option value="DEPOSITO">DESPOSITO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="">N° Recibo</label>
+                                            <input type="number" class="form-control" wire:model.defer='num_recibo' >
+                                        </div>
+                                    </div>    
+                                </div>                            
+                                <div class="form-group">
+                                    <label for="">Valor Recaudado</label>
+                                    <input type="number" wire:model.defer='valor_recudado' class="form-control" >
+                                </div>
+
                             @endif
                         </div>
                         <!-- /.card-body -->
@@ -100,6 +119,39 @@
                                                             {{number_format($val->valor_recaudado,2)}}</span>
                                                         @endempty
                                                     </div>
+                                                    @foreach ($item as $val)
+                                                        @if ($val->tipo == 'comentario')
+                                                            <div>
+                                                                <i class="fas fa-comments bg-warning"></i>
+                                                                <div class="timeline-item">
+                                                                    <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
+                                                                    <h3 class="timeline-header"><a href="#">{{$val->nombre_usuario}} </a> comento en {{$val->nombre_etapa}} </h3>
+                                                                    <div class="timeline-body">
+                                                                        <p class="my-2">{{$val->comentario}}</p>
+                                                                        <span><b>Tipo de Gestion:</b> {{$val->tipo_gestion}}</span>   
+                                                                        @empty(!$val->valor_recaudado)                                                                            
+                                                                            <span class="ml-4"><b>Valores recaudado:</b> {{number_format($val->valor_recaudado,2)}}</span> 
+                                                                            <br>
+                                                                            <span><b>Tipo Documento:</b> {{$val->tipo_documento}}</span>
+                                                                            <span class="ml-4"><b>Número recibo:</b> {{$val->num_recibo}}</span> 
+                                                                        @endempty
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <div>
+                                                                <i class="fas fa-user bg-green"></i>
+                                                                <div class="timeline-item">
+                                                                    <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
+                                                                    <h3 class="timeline-header no-border"><a href="#">{{$val->nombre_usuario}}</a>
+                                                                        {{$val->comentario}} <span class="badge {{$val->color}}">{{$val->nombre_etapa}}</span></h3>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                                <div>
+                                                    <i class="fas fa-clock bg-gray"></i>
                                                 </div>
                                             </div>
                                             @else
