@@ -112,7 +112,10 @@
                                                                         <p class="my-2">{{$val->comentario}}</p>
                                                                         <span><b>Tipo de Gestion:</b> {{$val->tipo_gestion}}</span>   
                                                                         @empty(!$val->valor_recaudado)                                                                            
-                                                                            <span class="ml-4"><b>Valores recaudado:</b> {{number_format($val->valor_recaudado,2)}}</span>                                                                 
+                                                                            <span class="ml-4"><b>Valores recaudado:</b> {{number_format($val->valor_recaudado,2)}}</span>
+                                                                            <br>
+                                                                            <span><b>Tipo Documento:</b> {{$val->tipo_documento}}</span>   
+                                                                            <span class="ml-4"><b>Número recibo:</b> {{$val->num_recibo}}</span>                                                                                                                                              
                                                                         @endempty
                                                                     </div>
                                                                 </div>
