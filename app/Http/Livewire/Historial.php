@@ -13,7 +13,7 @@ use Livewire\Component;
 class Historial extends Component
 {
     public $comentarios, $comentario,$id_etapa,$id_cliente,$id_gira, $etapa_actual , $etapa_has_cliente, $tipo_documento, $num_recibo;
-    public $select, $errorComentario, $open = false, $valor_recudado;
+    public $select, $errorComentario, $open = false, $valor_recudado,$edit= false,$newComment, $idEdit;
 
     public function mount($id_cliente,$id_etapa,$id_gira)
     {
@@ -84,5 +84,19 @@ class Historial extends Component
             'comentario'=>'cambió la etapa a',
         ]);
 
+    }
+
+    public function edit($comentario, $id)
+    {
+        $this->edit = true;
+        $this->newComment = $comentario;
+        $this->idEdit = $id;
+    }
+    public function editarComentario($id)
+    {
+        Comentario::find($id)->update([
+            'comentario'=>$this->newComment
+        ]);
+        $this->edit = false;
     }
 }

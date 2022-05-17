@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tarea;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\Mail;
 
 class webController extends Controller
@@ -37,10 +38,22 @@ class webController extends Controller
         }
         $giras = $giras->get();
         $i = 1;
-        $total_recaudado = Comentario::where('id_usuario',$user->id_usuario)->selectRaw('SUM(valor_recaudado) as total_recaudado')->first();
+        $ultimaCartera = DB::table('carteras')->orderByDesc('id')->limit(1)->get();
+        $ultimaCartera = $ultimaCartera[0];
+
+        $presupuesto = DB::table('carteras')->select(DB::raw('sum(carteras.saldo) as saldo'))->join('giras','giras.id','=','carteras.id_gira')
+        ->join('aw_users', 'aw_users.id_usuario','=','giras.id_usuario')
+        ->where('giras.id_usuario',$user->id_usuario)
+        ->where('carteras.fecha_inicio', $ultimaCartera->fecha_inicio)
+        ->groupBy('aw_users.id_usuario')->get();
+                
+        $total_recaudado = Comentario::where('id_usuario',$user->id_usuario)
+        ->whereBetween('created_at',[$ultimaCartera->fecha_inicio,$ultimaCartera->fecha_fin])
+        ->selectRaw('SUM(valor_recaudado) as total_recaudado')->first();
+
         $total_comentarios = Comentario::where('id_usuario',$user->id_usuario)->selectRaw('COUNT(id) as total_comentarios')->first();
-        $progreso = $user->presupuesto_semanal != '' ? number_format ((($total_recaudado->total_recaudado/$user->presupuesto_semanal)*100),2)."%" : 'SIN PRESUPUESTO';
-        return view('giras.index', compact('giras', 'i', 'user','total_recaudado','progreso','total_comentarios'));
+        $progreso = count($presupuesto) > 0 ? number_format ((($total_recaudado->total_recaudado/$presupuesto[0]->saldo)*100),2)."%" : 'SIN PRESUPUESTO';
+        return view('giras.index', compact('giras', 'i', 'user','total_recaudado','progreso','total_comentarios','presupuesto'));
     }
     public function show($id_gira)
     {
@@ -317,8 +330,8 @@ class webController extends Controller
     public function cartera()
     {
         $cartera = DB::table('carteras')->first();
-
-        return view('cartera.index', compact('cartera'));
+        $giras = Gira::all(['nombre','id']);
+        return view('cartera.index', compact('cartera','giras'));
     }
 
     public function saveExcel(Request $request)
@@ -328,6 +341,12 @@ class webController extends Controller
             'excel' => 'required|max:10000|mimes:xlsx,xls'
         ]);
 
+        // Obtener fechas de inicio y fin 
+        $fechas = $request->rango_fecha;
+        $fechas =  explode(' - ',$fechas);
+        $fecha_inicio =  DateTime::createFromFormat('d/m/Y', $fechas[0])->format('Y-m-d');
+        $fecha_fin = DateTime::createFromFormat('d/m/Y', $fechas[1])->format('Y-m-d');
+        //  
         $file_array = explode(".", $_FILES["excel"]["name"]);
         $file_extension = end($file_array);
 
@@ -454,12 +473,11 @@ class webController extends Controller
                     'saldo'  => $saldo,
                     'fecha'  => $fecha,
                     'created_at' =>  \Carbon\Carbon::now(),
-                    'updated_at' => \Carbon\Carbon::now()
+                    'updated_at' => \Carbon\Carbon::now(),
+                    'id_gira' => $row[14],
+                    'fecha_inicio'=> $fecha_inicio,
+                    'fecha_fin'=> $fecha_fin,
                 );
-
-                if($key == 1){
-                    DB::table('carteras')->truncate();
-                }
 
                 DB::table('carteras')->insert($insert_data);
             }
@@ -479,5 +497,23 @@ class webController extends Controller
                 ->update(['presupuesto_semanal' => floatval($presupuesto)]);
 
         return $user;
+    }
+    
+    public function reporteCartera()
+    {
+        $ultimaCartera = DB::table('carteras')->orderByDesc('id')->limit(1)->get();
+        $ultimaCartera = $ultimaCartera[0];
+
+        $usuarios = DB::table('aw_users')->where('tipo_usuario','vendedor')->get();
+        $data = DB::select(DB::raw("select au.nombre_usuario, sum(c.saldo) as ppt, g.nombre as gira , c.fecha_inicio,c.fecha_fin,
+        IFNULL((select sum(c.valor_recaudado) from aw_users u join comentarios c on c.id_usuario = u.id_usuario where u.nombre_usuario  = au.nombre_usuario 
+        group by u.nombre_usuario),0) as recaudado
+        from aw_users au 
+        join giras g on au.id_usuario = g.id_usuario 
+        join carteras c on c.id_gira = g.id
+        where au.tipo_usuario = 'vendedor' and c.fecha_inicio = '$ultimaCartera->fecha_inicio'
+        group by au.nombre_usuario ,g.nombre  ,c.fecha_inicio ,c.fecha_fin "));
+        
+        return view('cartera.reporte',compact('usuarios','data'));
     }
 }

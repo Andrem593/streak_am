@@ -108,16 +108,38 @@
                                                                 <div class="timeline-item">
                                                                     <span class="time"><i class="fas fa-clock"></i> {{$val->created_at->diffForHumans()}}</span>
                                                                     <h3 class="timeline-header"><a href="#">{{$val->nombre_usuario}} </a> comento en {{$val->nombre_etapa}} </h3>
+                                                                    @php
+                                                                        $fecha1 = new DateTime(date('Y-m-d H:i:s'));
+                                                                        $fecha2 = new DateTime(date($val->created_at));
+                                                                        $dif = $fecha1->diff($fecha2);
+                                                                        
+                                                                    @endphp 
                                                                     <div class="timeline-body">
-                                                                        <p class="my-2">{{$val->comentario}}</p>
-                                                                        <span><b>Tipo de Gestion:</b> {{$val->tipo_gestion}}</span>   
-                                                                        @empty(!$val->valor_recaudado)                                                                            
-                                                                            <span class="ml-4"><b>Valores recaudado:</b> {{number_format($val->valor_recaudado,2)}}</span>
-                                                                            <br>
-                                                                            <span><b>Tipo Documento:</b> {{$val->tipo_documento}}</span>   
-                                                                            <span class="ml-4"><b>Número recibo:</b> {{$val->num_recibo}}</span>                                                                                                                                              
-                                                                        @endempty
+                                                                        @if ($edit && $idEdit == $val->id)                                                                                                                                                    
+                                                                            <textarea class="form-control" rows="3" wire:model="newComment"></textarea>
+                                                                        @else
+                                                                            <p class="my-2">{{$val->comentario}}</p>
+                                                                            <span><b>Tipo de Gestion:</b> {{$val->tipo_gestion}}</span>   
+                                                                            @empty(!$val->valor_recaudado)                                                                            
+                                                                                <span class="ml-4"><b>Valores recaudado:</b> {{number_format($val->valor_recaudado,2)}}</span>
+                                                                                <br>
+                                                                                <span><b>Tipo Documento:</b> {{$val->tipo_documento}}</span>   
+                                                                                <span class="ml-4"><b>Número recibo:</b> {{$val->num_recibo}}</span>                                                                                                                                              
+                                                                            @endempty
+                                                                        @endif
                                                                     </div>
+                                                                                                  
+                                                                        @if ($dif->h <= 12)   
+                                                                            @if ($edit && $idEdit == $val->id)
+                                                                                <div class="timeline-footer">
+                                                                                    <a class="btn btn-sm btn-primary" wire:click="editarComentario({{$val->id}})">Guardar</a>
+                                                                                </div>
+                                                                            @else
+                                                                                <div class="timeline-footer">
+                                                                                    <a class="btn btn-sm btn-primary" wire:click="edit('{{$val->comentario}}',{{$val->id}})">Editar</a>
+                                                                                </div>                                                                                
+                                                                            @endif                                                                         
+                                                                        @endif
                                                                 </div>
                                                             </div>
                                                         @else

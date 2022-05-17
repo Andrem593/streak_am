@@ -1,13 +1,18 @@
 <x-plantilla>
     @section('content_header')
-    <div class="card redondeado m-1 p-4 shadow bg-degrade">
-        <div class="row d-flex justify-content-around">
-            <div class="col">
-                <h2 class="fw-bold my-2" style="font-size: 20px">Cartera de Clientes</h2>
-            </div>
-            <div class="col my-auto text-right">
-                <a class="btn btn-warning btn-sm" href="{{ url('http://localhost:8000/resources/cartera_clientes.xlsx') }}" target="_blank"><i class="fas fa-file-excel"></i>
-                    Plantilla</a>
+        <div class="card redondeado m-1 p-4 shadow bg-degrade">
+            <div class="row d-flex justify-content-around">
+                <div class="col">
+                    <h2 class="fw-bold my-2" style="font-size: 20px">Cartera de Clientes</h2>
+                </div>
+                <div class="col my-auto text-right">
+                    <a class="btn btn-warning btn-sm"
+                        href="{{ url('http://localhost:8000/resources/cartera_clientes.xlsx') }}" target="_blank"><i
+                            class="fas fa-file-excel"></i>
+                        Plantilla</a>
+                    <a class="btn btn-info btn-sm" href="{{route('cartera.reporte')}}">
+                        <i class="fas fa-file-excel"></i>
+                        Reporte</a>
                     <a class="btn btn-primary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
                             class="fas fa-arrow-left mr-1"></i>Regresar</a>
                 </div>
@@ -43,6 +48,29 @@
             <div class="card-body">
                 <form action="{{ route('fase.cargarExcel') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <div class="row">
+                        <div class="col-6">
+                            @php
+                                $config = [
+                                    'locale' => ['format' => 'DD/MM/YYYY'],
+                                ];
+                            @endphp
+                            <x-adminlte-date-range name="rango_fecha" placeholder="Selecciona el rango de fecha"
+                                label="Escoger la Semana:" :config="$config">
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text bg-info">
+                                        <i class="far fa-lg fa-calendar-alt"></i>
+                                    </div>
+                                </x-slot>
+                            </x-adminlte-date-range>
+                            @push('js')
+                                <script>
+                                    $(() => $("#rango_fecha").val(''))
+                                </script>
+                            @endpush
+
+                        </div>
+                    </div>
 
 
                     <x-adminlte-input-file name="excel" class="" igroup-size="sm"
@@ -69,7 +97,7 @@
         @livewire('consulta-cartera')
     </div>
     @push('css')
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
     @endpush
 
     @push('js')

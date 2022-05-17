@@ -7,6 +7,7 @@ use App\Events\RealTimeMessage;
 use App\Http\Livewire\Cartera;
 use App\Http\Livewire\Reporte;
 use App\Http\Livewire\ShowGira;
+use App\Http\Livewire\Clientes;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::get('/historial/{id_cliente}/{id_etapa}/{id_gira}',Historial::class)->nam
 Route::get('/show-gira/{id_gira}',ShowGira::class)->name('fase.gira');
 Route::get('/reporte',Reporte::class)->name('fase.reporte');
 Route::get('/cartera',[webController::class, 'cartera'])->name('fase.cartera');
+Route::get('/reporte-cartera',[webController::class, 'reporteCartera'])->name('cartera.reporte');
 Route::post('/cargar-excel',[webController::class,'saveExcel'])->name('fase.cargarExcel');
 Route::post('/reporteTable',[Reporte::class,'reporte'])->name('fase.dataTable');
 Route::post('/crear-gira',[webController::class,'createGira'])->name('new.gira');
@@ -41,3 +43,4 @@ Route::get('notificationsAll',[webController::class,'notificaciones'])->name('al
 Route::post('eliminar-recordatorio',[webController::class,'eliminarTarea'])->name('eliminarTarea');
 Route::get('leerNotificacion/{id_notificacion}',[webController::class,'marcarLeida'])->name('leerNotificacion');
 Route::post('/validacionClientes', [webController::class,'validacionClientesEtapa'])->name('etapa.validacionClientes');
+Route::get('/clientes',Clientes::class)->name('clientes');

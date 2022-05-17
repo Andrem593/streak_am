@@ -226,15 +226,20 @@ return [
 
     'menu' => [
         'MAIN NAVIGATION',
-    [
-        'text' => 'Cartera Clientes',
-        'url'  => '/cartera',
-        'icon' => 'fas fa-users',
-    ],
-    [
-        'type'          => 'darkmode-widget' ,
-        'topnav_right' => true , // O "topnav => true" para colocarlo a la izquierda. 
-    ],
+        [
+            'text' => 'Clientes',
+            'url'  => '/clientes',
+            'icon' => 'fas fa-user',
+        ],
+        [
+            'text' => 'Cartera Clientes',
+            'url'  => '/cartera',
+            'icon' => 'fas fa-users',
+        ],
+        [
+            'type'          => 'darkmode-widget',
+            'topnav_right' => true, // O "topnav => true" para colocarlo a la izquierda. 
+        ],
         // Navbar items:
         [
             'type'         => 'navbar-notification',
@@ -251,8 +256,8 @@ return [
                 'url' => 'notifications/get',         // The url to periodically fetch new data (optional).
                 'period' => 30,                       // The update period for get new data (in seconds, optional).
             ],
-        ],        
-        
+        ],
+
 
         // Sidebar items:
 
@@ -261,7 +266,7 @@ return [
             'text' => 'search',
         ],
     ],
-    
+
 
 
     /*
@@ -336,7 +341,7 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
-                ],                
+                ],
             ],
         ],
         'DatatablesPlugins' => [

@@ -38,10 +38,10 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Presupuesto</span>
-                    <span class="info-box-number">{{$user->presupuesto_semanal != '' ? '$ '.number_format ($user->presupuesto_semanal,2) : 'SIN PRESUPUESTO'}} </span>
+                    <span class="info-box-number">{{count($presupuesto) > 0 ? '$ '.number_format ($presupuesto[0]->saldo,2) : 'SIN PRESUPUESTO'}} </span>
 
                     <div class="progress">    
-                        <div class="progress-bar" style="{{$user->presupuesto_semanal != '' ? 'width:100%' : 'width:0%' }}"></div>                        
+                        <div class="progress-bar" style="{{count($presupuesto) > 0 ? 'width:100%' : 'width:0%' }}"></div>                        
                     </div>
                     <span class="progress-description">
                         Presupuesto de usuario
