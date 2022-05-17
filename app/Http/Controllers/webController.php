@@ -329,9 +329,12 @@ class webController extends Controller
 
     public function cartera()
     {
+        $user = DB::table('aw_users')
+                ->where('id_usuario', session('id_usuario'))
+                ->first();
         $cartera = DB::table('carteras')->first();
         $giras = Gira::all(['nombre','id']);
-        return view('cartera.index', compact('cartera','giras'));
+        return view('cartera.index', compact('cartera','giras','user'));
     }
 
     public function saveExcel(Request $request)

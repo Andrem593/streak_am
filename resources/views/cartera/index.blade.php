@@ -5,6 +5,7 @@
                 <div class="col">
                     <h2 class="fw-bold my-2" style="font-size: 20px">Cartera de Clientes</h2>
                 </div>
+                @if ($user->tipo_usuario == 'administrador')
                 <div class="col my-auto text-right">
                     <a class="btn btn-warning btn-sm"
                         href="{{ url('http://localhost:8000/resources/cartera_clientes.xlsx') }}" target="_blank"><i
@@ -16,6 +17,7 @@
                     <a class="btn btn-primary btn-sm" href="{{ redirect()->back()->getTargetUrl() }}"><i
                             class="fas fa-arrow-left mr-1"></i>Regresar</a>
                 </div>
+                @endif
             </div>
         </div>
     @stop
