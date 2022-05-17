@@ -16,11 +16,16 @@ class ConsultaCartera extends Component
     public function carteraCliente()
     {
         $cliente = $this->nombre_cliente;
-        
-        if ($this->documento == '') {
-            $this->data_cartera = DB::table('carteras')->where('cliente',$cliente)->orderBy('tipo_documento', 'asc')->get();
-        } else {            
-            $this->data_cartera = DB::table('carteras')->where('cliente',$cliente)->Where('tipo_documento', $this->documento)->orderBy('tipo_documento', 'asc')->get();
+
+        $ultimaCartera = DB::table('carteras')->orderByDesc('id')->limit(1)->get();
+        $ultimaCartera = $ultimaCartera[0];
+
+        if ($this->documento == '' && $cliente == '' ) {
+            $this->data_cartera = DB::table('carteras')->where('fecha_inicio',$ultimaCartera->fecha_inicio)->get();
+        } else if ($cliente != '' && $this->documento == '')  {  
+            $this->data_cartera = DB::table('carteras')->where('cliente',$cliente)->where('fecha_inicio',$ultimaCartera->fecha_inicio)->orderBy('tipo_documento', 'asc')->get();          
+        }else{
+            $this->data_cartera = DB::table('carteras')->where('cliente',$cliente)->where('fecha_inicio',$ultimaCartera->fecha_inicio)->Where('tipo_documento', $this->documento)->orderBy('tipo_documento', 'asc')->get();            
         }
 
     }
